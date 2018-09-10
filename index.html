@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				Builds & Workflows - Bitrise DevCenter
+				Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Builds & Workflows
+							Bitrise DevCenter - What is Bitrise?
 						
 					</div>
 				</div>
@@ -63,7 +63,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/index" title="Bitrise DevCenter - What is Bitrise?">Bitrise DevCenter - What is Bitrise?</a>
+				<a href="/index" title="Bitrise DevCenter - What is Bitrise?" class="current">Bitrise DevCenter - What is Bitrise?</a>
 			
 		
 		
@@ -81,7 +81,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/getting-started/builds-and-workflows" title="Builds & Workflows" class="current">Builds & Workflows</a>
+				<a href="/getting-started/builds-and-workflows" title="Builds & Workflows">Builds & Workflows</a>
 			
 		
 		
@@ -1765,64 +1765,51 @@
 			<main class="content">
 				
 					<div class="title-with-source-edit">
-						<h1>Builds & Workflows</h1>
-						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/getting-started/builds-and-workflows.md" target="_blank"></a>
+						<h1>Bitrise DevCenter - What is Bitrise?</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/index.md" target="_blank"></a>
 					</div>
 				
-				<h1 id="builds--workflows">Builds &amp; Workflows <a href="#builds--workflows" class="anchor-symbol">⚓</a></h1>
+				<p><strong>Bitrise</strong> is a <a href="https://en.wikipedia.org/wiki/Continuous_integration">Continuous Integration</a>
+and <a href="https://en.wikipedia.org/wiki/Continuous_delivery">Delivery</a> (CI/CD) Platform as a Service (PaaS)
+with a main focus on mobile app development (<code class="highlighter-rouge">iOS</code>, <code class="highlighter-rouge">Android</code>, <code class="highlighter-rouge">Xamarin</code>, …). It is a collection of tools and services to help you with the development and automation of your software projectz</p>
 
-<p>A <em>build</em> is the process specified by the app’s <em>workflow</em>, which is a collection of <em>steps</em>.
-Every step is an <strong>open source</strong> repository which you can inspect, modify,
-and run with the <a href="https://www.bitrise.io/cli">open source Bitrise CLI</a>.</p>
+<p><strong>Automate the testing and deployment of your apps with just a few clicks.</strong></p>
 
-<p>The app’s build configuration can be specified as a <code class="highlighter-rouge">yaml</code> (<code class="highlighter-rouge">bitrise.yml</code>) config,
-which you can modify in <a href="https://www.bitrise.io">bitrise.io</a>’s
-graphical Workflow Editor UI (on your app’s Bitrise.io page click the <code class="highlighter-rouge">Workflows</code> tab),
-or <a href="http://blog.bitrise.io/2016/02/12/edit-your-yaml-files-like-a-boss.html">yaml editor</a> directly.</p>
+<h2 id="run-your-builds-on-bitriseio">Run your builds on bitrise.io <a href="#run-your-builds-on-bitriseio" class="anchor-symbol">⚓</a></h2>
 
-<p>On the graphical UI of the Workflow editor, you are able to add, remove, and reorder the build steps.
-Steps represent a block of script execution with predefined input and output variables.
-Steps can be written in various languages, like bash, Go, Ruby, Swift, etc.
-Read more about how the CLI, workflows and steps work in the <a href="/bitrise-cli/">Bitrise CLI and bitrise.yml</a> section.</p>
+<p>You can run a build of your app on Bitrise by defining a <code class="highlighter-rouge">Workflow</code>. A <code class="highlighter-rouge">Workflow</code> consists of one or more build <code class="highlighter-rouge">Steps</code> (open source git repositories
+which can be executed with the <a href="https://www.bitrise.io/cli">open source Bitrise CLI</a>).
+<a href="https://github.com/bitrise-steplib/step-template">You can create and share your own build Steps too</a>.
+You are able to define more workflows for the very same app,
+and define <a href="https://bitrise-io.github.io/devcenter/webhooks/trigger-map/">triggers</a> to specify which workflow should be selected for
+each trigger.</p>
 
-<p>When a build is running, these scripts will be downloaded and executed in the order you’ve defined in your workflow,
-with the input parameters you set. They will produce the predefined outputs set as environment variables.</p>
+<p>The steps can do anything that can be implemented by command line scripts / programs:
+send emails, <a href="https://github.com/bitrise-io/steps-sms-text-message">text messages</a>,
+pass values to each other, <a href="https://github.com/bitrise-io/steps-xcode-archive">create Xcode archives</a>,
+gather system information about the Virtual Machine
+running the build, notify other users (e.g. on Slack)
+or even <a href="https://github.com/bitrise-io/steps-deploy-to-itunesconnect-deliver">publish to iTunes Connect</a>, and many more.
+You can read more at <a href="/getting-started/builds-and-workflows">Builds and Workflows</a>.</p>
 
-<h2 id="the-build-process">The build process <a href="#the-build-process" class="anchor-symbol">⚓</a></h2>
+<p>When you trigger a build a Virtual Machine is assigned to host
+your build and your defined Workflow (series of build Steps) will be executed, step by step.</p>
 
-<p>There are a lot of things that can be customized when working with Bitrise.
-The build process has some mutable dimensions as well,
-from several kind of <a href="https://bitrise-io.github.io/devcenter/webhooks/trigger-map">triggers</a>,
-through different stacks and preparation types to environment variables.</p>
+<p>After a build is finished the Virtual Machine is destroyed and you can browse
+the logs of every step that ran during the workflow.
+You can read more at <a href="/getting-started/code-security">Code Security</a>.</p>
 
-<ol>
-  <li>Trigger builds by:
-    <ul>
-      <li>clicking the <code class="highlighter-rouge">Build</code> button on the application’s page (manual build trigger)</li>
-      <li>scheduling with a selected branch and frequency (runs when scheduled - you can find this option in the <code class="highlighter-rouge">Build</code> popup)</li>
-      <li><a href="https://bitrise-io.github.io/devcenter/webhooks">webhook</a> - after each code/tag push or pull request to the given branch (runs when push/pull request arrives)</li>
-      <li>our <code class="highlighter-rouge">Build Trigger API</code></li>
-    </ul>
-  </li>
-  <li>Environment preparation:
-Once we’ve found a suitable machine, a virtual machine will be provisioned and prepared to run the build.
-Build specific environment variables are preset, so you can use these in your steps.
-You can find more information about the available <code class="highlighter-rouge">Stacks</code> on your app’s <code class="highlighter-rouge">Settings</code> tab,
-in the <code class="highlighter-rouge">Stack Selector</code> section.</li>
-  <li>Concurrency:
-Builds over your subscription plan’s concurrency count will be marked as <strong>on hold</strong>.
-They will start whenever your ongoing builds are finished and you have a free build slot.
-You can always <a href="https://www.bitrise.io/me/profile/pricing">purchase additional concurrencies</a> with the Pro plan
-to increase the concurrent builds you can run at the same time.</li>
-  <li>Workflow execution:
-Steps in Workflows are executed in the same order as defined in the Workflow editor of your application,
-from top to bottom. You can reorder the steps by dragging.
-The log each step generates will be displayed on the build’s details page.</li>
-  <li>Cleanup:
-After the execution of the build, there will be a summary of the build
-created and stored on the Bitrise server and <strong>the virtual machine gets destroyed</strong>,
-so your code/files woudn’t fall into the wrong hands.</li>
-</ol>
+<h2 id="bitrise-cli---the-open-source-offline-automation-runner">Bitrise CLI - the open source, offline, automation runner <a href="#bitrise-cli---the-open-source-offline-automation-runner" class="anchor-symbol">⚓</a></h2>
+
+<p>To run a <code class="highlighter-rouge">bitrise</code> build on your machine, you can install our <a href="https://www.bitrise.io/cli">open source runner</a>
+and use the <code class="highlighter-rouge">bitrise</code> command to execute your workflows locally.
+<em>No</em> <a href="https://www.bitrise.io"><em>bitrise.io</em></a> <em>account required to use the Bitrise CLI.</em></p>
+
+<p>It’s a great help when you’re developing steps, debugging builds,
+or just want to use Bitrise for <em>any kind of automation</em> on your machine.</p>
+
+<p>You can find more information about the offline runner
+in the <a href="/bitrise-cli/">Bitrise CLI and bitrise.yml</a> section of the DevCenter.</p>
 
 			</main>
 		</div>
