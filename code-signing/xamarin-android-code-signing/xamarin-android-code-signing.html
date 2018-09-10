@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Xamarin Android code signing - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Xamarin Android code signing
 						
 					</div>
 				</div>
@@ -747,7 +747,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/code-signing/xamarin-android-code-signing/xamarin-android-code-signing" title="Xamarin Android code signing">Xamarin Android code signing</a>
+				<a href="/code-signing/xamarin-android-code-signing/xamarin-android-code-signing" title="Xamarin Android code signing" class="current">Xamarin Android code signing</a>
 			
 		
 		
@@ -1764,26 +1764,92 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Xamarin Android code signing</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/code-signing/xamarin-android-code-signing/xamarin-android-code-signing.md" target="_blank"></a>
+					</div>
+				
+				<h2 id="configure-code-signing-in-xamarin-studio">Configure code signing in Xamarin Studio <a href="#configure-code-signing-in-xamarin-studio" class="anchor-symbol">⚓</a></h2>
 
-<div class="container">
-  <h1>404</h1>
+<p>You can specify the code signing configuration for your Xamarin Android project by creating a signed APK in <a href="https://www.visualstudio.com/xamarin/">Xamarin Studio</a>.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<ol>
+  <li>
+    <p>Log into your <code class="highlighter-rouge">Xamarin Studio</code>.</p>
+  </li>
+  <li>
+    <p>Double click on your Xamarin Android project to open <code class="highlighter-rouge">Project Option</code>.</p>
+  </li>
+  <li>
+    <p>Select the <code class="highlighter-rouge">Android Package Signing</code> in <code class="highlighter-rouge">Build group</code>.</p>
+  </li>
+  <li>
+    <p>Select your platform in the <code class="highlighter-rouge">Configuration - Platform</code>.</p>
+  </li>
+  <li>
+    <p>Check the <code class="highlighter-rouge">Sign .APK file using the following keystore details</code>.</p>
+  </li>
+  <li>
+    <p>Fill out the signing information.</p>
+  </li>
+</ol>
+
+<h2 id="use-the-same-keystore-path-locally-and-on-bitriseio-for-xamarin-android">Use the same keystore path locally and on <a href="https://www.bitrise.io">bitrise.io</a> for Xamarin Android <a href="#use-the-same-keystore-path-locally-and-on-bitriseio-for-xamarin-android" class="anchor-symbol">⚓</a></h2>
+
+<p>!!! warning “Do not use environment variables in keystore path”
+    You <strong>cannot use environment variables</strong> in your keystore path in your Xamarin project! The keystore path has to be relative to the folder of your Xamarin Android project. You can also use an absolute path.</p>
+
+<p>You can use the same path on your local machine and on <a href="https://www.bitrise.io">bitrise.io</a> by putting your keystore into your repository.</p>
+
+<p>!!! attention
+    Don’t forget to gitignore your keystore in your repository.</p>
+
+<p>Since your keystore is gitignored, you have to upload your keystore to the <code class="highlighter-rouge">GENERIC FILE STORAGE</code> of Bitrise and download it to the same location in the build.</p>
+
+<ol>
+  <li>
+    <p>On the <code class="highlighter-rouge">Dashboard</code>, click on your <code class="highlighter-rouge">Workflow</code> tab.</p>
+  </li>
+  <li>
+    <p>Click on <code class="highlighter-rouge">Code signing</code>.</p>
+  </li>
+  <li>
+    <p>Scroll down to the <code class="highlighter-rouge">GENERIC FILE STORAGE</code> field.</p>
+  </li>
+  <li>
+    <p>Type your environment variable name here in the first field.</p>
+
+    <p>!!! example
+     In our example, we use <code class="highlighter-rouge">XAMARIN_KEYSTORE</code>.</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> ![Screenshot](/img/android-code-signing/generic-file-storage-xm.png)
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Upload your keystore file in the <code class="highlighter-rouge">Upload file field</code>.</p>
+
+    <p>Your environment variable (for example, <code class="highlighter-rouge">$BITRISEIO_XAMARIN_KEYSTORE_URL</code>) will be automatically available with the download URL of your keystore file.</p>
+
+    <p><img src="/img/android-code-signing/download-url.png" alt="Screenshot" /></p>
+  </li>
+  <li>
+    <p>Navigate back to your workflow.</p>
+  </li>
+  <li>
+    <p>Insert the <code class="highlighter-rouge">File Downloader</code> step before the <code class="highlighter-rouge">Xamarin Archive</code> step. The <code class="highlighter-rouge">File Downloader</code> step will get a <code class="highlighter-rouge">Download source url</code> input.</p>
+  </li>
+  <li>
+    <p>Type your environment variable, for example, <code class="highlighter-rouge">$BITRISEIO_XAMARIN_KEYSTORE_URL</code> in the <code class="highlighter-rouge">Download source url</code> field.</p>
+  </li>
+  <li>
+    <p>Set your keystore path in the <code class="highlighter-rouge">Download destination path</code>.</p>
+  </li>
+</ol>
+
+<p><img src="/img/android-code-signing/file-downloader.png" alt="Screenshot" /></p>
+
+<p>!!! important “Ensure the same keystore path”
+    Ensure that your Bitrise keystore path is the same as your local path relative to your project root. For example, if <code class="highlighter-rouge">keystore.jks</code>is in your project’s root, then your Bitrise keystore path has to be <code class="highlighter-rouge">$BITRISE_SOURCE_DIR/keystore.jks</code>.</p>
 
 			</main>
 		</div>

@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Creating a signed .ipa for Xamarin projects - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Creating a signed .ipa for Xamarin projects
 						
 					</div>
 				</div>
@@ -816,7 +816,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/code-signing/ios-code-signing/create-signed-ipa-for-xamarin" title="Creating a signed .ipa for Xamarin projects">Creating a signed .ipa for Xamarin projects</a>
+				<a href="/code-signing/ios-code-signing/create-signed-ipa-for-xamarin" title="Creating a signed .ipa for Xamarin projects" class="current">Creating a signed .ipa for Xamarin projects</a>
 			
 		
 		
@@ -1764,26 +1764,55 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Creating a signed .ipa for Xamarin projects</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/code-signing/ios-code-signing/create-signed-ipa-for-xamarin.md" target="_blank"></a>
+					</div>
+				
+				<p>You can easily create a signed IPA for your Xamarin project with Bitrise. All you need to do is set the relevant inputs of our <code class="highlighter-rouge">Xamarin Archive</code> step!</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>!!! todo “Before you start”
+    Before setting up IPA export, make sure that:</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   * your code signing files have been collected: we recommend using our [codesigndoc](https://github.com/bitrise-tools/codesigndoc) tool.
+   * you have the `Certificate and profile installer` step in your workflow.
+</code></pre></div></div>
+
+<p>If you’re all set, proceed to setting up IPA export in your workflow:</p>
+
+<ol>
+  <li>
+    <p>Make sure that you have the <code class="highlighter-rouge">Xamarin Archive</code> step in the app’s Workflow Editor and select it.</p>
+  </li>
+  <li>
+    <p>Set the <code class="highlighter-rouge">Xamarin solution configuration</code> input of the step to the Xamarin project Configuration you want to use (for example, <code class="highlighter-rouge">Release</code>).</p>
+  </li>
+  <li>
+    <p>Set the <code class="highlighter-rouge">Xamarin solution platform</code> input to <code class="highlighter-rouge">iPhone</code>.</p>
+
+    <p>You can control the code signing type in your Xamarin project by setting the
+ code signing configurations in Xamarin Studio.</p>
+
+    <p><img src="/img/code-signing/ios-code-signing/xamarin-archive-export-method.png" alt="Select export method for Xamarin Archive for iOS" /></p>
+  </li>
+</ol>
+
+<p>If you wish to use more than one code signing type (for example, to create both Ad-hoc and App Store signed apps), create more than one <code class="highlighter-rouge">Release</code> configuration in Xamarin Studio. Set the separate configurations to the types you want to use.</p>
+
+<p>!!! tip “Tip: copy/clone an existing Release configuration”
+    You can <code class="highlighter-rouge">Copy</code> the existing
+    <code class="highlighter-rouge">Release</code> configuration in Xamarin Studio, to have an identical base configuration,
+    where you only change the code signing settings. For example,
+    <code class="highlighter-rouge">Copy</code> the <code class="highlighter-rouge">Release|iPhone</code> configuration with the name <code class="highlighter-rouge">ReleaseAppStore</code>,
+    set the code signing to App Store for this <code class="highlighter-rouge">ReleaseAppStore</code> configuration,
+    and specify this configuration as the <code class="highlighter-rouge">Xamarin solution configuration</code>
+    input of the <code class="highlighter-rouge">Xamarin Archive</code> step.</p>
+
+<p>!!! tip “Changing code signing configurations in a Xamarin project”
+    Don’t forget to run <code class="highlighter-rouge">codesigndoc</code> again if you change code signing
+    configurations in your Xamarin project, or to manually collect
+    and upload the signing files required for the configurations
+    you want to use!</p>
 
 			</main>
 		</div>

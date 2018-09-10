@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Selective builds - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Selective builds
 						
 					</div>
 				</div>
@@ -651,7 +651,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/builds/selective_builds" title="Selective builds">Selective builds</a>
+				<a href="/builds/selective_builds" title="Selective builds" class="current">Selective builds</a>
 			
 		
 		
@@ -1764,26 +1764,42 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Selective builds</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/builds/selective_builds.md" target="_blank"></a>
+					</div>
+				
+				<p>The Selective Builds setting provides change detection for your builds. Enabling it allows you to only trigger a build of an app if certain files or folders have changed.</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>You may want to use this setting if:</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<ul>
+  <li>you have multiple apps in a single repository</li>
+  <li>multiple apps share common files in your repository</li>
+</ul>
+
+<p>!!! note “A GitHub project is required”
+    The current version of our Selective Builds feature only works with GitHub projects. If your repository is hosted by another git hosting service, the option will not be available.</p>
+
+<p>!!! note “Service credential user”
+    The appropriate Service credential user must be set on your app’s <code class="highlighter-rouge">Team</code> page. This user must have an admin right for the GitHub repository of the project. <a href="/faq/github-pull-request-status-troubleshooting/#make-sure-to-select-a-service-credential-user-who-has-a-connected-github-account">Read more about setting up the Service credential user</a>.</p>
+
+<ol>
+  <li>
+    <p>Click on your app on your <code class="highlighter-rouge">Dashboard</code>.</p>
+  </li>
+  <li>
+    <p>Click <code class="highlighter-rouge">Settings</code> in the top navigation bar.</p>
+  </li>
+  <li>
+    <p>Find the <code class="highlighter-rouge">ENABLE SELECTIVE BUILDS</code> option and toggle the switch on the right.</p>
+
+    <p><img src="/img/getting-started/selective-builds.png" alt="Selective Builds" /></p>
+  </li>
+  <li>
+    <p>Add filenames and file paths in the <code class="highlighter-rouge">ADD FILENAME/PATH</code> window. You can add multiple files or file paths here. A build will be triggered only if these files are changed.</p>
+  </li>
+</ol>
 
 			</main>
 		</div>

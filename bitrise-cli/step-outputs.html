@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Step outputs - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Step outputs
 						
 					</div>
 				</div>
@@ -1041,7 +1041,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/bitrise-cli/step-outputs" title="Step outputs">Step outputs</a>
+				<a href="/bitrise-cli/step-outputs" title="Step outputs" class="current">Step outputs</a>
 			
 		
 		
@@ -1764,26 +1764,55 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Step outputs</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/bitrise-cli/step-outputs.md" target="_blank"></a>
+					</div>
+				
+				<p>Step outputs are environment items that are the result of running a given step. For example, the <code class="highlighter-rouge">deploy-to-bitrise-io</code> step generates the <code class="highlighter-rouge">$BITRISE_PUBLIC_INSTALL_PAGE_URL</code> and the <code class="highlighter-rouge">$BITRISE_PUBLIC_INSTALL_PAGE_URL_MAP</code> output variables by default. You can check out the default outputs of a step in the <code class="highlighter-rouge">Workflow Editor</code> on <a href="https://www.bitrise.io">bitrise.io</a> or in the <code class="highlighter-rouge">step.yml</code> file of the step.</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>Step outputs can be defined in the <code class="highlighter-rouge">step.yml</code> file of the project by setting the <code class="highlighter-rouge">outputs</code> attribute. They have the same syntax as every environment property. It consists of two main parts: a <code class="highlighter-rouge">KEY: value</code> pair and an <code class="highlighter-rouge">opts</code> field. The key and the value are required, the <code class="highlighter-rouge">opts</code> field is optional.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">MY_KEY_FOR_THE_ENV</span><span class="pi">:</span> <span class="s">my value for the env</span>
+  <span class="na">opts</span><span class="pi">:</span>
+    <span class="na">title</span><span class="pi">:</span> <span class="s">An example env var item</span>
+    <span class="na">is_dont_change_value</span><span class="pi">:</span> <span class="no">false</span>
+    <span class="na">category</span><span class="pi">:</span> <span class="s">example</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">MY_KEY_FOR_THE_ENV</code>: the key of the environment item (required)
+<code class="highlighter-rouge">my value for the env</code>: the value of the item (required)
+<code class="highlighter-rouge">opts</code>: optional attributes.</p>
+
+<h2 id="exporting-step-outputs-in-output-aliases">Exporting step outputs in output aliases <a href="#exporting-step-outputs-in-output-aliases" class="anchor-symbol">⚓</a></h2>
+
+<p>The default outputs of a step cannot be changed by the user in the <code class="highlighter-rouge">bitrise.yml</code> file of the project, it can only be changed in the <code class="highlighter-rouge">step.yml</code> file. However, you can export the output in a custom environment variable. This is useful, for example, if you have the same step twice in your workflow and you wish to use the generated output of both steps.</p>
+
+<ol>
+  <li>
+    <p>Open the <code class="highlighter-rouge">bitrise.yml</code> file of your project.</p>
+
+    <p>You can do this either on <a href="https://www.bitrise.io">bitrise.io</a> or locally.</p>
+  </li>
+  <li>
+    <p>Find the step you need.</p>
+  </li>
+  <li>
+    <p>Set the <code class="highlighter-rouge">outputs</code> attribute: specify the original environment key - the default output that the step generates - and the alias.</p>
+
+    <p>!!! example
+     <code class="highlighter-rouge">yaml
+     workflows:
+       primary:
+       steps:
+       - gradle-runner:
+           outputs:
+           - BITRISE_APK_PATH: ALIAS_APK_PATH
+    </code></p>
+
+    <p>In the example, the value for the <code class="highlighter-rouge">BITRISE_APK_PATH</code> environment variable will be exported under the <code class="highlighter-rouge">ALIAS_APK_PATH</code> key.</p>
+  </li>
+</ol>
 
 			</main>
 		</div>

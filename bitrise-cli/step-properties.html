@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Step properties - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Step properties
 						
 					</div>
 				</div>
@@ -1023,7 +1023,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/bitrise-cli/step-properties" title="Step properties">Step properties</a>
+				<a href="/bitrise-cli/step-properties" title="Step properties" class="current">Step properties</a>
 			
 		
 		
@@ -1764,26 +1764,49 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Step properties</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/bitrise-cli/step-properties.md" target="_blank"></a>
+					</div>
+				
+				<h3 id="step-properties">Step properties <a href="#step-properties" class="anchor-symbol">⚓</a></h3>
 
-<div class="container">
-  <h1>404</h1>
+<p>Step properties provide important data of a Step, such as its project type, its source code or the dependencies it requires. A Step’s inputs and outputs are also defined as step properties. Let’s take a look at the properties!</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<ul>
+  <li><code class="highlighter-rouge">title</code>, <code class="highlighter-rouge">summary</code> and <code class="highlighter-rouge">description</code> : metadata, for comments, tools and GUI.
+<em>Note: these meta properties can be used for permanent comments. Standard YML comments
+are not preserved when the YML is normalized, converted to JSON or otherwise
+generated or transformed. These meta properties are.</em></li>
+  <li><code class="highlighter-rouge">website</code> : official website of the Step / service.</li>
+  <li><code class="highlighter-rouge">source_code_url</code> : the url where the Step’s source code can be viewed.</li>
+  <li><code class="highlighter-rouge">support_url</code> : url to the Step’s support / issue tracker.</li>
+  <li><code class="highlighter-rouge">published_at</code> : <em>auto-generated at share</em> - the StepLib publish date of the Step’s version</li>
+  <li><code class="highlighter-rouge">source</code> : <em>auto-generated at share</em> git clone information.</li>
+  <li><code class="highlighter-rouge">asset_urls</code> : <em>auto-generated at share</em> Step assets (StepLib specific), like icon image.</li>
+  <li><code class="highlighter-rouge">host_os_tags</code> : supported operating systems. <em>Currently unused, reserved for future use.</em></li>
+  <li><code class="highlighter-rouge">project_type_tags</code> : project type tags if the Step is project type specific.
+Example: <code class="highlighter-rouge">ios</code> or <code class="highlighter-rouge">android</code>. Completely optional, and only used for search
+and filtering in Step lists.</li>
+  <li><code class="highlighter-rouge">type_tags</code> : generic type tags related to the Step.
+Example: <code class="highlighter-rouge">utility</code>, <code class="highlighter-rouge">test</code> or <code class="highlighter-rouge">notification</code>.
+Similar to <code class="highlighter-rouge">project_type_tags</code>, this property is completely optional, and only used for search
+and filtering in Step lists.</li>
+  <li><code class="highlighter-rouge">deps</code> : specifies the required dependencies of the Step. To declare a dependency, specify a package manager and then the dependency you wish to install.</li>
+</ul>
+
+<p>!!! example
+    <code class="highlighter-rouge">yaml
+    deps:
+      brew:
+        - name: curl
+        - name: git
+   </code></p>
+
+<ul>
+  <li><code class="highlighter-rouge">inputs</code> : inputs (Environments) of the Step. For more info, see <a href="/bitrise-cli/step-inputs">Step inputs</a>.</li>
+  <li><code class="highlighter-rouge">outputs</code> : outputs (Environments) of the Step. For more info, see <a href="/bitrise-cli/step-outputs">Step outputs</a>.</li>
+</ul>
 
 			</main>
 		</div>

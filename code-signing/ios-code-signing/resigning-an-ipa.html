@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Re-signing an .ipa - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Re-signing an .ipa
 						
 					</div>
 				</div>
@@ -825,7 +825,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/code-signing/ios-code-signing/resigning-an-ipa" title="Re-signing an .ipa">Re-signing an .ipa</a>
+				<a href="/code-signing/ios-code-signing/resigning-an-ipa" title="Re-signing an .ipa" class="current">Re-signing an .ipa</a>
 			
 		
 		
@@ -1764,26 +1764,44 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Re-signing an .ipa</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/code-signing/ios-code-signing/resigning-an-ipa.md" target="_blank"></a>
+					</div>
+				
+				<p>During the development of your iOS app you will need multiple types of distributions for different purposes, such as internal testing or deployment to the App Store. The good news is that this does not require setting up two separate workflows on <a href="https://www.bitrise.io">bitrise.io</a>.</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>!!! todo “Before you start”
+    You need to:</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>* upload different types of .p12 certificates (for example, developer and distribution certificates)
+* upload the associated Provisioning Profiles (or managing them automatically with the `iOS Auto Provisioning` step)
+</code></pre></div></div>
+
+<p>If all your code signing files are in place, proceed to setting up your workflow. In this example we’ll be setting up a workflow to create two signed .ipa files: one with the <code class="highlighter-rouge">development</code> and one with the <code class="highlighter-rouge">app-store</code> export method.</p>
+
+<ol>
+  <li>
+    <p>Make sure you have the <code class="highlighter-rouge">Xcode Archive &amp; Export for iOS</code> step in your workflow, and select it.</p>
+
+    <p>Please note that this step must come <strong>AFTER</strong> either the <code class="highlighter-rouge">Certificate and profile installer</code> or the <code class="highlighter-rouge">iOS Auto Provisioning</code> step in your workflow.</p>
+  </li>
+  <li>
+    <p>In the list of input variables, navigate to <code class="highlighter-rouge">Select method for export</code> and select <code class="highlighter-rouge">development</code> from the dropdown menu.</p>
+
+    <p><img src="/img/code-signing/ios-code-signing/xcode-archive-export-method.png" alt="Select export method for Xcode Archive for iOS" /></p>
+  </li>
+  <li>
+    <p>Add the <code class="highlighter-rouge">Export iOS and tvOS Xcode archive</code> step to your workflow.</p>
+  </li>
+  <li>
+    <p>In the list of input variables, navigate to <code class="highlighter-rouge">Select method for export</code> and select <code class="highlighter-rouge">app-store</code> from the dropdown menu.</p>
+
+    <p><img src="/img/code-signing/ios-code-signing/export-ios-step-for-resigning.png" alt="Export method input variable" /></p>
+  </li>
+</ol>
+
+<p>And you’re done! Feel free to add multiple <code class="highlighter-rouge">Export iOS and tvOS Xcode archive</code> steps to your workflow to create multiple different signed .ipa files if necessary.</p>
 
 			</main>
 		</div>

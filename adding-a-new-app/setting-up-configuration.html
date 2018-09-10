@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Setting up configuration - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Setting up configuration
 						
 					</div>
 				</div>
@@ -288,7 +288,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/adding-a-new-app/setting-up-configuration" title="Setting up configuration">Setting up configuration</a>
+				<a href="/adding-a-new-app/setting-up-configuration" title="Setting up configuration" class="current">Setting up configuration</a>
 			
 		
 		
@@ -1764,26 +1764,50 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Setting up configuration</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/adding-a-new-app/setting-up-configuration.md" target="_blank"></a>
+					</div>
+				
+				<p>After <a href="/adding-a-new-app/setting-up-ssh-keys">Setting up the SSH key</a> for
+your project, Bitrise will download your code to make sure it can access the repository
+and will run an automatic repository scanner script to find the best initial configuration for your project.
+Currently Bitrise will detect <code class="highlighter-rouge">iOS</code>, <code class="highlighter-rouge">Android</code>, <code class="highlighter-rouge">Xamarin</code> and <code class="highlighter-rouge">fastlane</code> projects out of the box.</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>You can configure other types of projects too, but that will require manual
+configuration.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<h2 id="automatic-project-configuration">Automatic project configuration <a href="#automatic-project-configuration" class="anchor-symbol">⚓</a></h2>
+
+<p>Enter the name of the default branch of your repository where your project is located. This branch should include the configuration of your project. Once you hit <code class="highlighter-rouge">Next</code>, Bitrise will automatically start the validation of the repository.</p>
+
+<p><img src="/img/adding-a-new-app/choose-branch.png" alt="Choosing branch" /></p>
+
+<p>During validation Bitrise will make sure it has access to the given branch,
+using the <a href="/adding-a-new-app/setting-up-ssh-keys">SSH key</a> you set up.</p>
+
+<p>If the validation is successful, Bitrise will scan your repository and give you a default workflow based on the configuration of the project.</p>
+
+<h2 id="manual-project-configuration">Manual project configuration <a href="#manual-project-configuration" class="anchor-symbol">⚓</a></h2>
+
+<p>If the validation fails, choose the <code class="highlighter-rouge">Restart scanning without validation</code> option.</p>
+
+<p><img src="/img/adding-a-new-app/validation-failed.png" alt="Validation failed" /></p>
+
+<p>In this case, you have to configure the project manually. Click <code class="highlighter-rouge">Next</code>. You will see the <code class="highlighter-rouge">Validating Repository</code> message again but this time Bitrise only checks that we have access to the specified repository.</p>
+
+<p>Choose the project type (for example, Xamarin) and specify the necessary inputs (for example, the path to the Xamarin Solution file). You can also select the stack on which you wish to run your builds.</p>
+
+<p><img src="/img/adding-a-new-app/select-project-type.png" alt="Choose project type" /></p>
+
+<p>!!! note “Restarting validation”
+    You can restart validation if you want Bitrise to automatically detect your project type. Once you fixed the issue that caused validation to fail for the first time, go to the <code class="highlighter-rouge">Project build configuration</code> window and select the <code class="highlighter-rouge">Detected</code> tab. Choose the <code class="highlighter-rouge">Restart current validation</code> option.</p>
+
+<h2 id="webhook-setup">Webhook setup <a href="#webhook-setup" class="anchor-symbol">⚓</a></h2>
+
+<p>Once project configuration is finished, Bitrise offers you the chance to immediately register a webhook in your repository. After the webhook is set up, any code change in your repository will trigger the automatically created <code class="highlighter-rouge">primary</code> workflow by default.</p>
+
+<p>Read about webhooks in detail in our <a href="/webhooks">Webhooks</a> section.</p>
 
 			</main>
 		</div>

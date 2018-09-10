@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Add custom sources to NuGet - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Add custom sources to NuGet
 						
 					</div>
 				</div>
@@ -1170,7 +1170,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/xamarin/add-custom-sources-to-nuget" title="Add custom sources to NuGet">Add custom sources to NuGet</a>
+				<a href="/xamarin/add-custom-sources-to-nuget" title="Add custom sources to NuGet" class="current">Add custom sources to NuGet</a>
 			
 		
 		
@@ -1764,26 +1764,35 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Add custom sources to NuGet</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/xamarin/add-custom-sources-to-nuget.md" target="_blank"></a>
+					</div>
+				
+				<p>If you are using third-party NuGet packages in your application
+you have to add these sources to your NuGet package sources.</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>Simply add a new <code class="highlighter-rouge">Script</code> step to your workflow with the following bash script as the content:</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="nb">set</span> <span class="nt">-ex</span>
+
+nuget sources add <span class="nt">-Name</span> NAME_FOR_SOURCE <span class="nt">-Source</span> SOURCE_URL
+</code></pre></div></div>
+
+<p>!!! warning
+    Don’t forget to update the <code class="highlighter-rouge">NAME_FOR_SOURCE</code> and <code class="highlighter-rouge">SOURCE_URL</code> parameters,
+    and make sure to place the <code class="highlighter-rouge">Script</code> step before the <code class="highlighter-rouge">NuGet Restore Step</code>.</p>
+
+<h3 id="custom-nuget-source-with-credentials">Custom NuGet source with credentials <a href="#custom-nuget-source-with-credentials" class="anchor-symbol">⚓</a></h3>
+
+<p>If you need to set credentials for your NuGet source you can modify the <code class="highlighter-rouge">Script</code> above in the following way:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="nb">set</span> <span class="nt">-ex</span>
+
+nuget sources add <span class="nt">-Name</span> NAME_FOR_SOURCE <span class="nt">-Source</span> SOURCE_URL <span class="nt">-UserName</span> NUGET_USERNAME <span class="nt">-Password</span> NUGET_PASSWORD
+</code></pre></div></div>
 
 			</main>
 		</div>

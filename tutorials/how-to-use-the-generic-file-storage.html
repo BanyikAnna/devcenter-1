@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				How to use the Generic File Storage - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							How to use the Generic File Storage
 						
 					</div>
 				</div>
@@ -1278,7 +1278,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/tutorials/how-to-use-the-generic-file-storage" title="How to use the Generic File Storage">How to use the Generic File Storage</a>
+				<a href="/tutorials/how-to-use-the-generic-file-storage" title="How to use the Generic File Storage" class="current">How to use the Generic File Storage</a>
 			
 		
 		
@@ -1764,26 +1764,96 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>How to use the Generic File Storage</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/tutorials/how-to-use-the-generic-file-storage.md" target="_blank"></a>
+					</div>
+				
+				<h2 id="how-to-upload-files-to-generic-file-storage-on-bitriseio">How to upload files to GENERIC FILE STORAGE on <a href="https://www.bitrise.io">bitrise.io</a>? <a href="#how-to-upload-files-to-generic-file-storage-on-bitriseio" class="anchor-symbol">⚓</a></h2>
 
-<div class="container">
-  <h1>404</h1>
+<ul>
+  <li>Open your app on <a href="https://www.bitrise.io">bitrise.io</a></li>
+  <li>Go to <code class="highlighter-rouge">Workflow</code> tab and open the <code class="highlighter-rouge">Workflow Editor</code></li>
+  <li>On the left side of the <code class="highlighter-rouge">Workflow Editor</code> select <code class="highlighter-rouge">Code Signing </code></li>
+  <li>Scroll down to <code class="highlighter-rouge">Generic File Storage</code> section.</li>
+  <li>Enter your unique ID before dropping your file into the <code class="highlighter-rouge">Upload file</code> field.</li>
+</ul>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>!!! note
+    Bitrise will upload your file and assign an environment variable (<code class="highlighter-rouge">BITRISEIO_[the ID you specify]_URL</code>)
+    to the file’s download url. A <strong>time limited, read only download URL</strong> will
+    be set as the value of this Environment Variable
+    for every build. You can use this URL to download the file during a build._</p>
+
+<h2 id="how-to-use-files-uploaded-to-generic-file-storage-on-bitriseio">How to use files uploaded to GENERIC FILE STORAGE on <a href="https://www.bitrise.io">bitrise.io</a>? <a href="#how-to-use-files-uploaded-to-generic-file-storage-on-bitriseio" class="anchor-symbol">⚓</a></h2>
+
+<p>You can refer the file’s read-only download url with the environment variable (<code class="highlighter-rouge">BITRISEIO_[the ID you specify]_URL</code>) you defined when uploading.</p>
+
+<p>Some steps have built-in support for downloading the file from a specified URL.
+These steps can use <code class="highlighter-rouge">BITRISEIO_[the ID you specify]_URL</code> as input value directly.
+<em>Example: the <code class="highlighter-rouge">certificate-and-profile-installer</code> step’s <code class="highlighter-rouge">certificate_url</code>
+<a href="https://github.com/bitrise-io/steps-certificate-and-profile-installer/blob/master/step.yml#L24">input</a>.</em></p>
+
+<p>Other steps might require local file paths, and don’t support URLs directly as the input value.
+If that’s the case, you can use the <code class="highlighter-rouge">File Downloader</code> or
+the generic <code class="highlighter-rouge">Script</code> step to download your file, and (optionally) export the downloaded file’s path as an environment variable.</p>
+
+<h3 id="example-to-download-a-file-using-the-file-downloader-step">Example to download a file using the <code class="highlighter-rouge">File Downloader</code> step <a href="#example-to-download-a-file-using-the-file-downloader-step" class="anchor-symbol">⚓</a></h3>
+
+<p>Assuming the file’s <code class="highlighter-rouge">GENERIC FILE STORAGE</code> url is assigned to <code class="highlighter-rouge">BITRISEIO_MY_FILE_ID_URL</code>, the script step would look like:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...
+- file-downloader:
+    inputs:
+    - source: "$BITRISEIO_MY_FILE_ID_URL"
+    - destination: "$BITRISE_SOURCE_DIR/path/to/store/the/file"
+...
+</code></pre></div></div>
+
+<p>You can set the location as an <code class="highlighter-rouge">App Env Var</code> instead of specifying it
+directly for the <code class="highlighter-rouge">destination</code> input. That way you can refer the file
+through the environment variable in other steps, you won’t have to
+specify the path every time.</p>
+
+<p>For example, if you specify the <code class="highlighter-rouge">BITRISEIO_MY_FILE_LOCAL_PATH</code> as an <code class="highlighter-rouge">App Env Var</code>,
+you can use it as the download destination:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...
+- file-downloader:
+    inputs:
+    - source: "$BITRISEIO_MY_FILE_ID_URL"
+    - destination: "$BITRISEIO_MY_FILE_LOCAL_PATH"
+...
+</code></pre></div></div>
+
+<p>Then in subsequent steps, you can use the same <code class="highlighter-rouge">$BITRISEIO_MY_FILE_LOCAL_PATH</code> env var
+as the file path.</p>
+
+<h3 id="example-to-download-a-file-and-export-the-files-path-using-a-script-step">Example to download a file and export the file’s path, using a <code class="highlighter-rouge">Script</code> step <a href="#example-to-download-a-file-and-export-the-files-path-using-a-script-step" class="anchor-symbol">⚓</a></h3>
+
+<p>Assuming the file’s <code class="highlighter-rouge">GENERIC FILE STORAGE</code> url is assigned to <code class="highlighter-rouge">BITRISEIO_MY_FILE_ID_URL</code>, the script step would look like this:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- script:
+    inputs:
+    - content: |
+        #!/bin/bash
+        set -ex
+
+        # specify local download path
+        file_local_path=download/path/to/my/file
+
+        # download the file
+        wget -O "$file_local_path" "$BITRISEIO_MY_FILE_ID_URL"
+        echo "file downloaded to: $file_local_path"
+
+        # OPTIONALLY: export the file's local path, to be able to use it in subsequent steps as an input value
+        envman add --key BITRISEIO_MY_FILE_LOCAL_PATH --value "$file_local_path"
+</code></pre></div></div>
+
+<p><em>In subsequent steps, you can refer to the downloaded file’s path with <code class="highlighter-rouge">$BITRISEIO_MY_FILE_LOCAL_PATH</code>.
+Alternatively, for example, you can set the location as an <code class="highlighter-rouge">App Env Var</code> and
+simply download it to that path instead of defining the path
+inside the Script.</em></p>
 
 			</main>
 		</div>

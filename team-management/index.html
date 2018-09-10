@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Adding a new team member - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Adding a new team member
 						
 					</div>
 				</div>
@@ -330,7 +330,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/team-management/index" title="Adding a new team member">Adding a new team member</a>
+				<a href="/team-management/index" title="Adding a new team member" class="current">Adding a new team member</a>
 			
 		
 		
@@ -1764,26 +1764,40 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Adding a new team member</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/team-management/index.md" target="_blank"></a>
+					</div>
+				
+				<p>Now that you have set up your app on Bitrise we can start inviting team members! You can select multiple roles for the new members, like: <code class="highlighter-rouge">admin</code>, <code class="highlighter-rouge">developer</code>, and <code class="highlighter-rouge">qa/tester</code>.
+Different roles have different permissions that you can read more about below.</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>To invite a team member head to the <code class="highlighter-rouge">Team tab</code> on your application’s page. You can invite any user by their username or by their email address. If they are not registered on Bitrise we will send out an invitation email for them. Before granting access to a new user, select their role.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>!!! warning “Inviting team members”
+    You need to be the app’s <code class="highlighter-rouge">owner</code> or an <code class="highlighter-rouge">admin</code> to be able to add new team members to your app.</p>
+
+<p><code class="highlighter-rouge">Owners</code> and <code class="highlighter-rouge">admins</code> can change the roles of other members by clicking <code class="highlighter-rouge">Change role</code> next to the member’s name.</p>
+
+<p><img src="/img/team-management/add-new-member.png" alt="Screenshot" /></p>
+
+<p>Check out the different roles and permissions below:</p>
+
+<h2 id="owner">Owner <a href="#owner" class="anchor-symbol">⚓</a></h2>
+
+<p><img src="/img/team-management/owners.png" alt="Screenshot" /></p>
+
+<h2 id="admin">Admin <a href="#admin" class="anchor-symbol">⚓</a></h2>
+
+<p><img src="/img/team-management/admins.png" alt="Screenshot" /></p>
+
+<h2 id="developer">Developer <a href="#developer" class="anchor-symbol">⚓</a></h2>
+
+<p><img src="/img/team-management/developers.png" alt="Screenshot" /></p>
+
+<h2 id="tester--qa">Tester / QA <a href="#tester--qa" class="anchor-symbol">⚓</a></h2>
+
+<p><img src="/img/team-management/testers-qa.png" alt="Screenshot" /></p>
 
 			</main>
 		</div>

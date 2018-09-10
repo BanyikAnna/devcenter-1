@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				How to generate an SSH key pair - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							How to generate an SSH key pair
 						
 					</div>
 				</div>
@@ -1539,7 +1539,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/faq/how-to-generate-ssh-keypair" title="How to generate an SSH key pair">How to generate an SSH key pair</a>
+				<a href="/faq/how-to-generate-ssh-keypair" title="How to generate an SSH key pair" class="current">How to generate an SSH key pair</a>
 			
 		
 		
@@ -1764,26 +1764,28 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>How to generate an SSH key pair</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/faq/how-to-generate-ssh-keypair.md" target="_blank"></a>
+					</div>
+				
+				<p>If you want to do manual SSH key configuration on <a href="https://www.bitrise.io">bitrise.io</a>
+you can generate an appropriate SSH keypair with a simple Command Line / Terminal command:</p>
 
-<div class="container">
-  <h1>404</h1>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh-keygen -t rsa -b 4096 -P '' -f ./bitrise-ssh
+</code></pre></div></div>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>This will generate two files in the current directory (the directory where
+you run the command):</p>
+
+<ul>
+  <li><code class="highlighter-rouge">bitrise-ssh</code> (private key)</li>
+  <li><code class="highlighter-rouge">bitrise-ssh.pub</code> (public key)</li>
+</ul>
+
+<p>You should copy paste the <strong>public key</strong> to your Git hosting service (GitHub, Bitbucket, etc.),
+and when you register your app on <a href="https://www.bitrise.io">bitrise.io</a>
+you’ll have to provide the <strong>private key</strong>.</p>
 
 			</main>
 		</div>

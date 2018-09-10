@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Basics of bitrise.yml - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Basics of bitrise.yml
 						
 					</div>
 				</div>
@@ -987,7 +987,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/bitrise-cli/basics-of-bitrise-yml" title="Basics of bitrise.yml">Basics of bitrise.yml</a>
+				<a href="/bitrise-cli/basics-of-bitrise-yml" title="Basics of bitrise.yml" class="current">Basics of bitrise.yml</a>
 			
 		
 		
@@ -1764,26 +1764,83 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Basics of bitrise.yml</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/bitrise-cli/basics-of-bitrise-yml.md" target="_blank"></a>
+					</div>
+				
+				<p>A bare minimal <code class="highlighter-rouge">bitrise.yml</code> is as simple as:</p>
 
-<div class="container">
-  <h1>404</h1>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">format_version</span><span class="pi">:</span> <span class="s">5</span>
+</code></pre></div></div>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>This configuration is valid, everything else is optional, but does not include anything to execute,
+there’s nothing to <code class="highlighter-rouge">run</code>.</p>
+
+<p>A minimal configuration which you can <code class="highlighter-rouge">bitrise run</code>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">format_version</span><span class="pi">:</span> <span class="s">5</span>
+<span class="na">workflows</span><span class="pi">:</span>
+  <span class="na">test</span><span class="pi">:</span>
+</code></pre></div></div>
+
+<p>This configuration can be executed with <code class="highlighter-rouge">bitrise run test</code>, and the <code class="highlighter-rouge">bitrise</code> CLI
+won’t give you any errors, but of course there’s still nothing declared to do.</p>
+
+<p>Let’s continue with our example from the previous guide,
+which executes a single Script step when you run it with <code class="highlighter-rouge">bitrise run test</code>,
+and talk about what’s what in the configuration:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">format_version</span><span class="pi">:</span> <span class="s">5</span>
+<span class="na">default_step_lib_source</span><span class="pi">:</span> <span class="s">https://github.com/bitrise-io/bitrise-steplib.git</span>
+<span class="na">project_type</span><span class="pi">:</span> <span class="s">android</span>
+<span class="na">app</span><span class="pi">:</span>
+  <span class="na">envs</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">MY_NAME</span><span class="pi">:</span> <span class="s">My Name</span>
+<span class="na">workflows</span><span class="pi">:</span>
+  <span class="na">test</span><span class="pi">:</span>
+    <span class="na">steps</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">script@1.1.5</span><span class="pi">:</span>
+        <span class="na">inputs</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">content</span><span class="pi">:</span> <span class="s">echo "Hello ${MY_NAME}!"</span>
+</code></pre></div></div>
+
+<p>A quick walk through of this sample configuration:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">format_version</code> : this property declares the minimum Bitrise CLI format version.
+You can get your Bitrise CLI’s supported highest format version with: <code class="highlighter-rouge">bitrise version --full</code>.
+If you set the <code class="highlighter-rouge">format_version</code> to <code class="highlighter-rouge">5</code> that means that Bitrise CLI versions which
+don’t support the format version <code class="highlighter-rouge">5</code> or higher won’t be able to run the configuration.
+This is important if you use features which are not available in older Bitrise CLI versions.</li>
+  <li><code class="highlighter-rouge">default_step_lib_source</code> : specifies the source to use when no other source is defined for a step.
+Read more about it in the <code class="highlighter-rouge">- script@1.1.5:</code> step description.</li>
+  <li><code class="highlighter-rouge">project_type</code> : defines your source project’s type. For example, <code class="highlighter-rouge">android</code>, <code class="highlighter-rouge">ios</code>, <code class="highlighter-rouge">xamarin</code>, and so on</li>
+  <li><code class="highlighter-rouge">app</code> - <code class="highlighter-rouge">envs</code> : the <code class="highlighter-rouge">app: envs:</code> section specifies Environment Variables which will be available for
+every build, every workflow, every step.</li>
+  <li><code class="highlighter-rouge">workflows</code> : the workflows section is the collection of separate build configurations
+which you can run with <code class="highlighter-rouge">bitrise run WORKFLOWID</code>.
+In this example the only workflow is <code class="highlighter-rouge">test</code>, which you can perform with <code class="highlighter-rouge">bitrise run test</code>.
+If you’d have a second workflow called <code class="highlighter-rouge">main</code>, you could run both <code class="highlighter-rouge">bitrise run test</code> and <code class="highlighter-rouge">bitrise run main</code>.</li>
+  <li><code class="highlighter-rouge">steps:</code> : the list of steps which should be executed when the workflow is performed.
+In this example the <code class="highlighter-rouge">test</code> workflow includes only a single <code class="highlighter-rouge">script</code> step. If more than one
+step is declared, the steps are performed one by one, after each other.</li>
+  <li><code class="highlighter-rouge">- script@1.1.5:</code> : a step (reference) to perform. This reference does not have a “StepLib Source” declaration,
+which means that the <code class="highlighter-rouge">default_step_lib_source</code> will be used as the StepLib Source.
+For more information check the <a href="/bitrise-cli/steps/#step-reference">Step reference section of the Steps guide</a>.</li>
+  <li><code class="highlighter-rouge">inputs:</code> : the inputs you want to specify for the given step.
+A step can have many inputs,
+but <em>you only have to specify those in the <code class="highlighter-rouge">bitrise.yml</code> which you want to set/overwrite.</em>
+For more information see the <a href="/bitrise-cli/steps">Steps documentation</a>.</li>
+  <li><code class="highlighter-rouge">- content:</code> : the input we want to set. In this example we only wanted to specify the Content
+of the Script step, all other inputs are irrelevant.</li>
+  <li><code class="highlighter-rouge">echo "Hello ${MY_NAME}!"</code> : this is the <strong>value</strong> we specified for the <code class="highlighter-rouge">content</code> input.</li>
+</ul>
+
+<p>Read on to learn more about how you can use multiple workflows,
+define multiple steps to execute for a given workflow and for
+more advanced concepts. You’ll be able to define your perfect automation
+configuration in no time!</p>
 
 			</main>
 		</div>

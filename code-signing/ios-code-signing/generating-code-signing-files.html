@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Generating code signing files - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Generating code signing files
 						
 					</div>
 				</div>
@@ -852,7 +852,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/code-signing/ios-code-signing/generating-code-signing-files" title="Generating code signing files">Generating code signing files</a>
+				<a href="/code-signing/ios-code-signing/generating-code-signing-files" title="Generating code signing files" class="current">Generating code signing files</a>
 			
 		
 		
@@ -1764,26 +1764,127 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Generating code signing files</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/code-signing/ios-code-signing/generating-code-signing-files.md" target="_blank"></a>
+					</div>
+				
+				<p>You’ll need two kinds of files to sign your app: Certificates and Provisioning Profiles.</p>
 
-<div class="container">
-  <h1>404</h1>
+<h2 id="generate-a-code-signing-certificate">Generate a Code Signing Certificate <a href="#generate-a-code-signing-certificate" class="anchor-symbol">⚓</a></h2>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>The certificates - development or distribution - are the guarantee that you, the named developer, built this code, that you are a member of the developer program, and that Apple have issued you with a certificate to do so.</p>
+
+<p>To get a certificate, you need to generate a Certificate Signing Request with Keychain Access and send it to Apple. This will create a public/private key for you if you don’t have one already. Apple will then verify the information, and create a certificate for you.</p>
+
+<h3 id="generate-a-code-signing-certificate-using-xcode">Generate a Code Signing Certificate using Xcode <a href="#generate-a-code-signing-certificate-using-xcode" class="anchor-symbol">⚓</a></h3>
+
+<p>First you have to add your Apple ID to Accounts preferences in Xcode. If you are already done with this, you can skip to step 6.</p>
+
+<ol>
+  <li>Start Xcode</li>
+  <li>Select Xcode &gt; Preferences from the navigation bar.</li>
+  <li>At the top of the window select <code class="highlighter-rouge">Accounts</code>.</li>
+  <li>Click on the <code class="highlighter-rouge">+</code> on the lower left corner and select <code class="highlighter-rouge">Add Apple ID...</code>
+<img src="/img/code-signing/ios-code-signing/xcode_adding_account.png" alt="Adding Apple ID" /></li>
+  <li>A dialog will appear. Add your Apple ID and your password, then select <code class="highlighter-rouge">Sign in</code>. If you don’t have an account you can create your Apple ID by selecting <code class="highlighter-rouge">Create Apple ID</code>.
+<img src="/img/code-signing/ios-code-signing/xcode_sign_in.png" alt="Sign in to Xcode" /></li>
+  <li>Select your Apple ID and your team from the right side bar, then click on <code class="highlighter-rouge">View Details...</code>.</li>
+  <li>A dialog will appear where you will see your code signing identities and the provisioning profiles.
+<img src="/img/code-signing/ios-code-signing/xcode_signing_files.png" alt="Xcode team details" /></li>
+  <li>Under the signing identities locate the <code class="highlighter-rouge">iOS Development</code> and <code class="highlighter-rouge">iOS Distribution</code> profiles. If you have not created them you will see a <code class="highlighter-rouge">Create</code> button next to them. Simply select it and Xcode will issue and download your code signing identities for you.</li>
+</ol>
+
+<p>!!! warning
+    If you already have Code Signing Identities issued, you will see a <code class="highlighter-rouge">Reset</code> button next to them. You can issue new certificates with it, that Xcode will generate and download, however note that this will invalidate your previous certificate, so only do this if you’ve lost those files or if you know what you are doing!</p>
+
+<h3 id="generate-a-code-signing-certificate-manually">Generate a Code Signing Certificate manually <a href="#generate-a-code-signing-certificate-manually" class="anchor-symbol">⚓</a></h3>
+<ol>
+  <li>Open your <code class="highlighter-rouge">Keychain Access</code> app on macOS.</li>
+  <li>Select <code class="highlighter-rouge">Keychain Access</code> &gt; <code class="highlighter-rouge">Certificate Assistant</code> &gt; <code class="highlighter-rouge">Request a Certificate From a Certificate Authority...</code></li>
+  <li>Fill in the <code class="highlighter-rouge">User's Email Address</code> and the <code class="highlighter-rouge">Common Name</code> and select <code class="highlighter-rouge">Saved to Disk</code>. Click on <code class="highlighter-rouge">Continue</code> and save the generated <code class="highlighter-rouge">certSigningRequest</code> file locally.
+<img src="/img/code-signing/ios-code-signing/certificate_assistant.png" alt="Certificate Assistant" /></li>
+  <li>Go to <a href="https://developer.apple.com">https://developer.apple.com</a> and log in to your account.</li>
+  <li>Select <code class="highlighter-rouge">Certificates, IDs &amp; Profiles</code> from the left sidebar.</li>
+  <li>Go to <code class="highlighter-rouge">Certificates</code> and click on the <code class="highlighter-rouge">+</code> button on the top right corner.</li>
+  <li>Select <code class="highlighter-rouge">iOS App Development</code> and click Continue.</li>
+  <li>On the next page you see the instructions for creating the <code class="highlighter-rouge">certSigningRequest</code> file. Click continue.</li>
+  <li>Upload the created <code class="highlighter-rouge">certSigningRequest</code> to the form and click continue. It will generate your code signing certificate for you.</li>
+  <li>Download the certificate and double click to install it. Once installed it will be added to your <code class="highlighter-rouge">Keychain Access</code> app.</li>
+</ol>
+
+<h2 id="generate-a-provisioning-profile">Generate a Provisioning Profile <a href="#generate-a-provisioning-profile" class="anchor-symbol">⚓</a></h2>
+<p>Provisioning is the process of preparing and configuring an app to launch on devices and to use app services. Development Provisioning Profiles holds the device identifiers ( UUID ) that is eligible to run your app. Distribution Provisioning Profiles can include App Store profiles, that lets you distribute your app to the App Store and Ad-hoc profiles are good for distributing to your testers.</p>
+
+<h3 id="generate-a-provisioning-profile-with-xcode">Generate a Provisioning Profile with Xcode <a href="#generate-a-provisioning-profile-with-xcode" class="anchor-symbol">⚓</a></h3>
+<p>Xcode will automatically generate an App ID for your project, that matches your unique bundle ID for your project. An App ID is used to identify one or more of your apps. It can be an <em>explicit App ID</em> that only matches one unique bundle identifier or a <em>wildcard App ID</em> that can match multiple ones.</p>
+
+<p>Xcode will also create a <em>Team Provisioning Profile</em> for your project automatically, so you can start deploying to your device automatically.</p>
+
+<p>If you hit any issues you should make sure that the device is eligible, for example if the device doesn’t match the deployment target you will get an error.</p>
+
+<p>Also make sure that your app is connected to the correct Team.</p>
+
+<ol>
+  <li>Select your project file from Xcode’s project navigator</li>
+  <li>Go to the <code class="highlighter-rouge">Signing</code> section and under the <code class="highlighter-rouge">Team</code> select your correct team.
+<img src="/img/code-signing/ios-code-signing/xcode_team_selector.png" alt="Team selector" /></li>
+</ol>
+
+<p>!!! note
+    If you hit any issues and can’t resolve it move to the manual step and set up Provisioning Profiles following the documentation.</p>
+
+<p>!!! note
+    To setup a distribution Provisioning Profile, go ahead with the manual setup.</p>
+
+<h3 id="download-a-provisioning-profile-with-xcode">Download a Provisioning Profile with Xcode <a href="#download-a-provisioning-profile-with-xcode" class="anchor-symbol">⚓</a></h3>
+<p>If you have already created the Provisioning Profile, you can do the following.</p>
+
+<ol>
+  <li>Start Xcode</li>
+  <li>Select Xcode &gt; Preferences from the navigation bar.</li>
+  <li>At the top of the window select <code class="highlighter-rouge">Accounts</code>.</li>
+  <li>Select your Apple ID and your team, then select <code class="highlighter-rouge">Download Manual Profiles</code>.</li>
+  <li>Go to <code class="highlighter-rouge">~/Library/MobileDevice/Provisioning Profiles/</code> and your profiles should be there.</li>
+</ol>
+
+<h3 id="generate-a-provisioning-profile-manually">Generate a Provisioning Profile manually <a href="#generate-a-provisioning-profile-manually" class="anchor-symbol">⚓</a></h3>
+
+<h4 id="setup-an-app-id">Setup an App ID <a href="#setup-an-app-id" class="anchor-symbol">⚓</a></h4>
+<ol>
+  <li>If you haven’t already created an App ID for your project, go to <a href="https://developer.apple.com">https://developer.apple.com</a> and log in.</li>
+  <li>Select Certificates, Identifiers &amp; Profiles from the left sidebar</li>
+  <li>Navigate to Identifiers &gt; App IDs</li>
+  <li>In the <code class="highlighter-rouge">App ID Description</code> add a recognizable name for your App ID</li>
+  <li>Select <code class="highlighter-rouge">Explicit App ID</code> and add your bundle identifier to the field.</li>
+  <li>Select any additional <code class="highlighter-rouge">App Services</code> that you need.</li>
+  <li>Click continue.</li>
+</ol>
+
+<h4 id="generate-a-provisioning-profile-1">Generate a Provisioning Profile <a href="#generate-a-provisioning-profile-1" class="anchor-symbol">⚓</a></h4>
+<ol>
+  <li>Go to <a href="https://developer.apple.com">https://developer.apple.com</a> and log in.</li>
+  <li>Select Certificates, Identifiers &amp; Profiles from the left sidebar</li>
+  <li>Navigate to Provisioning Profiles &gt; All</li>
+  <li>Select the <code class="highlighter-rouge">+</code> from the top right corner.</li>
+  <li>For development select the correct project type under <code class="highlighter-rouge">Development</code>, or for distribution select the correct one under <code class="highlighter-rouge">Distribution</code> and click continue.</li>
+  <li>Select the App ID you would like to use.</li>
+  <li>Select the certificates you wish to include in the Provisioning Profile. These certificates will be able to build with this profile; click continue.</li>
+  <li>Select all the devices you would like to use with this profile and click continue.</li>
+  <li>Name your Provisioning Profile and click continue.</li>
+  <li>Your profile is generated. You can download it to your device and double click to install it on your Mac.</li>
+</ol>
+
+<h4 id="download-a-provisioning-profile">Download a Provisioning Profile <a href="#download-a-provisioning-profile" class="anchor-symbol">⚓</a></h4>
+<ol>
+  <li>Go to <a href="https://developer.apple.com">https://developer.apple.com</a> and log in.</li>
+  <li>Select Certificates, Identifiers &amp; Profiles from the left sidebar</li>
+  <li>Navigate to Provisioning Profiles &gt; All</li>
+  <li>Find the Provisioning Profile you are looking for from the list or use the search to filter.</li>
+  <li>Click on the selected Provisioning Profile, this will expand the details.</li>
+  <li>If its status is invalid, you can click on the <code class="highlighter-rouge">Edit</code> button and save again.</li>
+  <li>Click on the <code class="highlighter-rouge">Download</code> button to download it and double click to install it on your Mac.</li>
+</ol>
 
 			</main>
 		</div>

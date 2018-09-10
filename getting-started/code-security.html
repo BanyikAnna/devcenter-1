@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Code Security - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Code Security
 						
 					</div>
 				</div>
@@ -90,7 +90,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/getting-started/code-security" title="Code Security">Code Security</a>
+				<a href="/getting-started/code-security" title="Code Security" class="current">Code Security</a>
 			
 		
 		
@@ -1764,26 +1764,44 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Code Security</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/getting-started/code-security.md" target="_blank"></a>
+					</div>
+				
+				<p>To guarantee the security of your builds we use <a href="/infrastructure/virtual-machines">virtual machines</a> for builds.
+Every build runs in its own, clean virtual machine and we discard the whole virtual machine after the build finishes,
+erasing every file your build uses and every change you make during your build.</p>
 
-<div class="container">
-  <h1>404</h1>
+<p><em>This is also true for the Linux/Android stacks, which use Docker containers to run the build.
+The build itself still gets a full virtual machine where no other Docker container is started,
+only the one used as the environment of the build. In short we only use Docker containers
+to manage the environment, not for build environment isolation - that’s ensured by using
+full virtual machines for every build.</em></p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>This way your builds are always protected from changes made by others and from your previous builds,
+no one else can access your code and you can use a stable environment to define your build workflow. Every build is completed in an isolated environment, unrelated to any previous or parallelly running builds.</p>
+
+<h2 id="source-code">Source code <a href="#source-code" class="anchor-symbol">⚓</a></h2>
+
+<p>We don’t store your source code. The source code is only accessed on the build machines (virtual machines)
+the way you define it in your Bitrise Configuration (workflow). If you don’t have a Git Clone step in your configuration,
+then the source code won’t be touched at all. At the end of the build the whole Virtual Machine is destroyed.</p>
+
+<h2 id="code-signing-and-other-files">Code signing and other files <a href="#code-signing-and-other-files" class="anchor-symbol">⚓</a></h2>
+
+<p>The files you upload in the Workflow Editor (<strong>Code Signing &amp; Files</strong> section of the editor)
+are stored on <code class="highlighter-rouge">Amazon S3</code> in a way that it’s only accessible for the web servers.</p>
+
+<p>The required credentials are not stored in any database, it is only available in the web servers’ environment.
+Build servers can’t access the files directly either.
+When a build starts the web server generates a read-only,
+time limited access URL for these files, using <a href="https://docs.aws.amazon.com/aws-sdk-php/v3/guide/service/s3-presigned-url.html">Amazon S3 presigned URLs</a>.</p>
+
+<h2 id="passwords">Passwords <a href="#passwords" class="anchor-symbol">⚓</a></h2>
+
+<p>Passwords are stored in a hashed, encrypted form.
+We are encrypting the passwords with <a href="https://en.wikipedia.org/wiki/Bcrypt">bcrypt algorithm</a>, using multiple stretches.</p>
 
 			</main>
 		</div>

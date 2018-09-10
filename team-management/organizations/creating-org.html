@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Creating organizations - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Creating organizations
 						
 					</div>
 				</div>
@@ -357,7 +357,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/team-management/organizations/creating-org" title="Creating organizations">Creating organizations</a>
+				<a href="/team-management/organizations/creating-org" title="Creating organizations" class="current">Creating organizations</a>
 			
 		
 		
@@ -1764,26 +1764,72 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Creating organizations</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/team-management/organizations/creating-org.md" target="_blank"></a>
+					</div>
+				
+				<p>You can create and manage <strong>Organizations</strong> on <a href="https://www.bitrise.io">bitrise.io</a> to manage entire teams quickly and effectively. You can set up multiple groups within an organization for different projects - for example, you can have a <em>Developer</em> group and a <em>Tester</em> group assigned to different app. You can also set roles for your group: these roles determine the access rights provided to members of the group.</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>To run builds as an organization, you need to subscribe to an <strong>Organization</strong> plan.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<h2 id="creating-an-organization">Creating an organization <a href="#creating-an-organization" class="anchor-symbol">⚓</a></h2>
+
+<p>No need for lengthy preparation when you wish to create an organization on Bitrise: all you really need is an existing Bitrise account - this will be the default owner of the organization - and an organization name. You can set up everything else later!</p>
+
+<ol>
+  <li>
+    <p>Log in to <a href="https://www.bitrise.io">bitrise.io</a>.</p>
+  </li>
+  <li>
+    <p>On the top menu bar, find the <code class="highlighter-rouge">+</code> symbol and click it.</p>
+
+    <p><img src="/img/team-management/organization/add-org.png" alt="Screenshot" /></p>
+  </li>
+  <li>
+    <p>Choose <code class="highlighter-rouge">Add organization</code> from the dropdown menu.</p>
+
+    <p>Alternatively, you can create a new organization from:</p>
+    <ul>
+      <li>your <code class="highlighter-rouge">Account settings</code> page: find the <code class="highlighter-rouge">+ New Organization</code> option on the left.</li>
+      <li>on the <code class="highlighter-rouge">Apps</code> screen: open the dropdown menu above your apps and click <code class="highlighter-rouge">Create organization</code>.</li>
+    </ul>
+
+    <p><img src="/img/team-management/organization/add-org-apps.png" alt="Screenshot" /></p>
+  </li>
+  <li>
+    <p>In the pop-up window, enter the name and the billing email of your organization, and click <code class="highlighter-rouge">Create</code>.</p>
+
+    <p>!!! note “Invoices”
+     By default, your invoices will be sent to the billing email you set here.</p>
+
+    <p><img src="/img/team-management/organization/name-email-org.png" alt="Screenshot" /></p>
+  </li>
+  <li>
+    <p>Provide your billing information.</p>
+
+    <p>You can skip this step and provide these details at a later date. <strong>Only the owner(s) of an organization can modify these.</strong></p>
+
+    <p>!!! note “Organizations is a premium feature”
+     You need to subscribe to an <strong>Organization</strong> plan to be able to run builds.</p>
+  </li>
+  <li>
+    <p>Transfer apps to your organization.</p>
+
+    <p>You can skip this step and transfer your apps or add new apps to your organization at any time.</p>
+
+    <p><img src="/img/team-management/organization/transfer-apps-creation.png" alt="Screenshot" /></p>
+  </li>
+  <li>
+    <p>In the pop-up window, click <code class="highlighter-rouge">Check billing</code> to immediately set up a subscription plan. You can also add your billing information here.</p>
+
+    <p>Alternatively, click <code class="highlighter-rouge">OK</code> to finish creating your org.</p>
+
+    <p><img src="/img/team-management/organization/no-active-sub-yet.png" alt="Screenshot" /></p>
+  </li>
+</ol>
+
+<p>And that’s it! You can start inviting people to your organization!</p>
 
 			</main>
 		</div>

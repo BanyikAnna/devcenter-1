@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Managing iOS code signing files - manual provisioning - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Managing iOS code signing files - manual provisioning
 						
 					</div>
 				</div>
@@ -798,7 +798,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/code-signing/ios-code-signing/ios-manual-provisioning" title="Managing iOS code signing files - manual provisioning">Managing iOS code signing files - manual provisioning</a>
+				<a href="/code-signing/ios-code-signing/ios-manual-provisioning" title="Managing iOS code signing files - manual provisioning" class="current">Managing iOS code signing files - manual provisioning</a>
 			
 		
 		
@@ -1764,26 +1764,58 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Managing iOS code signing files - manual provisioning</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/code-signing/ios-code-signing/ios-manual-provisioning.md" target="_blank"></a>
+					</div>
+				
+				<p>Manage your code signing files on <a href="https://www.bitrise.io">bitrise.io</a>. With manual provisioning, you can collect your Provisioning Profiles and .p12 certificates with our <a href="https://github.com/bitrise-tools/codesigndoc">codesigndoc</a> tool and then upload them manually or by using the tool.</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>!!! info “Xcode Automatically manage signing option”
+    We support using Xcode’s
+    <em>Automatically manage signing</em> option, introduced in Xcode 8, with your project. In this case, create an IPA of the desired type on your local machine to let Xcode generate the required profiles and then codesigndoc can collect these. If your project changes and Xcode re-generates the profiles, you will need to re-upload these profiles to Bitrise as well.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>If you collected all the necessary files with the codesigndoc tool, proceed to uploading them and setting up your workflow. In this example, we’ll be uploading the code signing files manually - however, you can do this with the codesigndoc tool, too!</p>
+
+<ol>
+  <li>
+    <p>Open your app on your <code class="highlighter-rouge">Dashboard</code>.</p>
+  </li>
+  <li>
+    <p>Select the <code class="highlighter-rouge">Workflow Editor</code> tab.</p>
+  </li>
+  <li>
+    <p>Select the <code class="highlighter-rouge">Code Signing</code> tab.</p>
+  </li>
+  <li>
+    <p>Make sure that the Provisioning Profile files and the .p12 files are uploaded. If not, add them in the <code class="highlighter-rouge">Add Provisioning Profile(s)</code> and the <code class="highlighter-rouge">Add the private key (.p12) for signing</code> fields, respectively.</p>
+
+    <p><img src="/img/code-signing/ios-code-signing/provisioning-and-certificate-upload.png" alt="Uploading certificates and Provisioning Profiles" /></p>
+
+    <p>!!! info “Provisioning Profile file extensions”
+     For a MacOS project, the Provisioning Profile file extension is <code class="highlighter-rouge">.provisionprofile</code>; for an iOS project, the file extension is <code class="highlighter-rouge">.mobileprovision</code>.</p>
+  </li>
+  <li>
+    <p>Make sure you have the <code class="highlighter-rouge">Certificate and profile installer</code> step in your app’s Workflow. You can check it on the <code class="highlighter-rouge">Workflow</code> tab of the <code class="highlighter-rouge">Workflow Editor</code>.</p>
+
+    <p>Please note that these steps must be <strong>BEFORE</strong> the steps that archive and export your project (for example, <code class="highlighter-rouge">Xcode Archive &amp; Export for iOS</code>) in your workflow.</p>
+
+    <p><img src="/img/code-signing/ios-code-signing/workflow-with-cert-prof-inst.png" alt="Certificate and profile installer step in your workflow" /></p>
+  </li>
+</ol>
+
+<p>!!! tip “Troubleshooting: missing Distribution signing files”
+    If <code class="highlighter-rouge">codesigndoc</code> does not pick up one or more distribution .p12 files and/or Provisioning Profile(s),
+    you can export those manually (.p12 from <code class="highlighter-rouge">Keychain Access</code> app, Provisioning Profiles from
+    <a href="https://developer.apple.com/">Apple Developer Portal</a>), just like you would when you
+    transfer these files between Macs.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>But __even if `codesigndoc` does not find
+all the files, you should upload all the files collected by `codesigndoc`!__
+The base files collected by `codesigndoc` are essential for your project's
+code signing: without those it's not possible to create a signed IPA
+for the project!
+</code></pre></div></div>
 
 			</main>
 		</div>

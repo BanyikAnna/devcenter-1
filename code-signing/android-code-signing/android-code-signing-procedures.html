@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Android code signing procedures - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Android code signing procedures
 						
 					</div>
 				</div>
@@ -711,7 +711,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/code-signing/android-code-signing/android-code-signing-procedures" title="Android code signing procedures">Android code signing procedures</a>
+				<a href="/code-signing/android-code-signing/android-code-signing-procedures" title="Android code signing procedures" class="current">Android code signing procedures</a>
 			
 		
 		
@@ -1764,26 +1764,19 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Android code signing procedures</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/code-signing/android-code-signing/android-code-signing-procedures.md" target="_blank"></a>
+					</div>
+				
+				<p>Before you distribute your app through <a href="https://play.google.com/store/apps">Google Play Store</a>, your APK file must be digitally signed.</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>You can specify the code signing configuration for your project in Android Studio or manually in your Gradle configuration. You can also use the <code class="highlighter-rouge">sign-apk</code> step in your Bitrise Workflow Editor to have your APK signed automatically.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>!!! info “Different Android code signing procedures”
+    * <a href="/code-signing/android-code-signing/android-code-signing-with-android-studio/">Android code signing with Android Studio</a>
+    * <a href="/code-signing/android-code-signing/android-code-signing-in-gradle/">Android code signing in Gradle</a>
+    * <a href="/code-signing/android-code-signing/android-code-signing-using-bitrise-sign-apk-step/">Android code signing using Bitrise Sign APK step</a></p>
 
 			</main>
 		</div>

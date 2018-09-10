@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Triggering builds with pull requests - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Triggering builds with pull requests
 						
 					</div>
 				</div>
@@ -591,7 +591,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/builds/triggering-builds/trigger-pull-request" title="Triggering builds with pull requests">Triggering builds with pull requests</a>
+				<a href="/builds/triggering-builds/trigger-pull-request" title="Triggering builds with pull requests" class="current">Triggering builds with pull requests</a>
 			
 		
 		
@@ -1764,26 +1764,52 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Triggering builds with pull requests</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/builds/triggering-builds/trigger-pull-request.md" target="_blank"></a>
+					</div>
+				
+				<p>You can set up a trigger so that every time a pull request is opened from a specified source branch to a specified target branch of your repository, a build is automatically triggered on Bitrise.</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>Note that this requires an incoming webhook set up with the hosting service of your repository. Read more in the <a href="/webhooks">Webhooks</a> section.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>By default, every new app you add will have a trigger that triggers a build every time any pull request is opened within your repository.</p>
+
+<ol>
+  <li>
+    <p>Open your app on <a href="hhtps://www.bitrise.io">bitrise.io</a>.</p>
+  </li>
+  <li>
+    <p>Open the <code class="highlighter-rouge">Workflow Editor</code>.</p>
+  </li>
+  <li>
+    <p>Select the <code class="highlighter-rouge">Triggers</code> tab.</p>
+  </li>
+  <li>
+    <p>Select the <code class="highlighter-rouge">PULL REQUEST</code> option.</p>
+
+    <p><img src="/img/getting-started/triggering-builds/pull-request-trigger.png" alt="PR trigger" /></p>
+  </li>
+  <li>
+    <p>In the existing trigger, click the <code class="highlighter-rouge">SOURCE BRANCH</code> and <code class="highlighter-rouge">TARGET BRANCH</code> options.</p>
+
+    <p>!!! note “<code class="highlighter-rouge">+ ADD TRIGGER</code> option”
+     If you have your own trigger set up already, click the <code class="highlighter-rouge">+ ADD TRIGGER</code> option to set up a new one.</p>
+  </li>
+  <li>
+    <p>Type the names of the source branch and the target branch. Make sure there are no spelling errors, otherwise the trigger won’t work.</p>
+
+    <p>You can leave either the source or target branch fields, or both, empty: the trigger will work accordingly. For example, if you leave both empty, as is the default with new apps, every pull request will trigger a build.</p>
+  </li>
+  <li>
+    <p>Select the workflow you wish to trigger (for example, <code class="highlighter-rouge">primary</code>).</p>
+  </li>
+  <li>
+    <p>Click <code class="highlighter-rouge">Save</code> in the top right corner.</p>
+  </li>
+</ol>
+
+<p>And you’re done! From now on, if a pull request is opened in your repository, Bitrise will trigger a build with the selected workflow!</p>
 
 			</main>
 		</div>

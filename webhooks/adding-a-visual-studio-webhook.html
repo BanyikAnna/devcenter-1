@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Adding a Visual Studio webhook - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Adding a Visual Studio webhook
 						
 					</div>
 				</div>
@@ -495,7 +495,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/webhooks/adding-a-visual-studio-webhook" title="Adding a Visual Studio webhook">Adding a Visual Studio webhook</a>
+				<a href="/webhooks/adding-a-visual-studio-webhook" title="Adding a Visual Studio webhook" class="current">Adding a Visual Studio webhook</a>
 			
 		
 		
@@ -1764,26 +1764,70 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Adding a Visual Studio webhook</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/webhooks/adding-a-visual-studio-webhook.md" target="_blank"></a>
+					</div>
+				
+				<p>You can set up webhooks so that Bitrise automatically triggers a build of your app whenever you perform a specified action, such as a code push or a pull request. For Visual Studio, all you have to do is register your <code class="highlighter-rouge">bitrise-webhooks</code> URL for
+a <a href="https://visualstudio.com">visualstudio.com</a> <em>project</em> as a <code class="highlighter-rouge">Service Hooks</code> integration.</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>You can find an official guide
+on <a href="https://www.visualstudio.com/en-us/get-started/integrate/service-hooks/webhooks-and-vso-vs">visualstudio.com ‘s documentations site</a>.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<h2 id="get-the-webhook-url-for-visual-studio">Get the webhook URL for Visual Studio <a href="#get-the-webhook-url-for-visual-studio" class="anchor-symbol">⚓</a></h2>
+
+<ol>
+  <li>
+    <p>Navigate to the <code class="highlighter-rouge">Code</code> tab of your app’s page and select <code class="highlighter-rouge">Visual Studio Online / Visual Studio Team Services</code> from the dropdown menu of the <code class="highlighter-rouge">Incoming Webhooks</code> section.</p>
+
+    <p><img src="/img/webhooks/bitrise-visual-webhook.png" alt="Screenshot" /></p>
+  </li>
+  <li>
+    <p>Copy the webhook URL for the selected service.</p>
+  </li>
+</ol>
+
+<h2 id="set-up-webhook-on-visual-studio">Set up webhook on Visual Studio <a href="#set-up-webhook-on-visual-studio" class="anchor-symbol">⚓</a></h2>
+
+<ol>
+  <li>Open your <em>project</em> on <a href="https://visualstudio.com">visualstudio.com</a>.</li>
+  <li>Go to the <em>Admin/Control panel</em> of the <em>project</em>.</li>
+  <li>
+    <p>Select <code class="highlighter-rouge">Service Hooks</code>.</p>
+
+    <p><img src="/img/webhooks/visual-studio-service-hooks.png" alt="Screenshot" /></p>
+  </li>
+  <li>Click <code class="highlighter-rouge">Create subscription</code>.</li>
+  <li>
+    <p>Create a service integration:</p>
+
+    <ul>
+      <li>
+        <p>In the Service list select the <code class="highlighter-rouge">Web Hooks</code> option.</p>
+
+        <p><img src="/img/webhooks/visual-studio-new-service.png" alt="Screenshot" /></p>
+      </li>
+      <li>
+        <p>Select the <code class="highlighter-rouge">Code pushed</code> event as the <em>Trigger</em>.</p>
+
+        <p><img src="/img/webhooks/visual-studio-code-pushed.png" alt="Screenshot" /></p>
+      </li>
+      <li>In the <code class="highlighter-rouge">Filters</code> section select the <code class="highlighter-rouge">Repository</code> you want to integrate.</li>
+      <li>You can leave the other filters on default.</li>
+      <li>Click <code class="highlighter-rouge">Next</code>.</li>
+      <li>
+        <p>On the <code class="highlighter-rouge">Action</code> setup form enter the <code class="highlighter-rouge">bitrise-webhooks</code> URL (<code class="highlighter-rouge">.../h/visualstudio/BITRISE-APP-SLUG/BITRISE-APP-API-TOKEN</code>) in the <code class="highlighter-rouge">URL</code> field. You can leave every other option on default.</p>
+
+        <p><img src="/img/webhooks/visual-studio-webhook-url.png" alt="Screenshot" /></p>
+      </li>
+    </ul>
+  </li>
+  <li>Click <code class="highlighter-rouge">Finish</code></li>
+</ol>
+
+<p>That’s all! The next time you <strong>push code</strong> or <strong>push a new tag</strong>
+a build will be triggered (if you have Trigger mapping defined for the event(s) on Bitrise).</p>
 
 			</main>
 		</div>

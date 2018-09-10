@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Xcode Archive: export options - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Xcode Archive: export options
 						
 					</div>
 				</div>
@@ -1452,7 +1452,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/tips-and-tricks/xcodebuild-export-options" title="Xcode Archive: export options">Xcode Archive: export options</a>
+				<a href="/tips-and-tricks/xcodebuild-export-options" title="Xcode Archive: export options" class="current">Xcode Archive: export options</a>
 			
 		
 		
@@ -1764,26 +1764,155 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Xcode Archive: export options</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/tips-and-tricks/xcodebuild-export-options.md" target="_blank"></a>
+					</div>
+				
+				<p>If you create a new iOS app on <a href="https://www.bitrise.io/">bitrise.io</a>
+the generated default workflow wil include our <code class="highlighter-rouge">Xcode Archive</code> step.
+This step can manage to archive and export your iOS app.</p>
 
-<div class="container">
-  <h1>404</h1>
+<h2 id="a-bit-of-history-and-technical-info">A bit of history and technical info <a href="#a-bit-of-history-and-technical-info" class="anchor-symbol">⚓</a></h2>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>If the step is used with <code class="highlighter-rouge">Xcode 6</code> it’ll generate the following (legacy) command to export
+the <code class="highlighter-rouge">ipa</code> of your app (you can see it in the step’s log):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xcodebuild -exportArchive \
+	-exportFormat ipa \
+	-archivePath "/var/folders/lb/8n5bn9k975qgw662jpqdy7mm0000gn/T/bitrise-xcarchive.YnAMfpzJ/ios-simple-objc.xcarchive" \
+	-exportPath "/Users/vagrant/deploy/ios-simple-objc.ipa" \
+	-exportProvisioningProfile "Xyz"
+</code></pre></div></div>
+
+<p>Back in the days of Xcode 6 this was everything you had to do; just specify the format to be <code class="highlighter-rouge">ipa</code>
+and set the required paths and the Provisioning Profile to be used for code signing the <code class="highlighter-rouge">ipa</code>.</p>
+
+<p><code class="highlighter-rouge">Xcode 7</code> introduced a lot of additional archive feature and the support for
+defining more complex archive parameters. This meant that although Xcode 7 still supports
+the old parameters, it’s now declared as <strong>deprecated</strong>, and you’d get
+the following warning if you’d use the old parameters instead of the new <code class="highlighter-rouge">-exportOptionsPlist</code> parameter:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xcodebuild: WARNING: -exportArchive without -exportOptionsPlist is deprecated
+</code></pre></div></div>
+
+<p>The export command’s <strong>new version</strong> expects a Plist file (<code class="highlighter-rouge">-exportOptionsPlist</code>),
+which should include all the archive parameters (including code signing type/method,
+and other parameters like enable/disable Bitcode). The full command looks like this:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xcodebuild -exportArchive \
+	-archivePath "/var/folders/lb/8n5bn9k975qgw662jpqdy7mm0000gn/T/bitrise-xcarchive.QbpHVvNx/ios-simple-objc.xcarchive" \
+	-exportPath "/var/folders/lb/8n5bn9k975qgw662jpqdy7mm0000gn/T/bitrise-xcarchive.aCvNPRAi" \
+	-exportOptionsPlist "/Users/vagrant/deploy/export_options.plist"
+</code></pre></div></div>
+
+<p>By default the <code class="highlighter-rouge">Xcode Archive</code> step generates the minimal sufficient Plist file,
+with only the export <code class="highlighter-rouge">method</code> defined in it (unless you specify the <code class="highlighter-rouge">export_options_path</code> input,
+we’ll get back to this a bit later):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">"1.0"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dict&gt;</span>
+	<span class="nt">&lt;key&gt;</span>method<span class="nt">&lt;/key&gt;</span>
+	<span class="nt">&lt;string&gt;</span>development<span class="nt">&lt;/string&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</code></pre></div></div>
+
+<h2 id="about-the-xcode-archive-step-generated-export-options">About the Xcode Archive step generated export options <a href="#about-the-xcode-archive-step-generated-export-options" class="anchor-symbol">⚓</a></h2>
+
+<p>The default <strong>generated</strong> export options Plist file only specifies
+the <strong>export method</strong> (<code class="highlighter-rouge">app-store</code>, <code class="highlighter-rouge">ad-hoc</code>, <code class="highlighter-rouge">enterprise</code> or <code class="highlighter-rouge">development</code>)
+based on the provisioning profile embedded in the <code class="highlighter-rouge">.xcarchive</code> (which is generated by the <code class="highlighter-rouge">xcodebuild archive</code>
+command, also performed by the <code class="highlighter-rouge">Xcode Archive</code> step, right before the <code class="highlighter-rouge">xcodebuild -exportArchive</code> command).</p>
+
+<p><em>The embedded provisioning profile depends on your code sign settings in your project.
+You can force the desired code signing configuration
+with <code class="highlighter-rouge">Xcode Archive</code> step’s <code class="highlighter-rouge">force_code_sign_identity</code> and <code class="highlighter-rouge">force_provisioning_profile</code> inputs.
+You can find more information about these options in the <a href="ios/code-signing">iOS Code Signing</a> article.</em></p>
+
+<p>Every other export option which can be defined in the Plist is optional.</p>
+
+<h2 id="use-your-own-export-options">Use your own export options <a href="#use-your-own-export-options" class="anchor-symbol">⚓</a></h2>
+
+<p>In case of the default export_options.plist does not fit your needs,
+you can specify your own export options too.
+To do this create a plist file (in your repository) with the options you want to use.</p>
+
+<p>!!! note “Available export options”
+    You can get a list of all available options by calling <code class="highlighter-rouge">xcodebuild -h</code> -
+    check the <strong>Available keys for -exportOptionsPlist:</strong> section of the printed help.</p>
+
+<p><em>These are the options you can select in Xcode when you export the ipa manually.</em></p>
+
+<p>The <strong>recommanded</strong> way is to <strong>put this generated plist file in your project’s repository</strong>.
+Then you can set <code class="highlighter-rouge">Xcode Archive</code> step’s <code class="highlighter-rouge">export_options_path</code> input
+to the path of your plist file (e.g. <code class="highlighter-rouge">./path/to/export-options.plist</code>).</p>
+
+<h3 id="disable-bitcode-in-ipa">Disable bitcode in ipa <a href="#disable-bitcode-in-ipa" class="anchor-symbol">⚓</a></h3>
+
+<p><strong>By default uploadBitcode export options is set to YES</strong>, unless you specifically disable
+it in the export options Plist.
+If it does not fit your requirements you have to use your own export options,
+instead of the archive steps generated one.</p>
+
+<p>Your export options plist should look like:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="cp">&lt;!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;</span>
+<span class="nt">&lt;plist</span> <span class="na">version=</span><span class="s">"1.0"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;dict&gt;</span>
+	<span class="nt">&lt;key&gt;</span>method<span class="nt">&lt;/key&gt;</span>
+	<span class="nt">&lt;string&gt;</span>app-store<span class="nt">&lt;/string&gt;</span>
+	<span class="nt">&lt;key&gt;</span>uploadBitcode<span class="nt">&lt;/key&gt;</span>
+	<span class="nt">&lt;false/&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/plist&gt;</span>
+</code></pre></div></div>
+
+<p>!!! note “Code Signing note”
+    Of course, if you set the <code class="highlighter-rouge">method</code> to <code class="highlighter-rouge">app-store</code> then you have to upload / use
+    an App Store code signing Identity &amp; Provisioning Profile (it have to be
+    available in the system).</p>
+
+<h3 id="related-issues">Related issues: <a href="#related-issues" class="anchor-symbol">⚓</a></h3>
+
+<h4 id="error-itms-90635-invalid-mach-o-format">ERROR ITMS-90635: Invalid Mach-O Format <a href="#error-itms-90635-invalid-mach-o-format" class="anchor-symbol">⚓</a></h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Transporter Error Output: ERROR ITMS-90635: Invalid Mach-O Format.
+...
+Verify that all of the targets for a platform have a consistent value for the ENABLE_BITCODE build setting.
+...
+</code></pre></div></div>
+
+<p>This error occurs if you have different <code class="highlighter-rouge">ENABLE_BITCODE</code> settings
+in your (sub)projects, including the projects generated by CocoaPods for example.</p>
+
+<p>If you use CocoaPods you can <strong>override the <code class="highlighter-rouge">ENABLE_BITCODE</code> in the pod projects</strong> by adding
+the following section to your <code class="highlighter-rouge">Podfile</code>:</p>
+
+<p>For CocoaPods 1.0+:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['ENABLE_BITCODE'] = 'NO'
+    end
+  end
+end
+</code></pre></div></div>
+
+<p>For CocoaPods 0.39 and below:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>post_install do |installer|
+  installer.project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['ENABLE_BITCODE'] = 'NO'
+    end
+  end
+end
+</code></pre></div></div>
 
 			</main>
 		</div>

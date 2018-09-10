@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Adding a Gitlab webhook - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Adding a Gitlab webhook
 						
 					</div>
 				</div>
@@ -468,7 +468,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/webhooks/adding-a-gitlab-webhook" title="Adding a Gitlab webhook">Adding a Gitlab webhook</a>
+				<a href="/webhooks/adding-a-gitlab-webhook" title="Adding a Gitlab webhook" class="current">Adding a Gitlab webhook</a>
 			
 		
 		
@@ -1764,26 +1764,62 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Adding a Gitlab webhook</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/webhooks/adding-a-gitlab-webhook.md" target="_blank"></a>
+					</div>
+				
+				<p>You can set up webhooks so that Bitrise automatically triggers a build of your app whenever you perform a specified action, such as a code push or a pull request. For GitLab, all you have to do is register your <code class="highlighter-rouge">bitrise-webhooks</code> URL as a Webhook in your <a href="https://www.gitlab.com">GitLab</a> repository.</p>
 
-<div class="container">
-  <h1>404</h1>
+<h2 id="get-the-webhook-url-for-gitlab">Get the webhook URL for GitLab <a href="#get-the-webhook-url-for-gitlab" class="anchor-symbol">⚓</a></h2>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<ol>
+  <li>
+    <p>Navigate to the <code class="highlighter-rouge">Code</code> tab of your app’s page and select <code class="highlighter-rouge">GitLab</code> from the dropdown menu of the <code class="highlighter-rouge">Incoming Webhooks</code> section.</p>
+
+    <p><img src="/img/webhooks/bitrise-gitlab-webhook.png" alt="Screenshot" /></p>
+  </li>
+  <li>
+    <p>Copy the webhook URL for the selected service.</p>
+  </li>
+</ol>
+
+<h2 id="set-up-webhook-on-gitlab">Set up webhook on GitLab <a href="#set-up-webhook-on-gitlab" class="anchor-symbol">⚓</a></h2>
+
+<ol>
+  <li>
+    <p>Open your project on <a href="https://www.gitlab.com">GitLab.com</a></p>
+  </li>
+  <li>
+    <p>Go to <code class="highlighter-rouge">Settings</code> of the project.</p>
+  </li>
+  <li>
+    <p>Select <code class="highlighter-rouge">Integrations</code>.</p>
+
+    <p><img src="/img/webhooks/integrations-gitlab.png" alt="Screenshot" /></p>
+  </li>
+  <li>
+    <p>Enter the bitrise-webhooks URL in the URL field.</p>
+
+    <p><img src="/img/webhooks/gitlab-webhook-url.png" alt="Screenshot" /></p>
+  </li>
+  <li>
+    <p>In the <code class="highlighter-rouge">Trigger</code> section select:</p>
+
+    <ul>
+      <li><code class="highlighter-rouge">Push events</code></li>
+      <li><code class="highlighter-rouge">Tag push events</code></li>
+      <li><code class="highlighter-rouge">Merge request events</code></li>
+    </ul>
+
+    <p><img src="/img/webhooks/gitlab-webhook-events.png" alt="Screenshot" /></p>
+  </li>
+  <li>
+    <p>Click <code class="highlighter-rouge">Add webhook</code>.</p>
+  </li>
+</ol>
+
+<p>That’s all! The next time you push code, push a new tag or create/update a merge request a build will be triggered (if you have Trigger mapping defined for the event(s) on Bitrise).</p>
 
 			</main>
 		</div>

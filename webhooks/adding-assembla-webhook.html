@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Adding an Assembla webhook - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Adding an Assembla webhook
 						
 					</div>
 				</div>
@@ -504,7 +504,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/webhooks/adding-assembla-webhook" title="Adding an Assembla webhook">Adding an Assembla webhook</a>
+				<a href="/webhooks/adding-assembla-webhook" title="Adding an Assembla webhook" class="current">Adding an Assembla webhook</a>
 			
 		
 		
@@ -1764,26 +1764,46 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Adding an Assembla webhook</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/webhooks/adding-assembla-webhook.md" target="_blank"></a>
+					</div>
+				
+				<p>You can set up webhooks so that Bitrise automatically triggers a build of your app whenever you perform a specified action, such as a code push or a pull request. For Assembla, you only need to add your <code class="highlighter-rouge">bitrise-webhooks</code> URL to your <a href="https://assembla.com">Assembla</a> space.</p>
 
-<div class="container">
-  <h1>404</h1>
+<h2 id="get-the-webhook-url-for-assembla">Get the webhook URL for Assembla <a href="#get-the-webhook-url-for-assembla" class="anchor-symbol">⚓</a></h2>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<ol>
+  <li>
+    <p>Navigate to the <code class="highlighter-rouge">Code</code> tab of your app’s page and select <code class="highlighter-rouge">Assembla</code> from the dropdown menu of the <code class="highlighter-rouge">Incoming Webhooks</code> section.</p>
+
+    <p><img src="/img/webhooks/bitrise-assembla-webhook.png" alt="Screenshot" /></p>
+  </li>
+  <li>
+    <p>Copy the webhook URL for the selected service.</p>
+  </li>
+</ol>
+
+<h2 id="set-up-webhook-on-assembla">Set up webhook on Assembla <a href="#set-up-webhook-on-assembla" class="anchor-symbol">⚓</a></h2>
+
+<ol>
+  <li>Open your space on <a href="https://assembla.com">assembla.com</a> or your organisation’s assembla domain.</li>
+  <li>Go to the <code class="highlighter-rouge">Webhooks</code> section of the space.</li>
+  <li>Select <code class="highlighter-rouge">Create New Webhook</code>.</li>
+  <li>Set <code class="highlighter-rouge">Title</code> to <code class="highlighter-rouge">BitRise Webhook</code>.</li>
+  <li>Specify the <code class="highlighter-rouge">bitrise-webhooks</code> URL. (<code class="highlighter-rouge">.../h/assembla/BITRISE-APP-SLUG/BITRISE-APP-API-TOKEN</code>) in the <code class="highlighter-rouge">External url</code> field</li>
+  <li>Select <code class="highlighter-rouge">application/json</code> in the <code class="highlighter-rouge">Content type</code> field.</li>
+  <li>
+    <p>Paste the following code to <code class="highlighter-rouge">Content</code>:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> {"assembla": {"space": "%{space}", "action": "%{action}", "object": "%{object}"}, "message": {"title": "%{title}", "body": "%{body}", "author": "%{author}"}, "git": {"repository_suffix": "%{repository_suffix}", "repository_url": "%{repository_url}", "branch": "%{branch}", "commit_id": "%{commit_id}"}}
+</code></pre></div>    </div>
+  </li>
+  <li>Select <code class="highlighter-rouge">Code commits</code> and/or <code class="highlighter-rouge">Git Push</code> in the <code class="highlighter-rouge">Post updates about:</code> section.</li>
+  <li>Click <code class="highlighter-rouge">Add</code>.</li>
+</ol>
+
+<p>That’s all! The next time you <strong>push code</strong> a build will be triggered (if you have Trigger mapping defined for the event(s) on Bitrise).</p>
 
 			</main>
 		</div>

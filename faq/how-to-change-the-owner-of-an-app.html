@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				How to change the owner of an app - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							How to change the owner of an app
 						
 					</div>
 				</div>
@@ -1503,7 +1503,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/faq/how-to-change-the-owner-of-an-app" title="How to change the owner of an app">How to change the owner of an app</a>
+				<a href="/faq/how-to-change-the-owner-of-an-app" title="How to change the owner of an app" class="current">How to change the owner of an app</a>
 			
 		
 		
@@ -1764,26 +1764,37 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>How to change the owner of an app</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/faq/how-to-change-the-owner-of-an-app.md" target="_blank"></a>
+					</div>
+				
+				<p>It can happen that you need to transfer an Application on <a href="https://www.bitrise.io">Bitrise</a>
+to another User or to an Organization.
+This can be done in a few seconds by following these quick steps:</p>
 
-<div class="container">
-  <h1>404</h1>
+<ol>
+  <li>Login with the <strong>current Owner</strong> of the App on <a href="https://www.bitrise.io">bitrise.io</a></li>
+  <li>Open the App’s page and go to the <code class="highlighter-rouge">Team</code> tab</li>
+  <li>Make sure the new owner of the App is in the team or add her/him if you need to.
+In case if you want to transfer the ownership to an Organization,
+you have to be part of the Organization.</li>
+  <li>Click the <code class="highlighter-rouge">Transfer ownership</code> button next to your name</li>
+  <li>After selecting the new owner from the dropdown, click on the purple button that says
+<code class="highlighter-rouge">Transfer ownership to &lt;Username&gt;</code>, and you are done!</li>
+</ol>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>!!! note “Good to know: Do you want to remain the connected services user?”
+    If you enable the <code class="highlighter-rouge">Do you want to remain the connected services user?</code> option in the Transfer popup,
+    then during the transfer you’ll be explicitly marked as the “connected services” user for the app.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The "connected services" user specifies which Team Member's service connections / accounts
+connected to his/her Bitrise user should be used when Bitrise tries to communicate
+with another service (GitHub, Bitbucket, ...), for example to send back build status information,
+or to register a new SSH key automatically.
+
+Admins of an app can change this any time on the `Settings` tab of the app.
+</code></pre></div></div>
 
 			</main>
 		</div>

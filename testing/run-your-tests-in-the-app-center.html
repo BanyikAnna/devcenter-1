@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Run your tests in the Visual Studio App Center - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Run your tests in the Visual Studio App Center
 						
 					</div>
 				</div>
@@ -1227,7 +1227,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/testing/run-your-tests-in-the-app-center" title="Run your tests in the Visual Studio App Center">Run your tests in the Visual Studio App Center</a>
+				<a href="/testing/run-your-tests-in-the-app-center" title="Run your tests in the Visual Studio App Center" class="current">Run your tests in the Visual Studio App Center</a>
 			
 		
 		
@@ -1764,26 +1764,44 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Run your tests in the Visual Studio App Center</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/testing/run-your-tests-in-the-app-center.md" target="_blank"></a>
+					</div>
+				
+				<p>Upload and schedule tests on the Visual Studio App Center for your projects. The following testing frameworks are available:</p>
 
-<div class="container">
-  <h1>404</h1>
+<ul>
+  <li>Appium</li>
+  <li>Espresso</li>
+  <li>Calabash</li>
+  <li>Xamarin.UITest</li>
+  <li>XCUITest</li>
+</ul>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>In the Workflow Editor <a href="/getting-started/manage-your-bitrise-workflow/#add-a-new-step">add</a>
+the <code class="highlighter-rouge">App Center upload and schedule tests</code> step to your workflow.</p>
+
+<p>The step has multiple required inputs. Find the value of these inputs by setting up your test on the Visual Studio App Center.</p>
+
+<ol>
+  <li>
+    <p>Prepare your test for upload: https://docs.microsoft.com/en-us/appcenter/test-cloud/preparing-for-upload/</p>
+  </li>
+  <li>
+    <p>Create an App Center project: https://appcenter.ms/apps</p>
+  </li>
+  <li>
+    <p>Navigate to <code class="highlighter-rouge">Test runs</code> tab and start a <code class="highlighter-rouge">New test run</code>:</p>
+
+    <ul>
+      <li>Select the devices you want to test your app on.</li>
+      <li>Configure the test run:  choose a test series, a system language and a test framework.</li>
+      <li><strong>On the <code class="highlighter-rouge">Submit</code> tab you will find every required input for the step in the <code class="highlighter-rouge">Upload and schedule test</code> section</strong>.</li>
+      <li>Click on <code class="highlighter-rouge">Done</code>.</li>
+    </ul>
+  </li>
+</ol>
 
 			</main>
 		</div>

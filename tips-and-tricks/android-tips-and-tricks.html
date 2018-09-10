@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Android tips and tricks - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Android tips and tricks
 						
 					</div>
 				</div>
@@ -1398,7 +1398,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/tips-and-tricks/android-tips-and-tricks" title="Android tips and tricks">Android tips and tricks</a>
+				<a href="/tips-and-tricks/android-tips-and-tricks" title="Android tips and tricks" class="current">Android tips and tricks</a>
 			
 		
 		
@@ -1764,26 +1764,178 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Android tips and tricks</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/tips-and-tricks/android-tips-and-tricks.md" target="_blank"></a>
+					</div>
+				
+				<h2 id="what-are-gradle-tasks-and-how-can-i-get-the-list-of-available-tasks-in-my-project">What are Gradle tasks and how can I get the list of available tasks in my project? <a href="#what-are-gradle-tasks-and-how-can-i-get-the-list-of-available-tasks-in-my-project" class="anchor-symbol">⚓</a></h2>
 
-<div class="container">
-  <h1>404</h1>
+<p>A <code class="highlighter-rouge">gradle</code> task is a process you can run with <code class="highlighter-rouge">gradle</code>.
+You can run these tasks by running <code class="highlighter-rouge">gradle TASK-TO-RUN</code> in your Command Line / Terminal.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>A standard Android Gradle project includes a lot of tasks by default, things like:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">androidDependencies - Displays the Android dependencies of the project.</code></li>
+  <li><code class="highlighter-rouge">assemble - Assembles all variants of all applications and secondary packages.</code></li>
+  <li><code class="highlighter-rouge">assembleAndroidTest - Assembles all the Test applications.</code></li>
+  <li><code class="highlighter-rouge">clean - Deletes the build directory</code></li>
+</ul>
+
+<p>You can get the base task list by calling <code class="highlighter-rouge">gradle tasks</code> in your Android app’s directory,
+or to see all the available tasks you can call <code class="highlighter-rouge">gradle tasks --all</code>.</p>
+
+<p>Running <code class="highlighter-rouge">gradle tasks</code> you’ll get a list of available Gradle tasks in the format:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ gradle task
+
+:tasks
+
+------------------------------------------------------------
+All tasks runnable from root project
+------------------------------------------------------------
+
+Android tasks
+-------------
+androidDependencies - Displays the Android dependencies of the project.
+signingReport - Displays the signing info for each variant.
+sourceSets - Prints out all the source sets defined in this project.
+
+Build tasks
+-----------
+assemble - Assembles all variants of all applications and secondary packages.
+assembleAndroidTest - Assembles all the Test applications.
+assembleDebug - Assembles all Debug builds.
+assembleRelease - Assembles all Release builds.
+...
+</code></pre></div></div>
+
+<p>You can run any of the tasks on bitrise from a <code class="highlighter-rouge">Script</code> step by calling <code class="highlighter-rouge">gradle task-name-to-run</code> (for example: <code class="highlighter-rouge">gradle assemle</code>)
+or by using our <code class="highlighter-rouge">Gradle Runner</code> step (<a href="https://github.com/bitrise-io/steps-gradle-runner">https://github.com/bitrise-io/steps-gradle-runner</a>)
+and specifying the task as the value of the <code class="highlighter-rouge">gradle_task</code> input.</p>
+
+<p><strong>Instead of running <code class="highlighter-rouge">gradle</code> directly, you should run the gradle commands through <code class="highlighter-rouge">gradlew</code> (the Gradle Wrapper)!</strong>
+The <code class="highlighter-rouge">Gradle Runner</code> step does this, and as you can see it in the related input description of the step:</p>
+
+<blockquote>
+  <p>Using a Gradle Wrapper (gradlew) is strongly suggested, as the wrapper is what makes sure
+that the right Gradle version is installed and used for the build.</p>
+
+  <p><strong>You can find more information about the Gradle Wrapper (gradlew),
+and about how you can generate one (if you would not have one already)</strong>
+in the official guide at: <a href="https://docs.gradle.org/current/userguide/gradle_wrapper.html">https://docs.gradle.org/current/userguide/gradle_wrapper.html</a>.</p>
+</blockquote>
+
+<h2 id="how-to-install-an-additional-android-sdk-package">How to install an additional Android SDK package <a href="#how-to-install-an-additional-android-sdk-package" class="anchor-symbol">⚓</a></h2>
+
+<p><strong>The preferred way to do this is to use the <code class="highlighter-rouge">Install missing Android tools</code> step.
+Please only use a Script solution if you really have to, as you’ll have to update
+the Script if the Android tools change (which did happen).</strong></p>
+
+<p>All you have to do is to add a <code class="highlighter-rouge">Script</code> step to your workflow,
+and use the Android <code class="highlighter-rouge">sdkmanager</code> tool to install the additional packages you want to.</p>
+
+<p>As an example, to install the Android SDK v18 and the related <code class="highlighter-rouge">build-tools</code> v18.0.1,
+you can add a <code class="highlighter-rouge">Script</code> step (can be the very first step in the Workflow)
+with the following content:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="c"># fail if any commands fails</span>
+<span class="nb">set</span> <span class="nt">-e</span>
+<span class="c"># debug log</span>
+<span class="nb">set</span> <span class="nt">-x</span>
+
+<span class="c"># write your script here</span>
+sdkmanager <span class="s2">"platforms;android-18"</span>
+sdkmanager <span class="s2">"build-tools;18.0.1"</span>
+</code></pre></div></div>
+
+<p><strong>You can get the full list of available packages</strong> by running:
+<code class="highlighter-rouge">sdkmanager --list --include_obsolete --verbose</code>.
+You can run this on your own machine if you have <code class="highlighter-rouge">$ANDROID_HOME/tools/bin</code> in your <code class="highlighter-rouge">$PATH</code>.
+If not then you can run it with <code class="highlighter-rouge">/PATH/TO/ANDROID-SDK-HOME/tools/bin/sdkmanager ...</code>.</p>
+
+<h2 id="enable-gradle-debug-options">Enable Gradle debug options <a href="#enable-gradle-debug-options" class="anchor-symbol">⚓</a></h2>
+
+<p>If your Gradle build fails and you can’t find any information in the logs you can try to call it with
+<code class="highlighter-rouge">--stacktrace --debug</code> flags (ex: <code class="highlighter-rouge">gradle ... --stacktrace --debug</code>) to get more detailed logs.</p>
+
+<p>In most cases <code class="highlighter-rouge">--stacktrace</code> should be enough, and the <code class="highlighter-rouge">Gradle Runner</code> step includes
+this flag by default.</p>
+
+<h2 id="run-a-bitrise-android-build-on-your-macpc-with-docker">Run a bitrise Android build on your Mac/PC, with Docker <a href="#run-a-bitrise-android-build-on-your-macpc-with-docker" class="anchor-symbol">⚓</a></h2>
+
+<p>You can run your build on your Mac/PC, inside the same <code class="highlighter-rouge">docker</code> container you use on <a href="https://www.bitrise.io">bitrise.io</a>,
+to fully test your build in an identical environment! You can find the detailed guide here:
+<a href="/docker/run-your-build-locally-in-docker/">How to run your build locally in Docker</a></p>
+
+<h2 id="memory-ram-limit">Memory (RAM) limit <a href="#memory-ram-limit" class="anchor-symbol">⚓</a></h2>
+
+<p>You can specify the amount allowed RAM for the JVM by adding two <strong>Environment Variables</strong> to your Workflow,
+e.g. as <code class="highlighter-rouge">App Env Var</code>s:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError"'</code></li>
+  <li><code class="highlighter-rouge">_JAVA_OPTIONS: "-Xms512m -Xmx1024m"</code></li>
+</ul>
+
+<p>This method can be used to limit the allowed RAM the Gradle JVM process can use,
+which can be useful in case there’s not enough RAM available in the system.</p>
+
+<h2 id="emulators">Emulators <a href="#emulators" class="anchor-symbol">⚓</a></h2>
+
+<p>You can find and use our Android emulator steps to create &amp; boot emulators:
+<a href="http://www.bitrise.io/integrations">http://www.bitrise.io/integrations</a>.</p>
+
+<p>First you have to create an emulator with a <code class="highlighter-rouge">Create Android emulator</code> step,
+where you can set the Android version and a couple of other parameters for the new emulator,
+then you can boot this emulator with the <code class="highlighter-rouge">Start Android emulator</code> step,
+which makes sure that the emulator is booted and ready for subsequent steps.</p>
+
+<h3 id="emulator-with-google-apis">Emulator with Google APIs <a href="#emulator-with-google-apis" class="anchor-symbol">⚓</a></h3>
+
+<p><strong>Instead of using a Script step to create an android emulator please use the <code class="highlighter-rouge">Create Android emulator</code> step!
+There are simply too many edge cases to cover here, as well as the commands and working configurations change quite frequently.</strong></p>
+
+<p><em>The section below is kept here for referencing purposes, and might be outdated.</em></p>
+
+<p><strong>Note about Android SDK versions:</strong> at this time there are lots of known issues reported for Android Emulators
+with Android SDK version 22 &amp; 23 when combined with Google Play services
+(see <a href="http://stackoverflow.com/questions/32856919/androidstudio-emulator-wont-run-unless-you-update-google-play-services">1</a>
+and <a href="https://code.google.com/p/android/issues/detail?id=176348">2</a>).
+The script above creates an emulator with SDK version 21, which should work properly with Google Play services.</p>
+
+<p><em>There are possible workarounds for newer versions
+(see <a href="http://stackoverflow.com/questions/34329363/app-wont-run-unless-you-update-google-play-services-with-google-maps-api-andr">1</a>
+and <a href="http://stackoverflow.com/questions/33114112/app-wont-run-unless-you-update-google-play-services">2</a>),
+but that requires some customization in your project.</em></p>
+
+<h2 id="installing--using-java-version-x">Installing / Using Java version X <a href="#installing--using-java-version-x" class="anchor-symbol">⚓</a></h2>
+
+<p>!!! note “Java 8 is now pre-installed”
+    Java 8 is now the pre-installed Java version on the Bitrise.io Linux Stack.
+    This section is kept here for future reference, in case you’d need another Java version.</p>
+
+<p><em>If you’d need a Java / JDK version which is not preinstalled on the Android stacks,
+you can follow this guide to install it. This example will install Java/JDK 8,
+please adapt it to the version you need.</em></p>
+
+<p>If your build requires JDK 8, you can install and activate it with a <code class="highlighter-rouge">Script</code> step:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="nb">set</span> <span class="nt">-ex</span>
+
+add-apt-repository <span class="nt">-y</span> ppa:openjdk-r/ppa
+apt-get update <span class="nt">-qq</span>
+apt-get <span class="nb">install</span> <span class="nt">-y</span> openjdk-8-jdk
+update-java-alternatives <span class="nt">-s</span> /usr/lib/jvm/java-1.8.0-openjdk-amd64
+<span class="nb">echo</span> <span class="s2">"done"</span>
+</code></pre></div></div>
+
+<p>That’s all, just add the <code class="highlighter-rouge">Script</code> step to the Workflow with the content above,
+and start a new build. <em>This <code class="highlighter-rouge">Script</code> step can be the very first step in the Workflow,
+as it does not depend on anything else.</em></p>
 
 			</main>
 		</div>

@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Collecting and exporting code signing files with codesigndoc - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Collecting and exporting code signing files with codesigndoc
 						
 					</div>
 				</div>
@@ -780,7 +780,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/code-signing/ios-code-signing/collecting-files-with-codesigndoc" title="Collecting and exporting code signing files with codesigndoc">Collecting and exporting code signing files with codesigndoc</a>
+				<a href="/code-signing/ios-code-signing/collecting-files-with-codesigndoc" title="Collecting and exporting code signing files with codesigndoc" class="current">Collecting and exporting code signing files with codesigndoc</a>
 			
 		
 		
@@ -1764,26 +1764,94 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Collecting and exporting code signing files with codesigndoc</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/code-signing/ios-code-signing/collecting-files-with-codesigndoc.md" target="_blank"></a>
+					</div>
+				
+				<p>The open source <a href="https://github.com/bitrise-tools/codesigndoc">codesigndoc</a>
+tool runs a clean Xcode/Xamarin Studio Archive <em>on your Mac</em>, and analyzes the generated archive file. It collects the code signing settings that Xcode or Xamarin Studio used during the archive process, and prints the list of the required code signing files. You can also search for, export and upload these files using <code class="highlighter-rouge">codesigndoc</code>.</p>
 
-<div class="container">
-  <h1>404</h1>
+<h3 id="collecting-the-files-with-codesigndoc">Collecting the files with codesigndoc <a href="#collecting-the-files-with-codesigndoc" class="anchor-symbol">⚓</a></h3>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<ol>
+  <li>
+    <p>Open the <code class="highlighter-rouge">Terminal</code>.</p>
+  </li>
+  <li>Enter the appropriate one-liner command, depending on your project type.
+    <ul>
+      <li>
+        <p>For an <strong>Xcode</strong> project:</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  bash <span class="nt">-l</span> <span class="nt">-c</span> <span class="s2">"</span><span class="k">$(</span>curl <span class="nt">-sfL</span> https://raw.githubusercontent.com/bitrise-tools/codesigndoc/master/_scripts/install_wrap-xcode.sh<span class="k">)</span><span class="s2">"</span>
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>For a <strong>Xamarin</strong> project:</p>
+
+        <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  bash <span class="nt">-l</span> <span class="nt">-c</span> <span class="s2">"</span><span class="k">$(</span>curl <span class="nt">-sfL</span> https://raw.githubusercontent.com/bitrise-tools/codesigndoc/master/_scripts/install_wrap-xamarin.sh<span class="k">)</span><span class="s2">"</span>
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>Open your <code class="highlighter-rouge">Finder.app</code> and drag-and-drop your project’s <code class="highlighter-rouge">.xcodeproj</code> or <code class="highlighter-rouge">.xcworkspace</code> file into the command line in your <code class="highlighter-rouge">Terminal</code>.</li>
+</ol>
+
+<h3 id="uploading-the-files-to-bitrise-with-codesigndoc">Uploading the files to Bitrise with codesigndoc <a href="#uploading-the-files-to-bitrise-with-codesigndoc" class="anchor-symbol">⚓</a></h3>
+
+<ol>
+  <li>
+    <p>Once the code signing files are collected, <code class="highlighter-rouge">codesigndoc</code> will ask if you wish to upload the files to Bitrise:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> Do you want to upload the provisioning profiles and certificates to Bitrise? [yes/no] :
+</code></pre></div>    </div>
+
+    <p>If you wish to upload the files with <code class="highlighter-rouge">codesigndoc</code>, type <code class="highlighter-rouge">yes</code> and press <code class="highlighter-rouge">Enter</code>.</p>
+  </li>
+  <li>
+    <p>Provide your Bitrise access token.</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> Please copy your personal access token to Bitrise.
+ (To acquire a Personal Access Token for your user, sign in with that user on bitrise.io,
+ go to your Account Settings page, and select the Security tab on the left side.) :
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Select the Bitrise project as a target for the collected files:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> Fetching your application list from Bitrise...
+ Select the app which you want to upload the provisioning profiles
+ Please select from the list:
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>That’s all, you are done!</p>
+
+<p>If you wish to use automatic provisioning with our <code class="highlighter-rouge">iOS Auto Provisioning</code> step, you only need to collect the certificate file(s). You can run <code class="highlighter-rouge">codesigndoc scan</code> with the <code class="highlighter-rouge">--certs-only</code> flag to do that.</p>
+
+<p>You can also install and run <code class="highlighter-rouge">codesigndoc</code> manually. For more information, check out the <a href="https://github.com/bitrise-tools/codesigndoc">tool’s Readme</a>!</p>
+
+<p>!!! tip “Troubleshooting: ensure the correct state of the code”
+    You get the most accurate result if you run <code class="highlighter-rouge">codesigndoc</code> on the same state of your
+    repository/code which is available after a clean <code class="highlighter-rouge">git clone</code>, as that will
+    be the state of the code after the build server checks it out (for example,
+    you might have files on your Mac which are in <code class="highlighter-rouge">.gitignore</code>, so it exists
+    on your Mac but not in the repository or after a <code class="highlighter-rouge">git clone</code> on a new Mac).</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>So, for the best results, we recommend you to:
+1. __Do a clean `git clone` of the repository__ (into a new directory) on your Mac.
+
+2. Run `codesigndoc` in this directory (not in the directory
+   where you usually work on the project).
+</code></pre></div></div>
+
+<p>!!! tip “Troubleshooting: make sure you can export an IPA from Xcode.app”
+    It’s also advised to do a full Archive + Export (until you get a signed <code class="highlighter-rouge">.ipa</code>)
+    of your project from <code class="highlighter-rouge">Xcode.app</code> first, and run <code class="highlighter-rouge">codesigndoc</code> <strong>after that</strong>.
+    The reason is that <code class="highlighter-rouge">Xcode.app</code> might download or update profiles in the background
+    during the IPA export. If you run <code class="highlighter-rouge">codesigndoc</code> after you exported an <code class="highlighter-rouge">.ipa</code>
+    from Xcode, <code class="highlighter-rouge">codesigndoc</code> will able to collect all the files.</p>
 
 			</main>
 		</div>

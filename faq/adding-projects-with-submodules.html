@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Adding projects with submodules or with private CocoaPods repos - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Adding projects with submodules or with private CocoaPods repos
 						
 					</div>
 				</div>
@@ -1521,7 +1521,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/faq/adding-projects-with-submodules" title="Adding projects with submodules or with private CocoaPods repos">Adding projects with submodules or with private CocoaPods repos</a>
+				<a href="/faq/adding-projects-with-submodules" title="Adding projects with submodules or with private CocoaPods repos" class="current">Adding projects with submodules or with private CocoaPods repos</a>
 			
 		
 		
@@ -1764,26 +1764,79 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Adding projects with submodules or with private CocoaPods repos</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/faq/adding-projects-with-submodules.md" target="_blank"></a>
+					</div>
+				
+				<p>If you have a project with one or more submodules
+or other private repository dependencies (for example, CocoaPods repositories), you have to grant access to all repositories for a successful build.</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>There are two ways to achieve this:</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<ul>
+  <li>
+    <p>Register <strong>the same SSH key</strong> for every repository you have to access during the build,
+as “Deployment keys”. This is the best, most secure way but not supported by all git hosting services (GitHub, for example, doesn’t support it).</p>
+  </li>
+  <li>
+    <p>Register an SSH key for a user account. Simply add a “bot” / “machine” user with the SSH key to the repositories. <strong>Add the SSH key you would like to use to the user and add the user to the projects</strong>. It is enough to assign <em>read</em> permissions to the bot user. After that, you can use the SSH key to clone to the repository or any submodule.</p>
+  </li>
+</ul>
+
+<p>!!! note
+    It is not required to use a special “bot” / “machine” user: you can add the
+    SSH key to your own account on the git hosting service. The best practice, however, is
+    to use a machine user, with <strong>read only</strong> access, for those repositories you want to access during the build.</p>
+
+<p><a href="https://developer.github.com/v3/guides/managing-deploy-keys/#machine-users">GitHub itself recommends this method</a> for accessing multiple repositories.</p>
+
+<p>On GitLab and Bitbucket it’s possible to register a single SSH key
+as a “Deployment key” to multiple repositories, without the need to create a “bot” / “machine” user.</p>
+
+<h2 id="git-cloning-submodules-and-repository-dependencies">Git cloning submodules and repository dependencies <a href="#git-cloning-submodules-and-repository-dependencies" class="anchor-symbol">⚓</a></h2>
+
+<p>There is one important detail to keep in mind when you want to give access to all submodules or private repository dependencies for an app: the app’s privacy settings determine what git URL should you use.</p>
+
+<ul>
+  <li>
+    <p>If you have a <strong>private</strong> app: <strong>use SSH URLs everywhere!</strong> Most services support SSH key based authentication <strong>only</strong> for SSH URLs
+(for example, <code class="highlighter-rouge">git@github.com:bitrise-io/bitrise.git</code>).
+Therefore <strong>every private repository you want to use have to be addressed with the SSH URL</strong>.
+If you have direct private git repo references in your CocoaPods <code class="highlighter-rouge">Podfile</code> you’ll have to
+use the SSH URL there as well! The same applies for submodules and every other private
+git repository URL you want to use with the SSH key you register on <a href="https://www.bitrise.io/">Bitrise.io</a>!</p>
+  </li>
+  <li>
+    <p>If you have a <strong>public</strong> app: <strong>use HTTPS URLs everywhere!</strong> SSH URLs require SSH keys even if the repository is public. For security reasons, public apps CANNOT have SSH keys. As HTTPS git clone URLs do not require any authentication in the case of public repositories, they should be used for public Bitrise apps.</p>
+  </li>
+</ul>
+
+<h2 id="creating-ssh-keys-for-a-new-private-app">Creating SSH keys for a new private app <a href="#creating-ssh-keys-for-a-new-private-app" class="anchor-symbol">⚓</a></h2>
+
+<p>There are three options to grant <a href="https://www.bitrise.io">Bitrise</a> access to your repository:</p>
+
+<ul>
+  <li><em>Auto-add SSH keypair</em>: <strong>Don’t use this option if you use submodules.</strong>
+This option adds the SSH key to the main repository only.</li>
+  <li><em>Generate SSH keypair</em>: this generates a key for you on the <a href="https://www.bitrise.io">Bitrise</a> website and you will have to copy it manually to the given user.
+<strong>This is the recommended option if you want to use submodules or have to access multiple repositories during your build.</strong></li>
+  <li><em>Use your own SSH keypair</em>: can be used if you also have the private key of the given user.
+You just have to paste the private key and <a href="https://www.bitrise.io">Bitrise</a> will be able to access the repositories.
+<strong>Keep in mind that the SSH key has to be an RSA key, without a passphrase!</strong>
+You can find an example of how you can generate a key like that <a href="/faq/how-to-generate-ssh-keypair/">here</a>.</li>
+</ul>
+
+<h2 id="managing-ssh-keys-of-an-existing-private-app">Managing SSH keys of an existing private app <a href="#managing-ssh-keys-of-an-existing-private-app" class="anchor-symbol">⚓</a></h2>
+
+<p>You can find the public SSH key of the app in the <code class="highlighter-rouge">Settings</code> of the given
+app on <a href="https://www.bitrise.io">Bitrise</a>. Scroll down to the <code class="highlighter-rouge">SSH settings</code> section
+and click <code class="highlighter-rouge">Show SSH Public Key</code>.</p>
+
+<p>Copy the key to the given user and you are ready to build!</p>
+
+<p>If necessary, update the given app’s SSH key by clicking the <code class="highlighter-rouge">Change SSH Keypair</code> button
+and choosing one of the three options.</p>
 
 			</main>
 		</div>

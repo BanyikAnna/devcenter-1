@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Workflow Editor doesn't load - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Workflow Editor doesn't load
 						
 					</div>
 				</div>
@@ -1626,7 +1626,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/troubleshooting/workflow-editor-doesnt-load" title="Workflow Editor doesn't load">Workflow Editor doesn't load</a>
+				<a href="/troubleshooting/workflow-editor-doesnt-load" title="Workflow Editor doesn't load" class="current">Workflow Editor doesn't load</a>
 			
 		
 		
@@ -1764,26 +1764,30 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Workflow Editor doesn't load</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/troubleshooting/workflow-editor-doesnt-load.md" target="_blank"></a>
+					</div>
+				
+				<p>This can happen if you modified the <code class="highlighter-rouge">bitrise.yml</code> / workflow configuration in a way which crashes the Workflow Editor UI.</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>If this would happen please <a href="https://www.bitrise.io/contact">contact us</a> so we can fix the issue in the UI code,
+then you can fix the <code class="highlighter-rouge">bitrise.yml</code> through our API.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>You can find an example of how the API works <a href="https://github.com/bitrise-io/bitrise/blob/master/_examples/experimentals/upload_download_bitrise_io/bitrise.yml">on GitHub</a>.
+In short, you can use a simple <code class="highlighter-rouge">curl</code> call to download &amp; to upload an app’s config / <code class="highlighter-rouge">bitrise.yml</code> to <a href="https://www.bitrise.io">bitrise.io</a>.</p>
+
+<p>With the Bitrise API you can download the <code class="highlighter-rouge">bitrise.yml</code> from <a href="https://www.bitrise.io">bitrise.io</a> even if it breaks the Workflow Editor UI,
+fix it locally and then upload the fixed <code class="highlighter-rouge">bitrise.yml</code> with another API call. For this all you need is a Personal Access Token, which you can generate on your <a href="https://www.bitrise.io/me/profile#/security">account’s security tab</a>.</p>
+
+<p>To download the <code class="highlighter-rouge">bitrise.yml</code> please check the <a href="/api/v0.1/#get-appsapp-slugbitriseyml">related section of the Bitrise API documentation</a>.</p>
+
+<p>Save the <code class="highlighter-rouge">bitrise.yml</code> into a file, fix it, then you can upload it with another <code class="highlighter-rouge">curl</code> call.</p>
+
+<p>To upload the <code class="highlighter-rouge">bitrise.yml</code> please also follow the <a href="/api/v0.1/#post-appsapp-slugbitriseyml">related part of the Bitrise API documentation</a>.</p>
+
+<p><em>Note: make sure that you set the right <code class="highlighter-rouge">path/to/bitrise.yml</code> - specify the path of
+the <code class="highlighter-rouge">bitrise.yml</code> file where you saved the fixed <code class="highlighter-rouge">bitrise.yml</code>!</em></p>
 
 			</main>
 		</div>

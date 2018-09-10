@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Reporting the build status to your git hosting provider - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Reporting the build status to your git hosting provider
 						
 					</div>
 				</div>
@@ -618,7 +618,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/builds/triggering-builds/status-reporting" title="Reporting the build status to your git hosting provider">Reporting the build status to your git hosting provider</a>
+				<a href="/builds/triggering-builds/status-reporting" title="Reporting the build status to your git hosting provider" class="current">Reporting the build status to your git hosting provider</a>
 			
 		
 		
@@ -1764,26 +1764,35 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Reporting the build status to your git hosting provider</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/builds/triggering-builds/status-reporting.md" target="_blank"></a>
+					</div>
+				
+				<p>Bitrise can push back build status reports to your git hosting provider (GitHub/GitLab/Bitbucket). You only need to authenticate Bitrise to communicate towards the git hosting service. Apart from build status reports, this enables other operations, such as auto-registering SSH keys or Webhooks.</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>To do this, you need to specify a Service Credential User on the <code class="highlighter-rouge">Team</code> tab of your app on <a href="https://www.bitrise.io">bitrise.io</a>. You also need to make sure that this user has a connected account with the git hosting service of your choice on <a href="https://www.bitrise.io">bitrise.io</a>. This account will be used by Bitrise to communicate with the API of the git hosting provider.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>Please note that status reports are sent only for automatically triggered builds, such as builds triggered by a code push or a pull request.</p>
+
+<ol>
+  <li>
+    <p>Make sure the account you wish to use is connected to the relevant hosting provider: go to the <code class="highlighter-rouge">Account settings</code> page of the account and check the <code class="highlighter-rouge">CONNECTED ACCOUNTS</code> menu on the left side.</p>
+
+    <p><img src="/img/getting-started/triggering-builds/connected-account.png" alt="Connected account" /></p>
+  </li>
+  <li>
+    <p>Go to the <code class="highlighter-rouge">Team</code> tab of your app on <a href="https://www.bitrise.io">bitrise.io</a>.</p>
+  </li>
+  <li>
+    <p>Find the <code class="highlighter-rouge">Service credential User</code> menu and select the user with the connected account.</p>
+
+    <p><img src="/img/getting-started/triggering-builds/service-credential.png" alt="Service credential user" /></p>
+  </li>
+  <li>
+    <p>Click the <code class="highlighter-rouge">Test the git connection</code> button to make sure the selected user’s connection can be used for sending back the build status to the hosting provider.</p>
+  </li>
+</ol>
 
 			</main>
 		</div>

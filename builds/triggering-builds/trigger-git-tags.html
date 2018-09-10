@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Triggering builds with Git Tags - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Triggering builds with Git Tags
 						
 					</div>
 				</div>
@@ -600,7 +600,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/builds/triggering-builds/trigger-git-tags" title="Triggering builds with Git Tags">Triggering builds with Git Tags</a>
+				<a href="/builds/triggering-builds/trigger-git-tags" title="Triggering builds with Git Tags" class="current">Triggering builds with Git Tags</a>
 			
 		
 		
@@ -1764,26 +1764,48 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Triggering builds with Git Tags</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/builds/triggering-builds/trigger-git-tags.md" target="_blank"></a>
+					</div>
+				
+				<p>You can specify a pattern for your Git Tags to trigger a specific workflow. This is a good way to build and deploy your app in a specific state. And it’s very easy to set up!</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>Note that this requires an incoming webhook set up with the hosting service of your repository. Read more in the <a href="/webhooks">Webhooks</a> section.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>!!! note “Enabling Tag Push”
+    Certain providers, such as GitLab, require Tag Push events to be specifically enabled in the webhook setup.</p>
+
+<ol>
+  <li>
+    <p>Open your app on <a href="hhtps://www.bitrise.io">bitrise.io</a>.</p>
+  </li>
+  <li>
+    <p>Open the <code class="highlighter-rouge">Workflow Editor</code>.</p>
+  </li>
+  <li>
+    <p>Select the <code class="highlighter-rouge">Triggers</code> tab.</p>
+  </li>
+  <li>
+    <p>Select the <code class="highlighter-rouge">TAG</code> option.</p>
+
+    <p><img src="/img/getting-started/triggering-builds/tag-trigger.png" alt="Tag trigger" /></p>
+  </li>
+  <li>
+    <p>Click <code class="highlighter-rouge">+ ADD TRIGGER</code>.</p>
+  </li>
+  <li>
+    <p>In the <code class="highlighter-rouge">TAG</code> window, add the tag that you wish to trigger a build.</p>
+  </li>
+  <li>
+    <p>Select the workflow you wish to trigger (for example, <code class="highlighter-rouge">primary</code>).</p>
+  </li>
+  <li>
+    <p>Click <code class="highlighter-rouge">Save</code> in the top right corner.</p>
+  </li>
+</ol>
+
+<p>And you’re done!</p>
 
 			</main>
 		</div>

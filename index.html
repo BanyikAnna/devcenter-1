@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Bitrise DevCenter - What is Bitrise?
 						
 					</div>
 				</div>
@@ -63,7 +63,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/index" title="Bitrise DevCenter - What is Bitrise?">Bitrise DevCenter - What is Bitrise?</a>
+				<a href="/index" title="Bitrise DevCenter - What is Bitrise?" class="current">Bitrise DevCenter - What is Bitrise?</a>
 			
 		
 		
@@ -1764,26 +1764,52 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Bitrise DevCenter - What is Bitrise?</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/index.md" target="_blank"></a>
+					</div>
+				
+				<p><strong>Bitrise</strong> is a <a href="https://en.wikipedia.org/wiki/Continuous_integration">Continuous Integration</a>
+and <a href="https://en.wikipedia.org/wiki/Continuous_delivery">Delivery</a> (CI/CD) Platform as a Service (PaaS)
+with a main focus on mobile app development (<code class="highlighter-rouge">iOS</code>, <code class="highlighter-rouge">Android</code>, <code class="highlighter-rouge">Xamarin</code>, …). It is a collection of tools and services to help you with the development and automation of your software projectz</p>
 
-<div class="container">
-  <h1>404</h1>
+<p><strong>Automate the testing and deployment of your apps with just a few clicks.</strong></p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<h2 id="run-your-builds-on-bitriseio">Run your builds on bitrise.io <a href="#run-your-builds-on-bitriseio" class="anchor-symbol">⚓</a></h2>
+
+<p>You can run a build of your app on Bitrise by defining a <code class="highlighter-rouge">Workflow</code>. A <code class="highlighter-rouge">Workflow</code> consists of one or more build <code class="highlighter-rouge">Steps</code> (open source git repositories
+which can be executed with the <a href="https://www.bitrise.io/cli">open source Bitrise CLI</a>).
+<a href="https://github.com/bitrise-steplib/step-template">You can create and share your own build Steps too</a>.
+You are able to define more workflows for the very same app,
+and define <a href="https://bitrise-io.github.io/devcenter/webhooks/trigger-map/">triggers</a> to specify which workflow should be selected for
+each trigger.</p>
+
+<p>The steps can do anything that can be implemented by command line scripts / programs:
+send emails, <a href="https://github.com/bitrise-io/steps-sms-text-message">text messages</a>,
+pass values to each other, <a href="https://github.com/bitrise-io/steps-xcode-archive">create Xcode archives</a>,
+gather system information about the Virtual Machine
+running the build, notify other users (e.g. on Slack)
+or even <a href="https://github.com/bitrise-io/steps-deploy-to-itunesconnect-deliver">publish to iTunes Connect</a>, and many more.
+You can read more at <a href="/getting-started/builds-and-workflows">Builds and Workflows</a>.</p>
+
+<p>When you trigger a build a Virtual Machine is assigned to host
+your build and your defined Workflow (series of build Steps) will be executed, step by step.</p>
+
+<p>After a build is finished the Virtual Machine is destroyed and you can browse
+the logs of every step that ran during the workflow.
+You can read more at <a href="/getting-started/code-security">Code Security</a>.</p>
+
+<h2 id="bitrise-cli---the-open-source-offline-automation-runner">Bitrise CLI - the open source, offline, automation runner <a href="#bitrise-cli---the-open-source-offline-automation-runner" class="anchor-symbol">⚓</a></h2>
+
+<p>To run a <code class="highlighter-rouge">bitrise</code> build on your machine, you can install our <a href="https://www.bitrise.io/cli">open source runner</a>
+and use the <code class="highlighter-rouge">bitrise</code> command to execute your workflows locally.
+<em>No</em> <a href="https://www.bitrise.io"><em>bitrise.io</em></a> <em>account required to use the Bitrise CLI.</em></p>
+
+<p>It’s a great help when you’re developing steps, debugging builds,
+or just want to use Bitrise for <em>any kind of automation</em> on your machine.</p>
+
+<p>You can find more information about the offline runner
+in the <a href="/bitrise-cli/">Bitrise CLI and bitrise.yml</a> section of the DevCenter.</p>
 
 			</main>
 		</div>

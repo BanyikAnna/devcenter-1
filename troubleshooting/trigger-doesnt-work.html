@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Build Trigger does not work - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Build Trigger does not work
 						
 					</div>
 				</div>
@@ -1662,7 +1662,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/troubleshooting/trigger-doesnt-work" title="Build Trigger does not work">Build Trigger does not work</a>
+				<a href="/troubleshooting/trigger-doesnt-work" title="Build Trigger does not work" class="current">Build Trigger does not work</a>
 			
 		
 		
@@ -1764,26 +1764,37 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Build Trigger does not work</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/troubleshooting/trigger-doesnt-work.md" target="_blank"></a>
+					</div>
+				
+				<p>Unfortunately, it can happen that your build triggers do not trigger a build automatically on Bitrise. There are many potential issues that can stop your builds - let’s take a look!</p>
 
-<div class="container">
-  <h1>404</h1>
+<ol>
+  <li>
+    <p>Check your webhooks.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+    <p>Check that you have the webhook set up correctly. You can find out the webhook URL for your repository’s hosting provider on the <code class="highlighter-rouge">Code</code> tab of your app and you can check in your repository’s settings if they match.</p>
+
+    <p>Also, you have to enable the specific event that you would like to trigger a build. For example, if your repository is hosted at GitLab and you wish to trigger builds with Git Tags, you must enable Tag Push events in your GitLab webhook.</p>
+
+    <p>Check in your repository’s settings if there are any error messages regarding the delivery attempts related to your webhook.</p>
+
+    <p>For more information about potential issues with webhooks, check out <a href="/webhooks/troubleshooting">Webhook troubleshooting</a></p>
+  </li>
+  <li>
+    <p>Check the branch names and tags you set up with the trigger on bitrise.io.</p>
+
+    <p>For example, if you accidentally typed <code class="highlighter-rouge">msater</code> instead of <code class="highlighter-rouge">master</code>, no build will be triggered.</p>
+  </li>
+  <li>
+    <p>Check if you previously enabled Selective Builds for the app. You can find the option on your app’s <code class="highlighter-rouge">Settings</code> page. With this feature, you can set that a build should be triggered only if certain files or folders have been changed.</p>
+  </li>
+  <li>
+    <p>Check the status page of your repository’s hosting provider to see if there are any known issues.</p>
+  </li>
+</ol>
 
 			</main>
 		</div>

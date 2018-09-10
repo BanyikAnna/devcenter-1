@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Run your first build - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Run your first build
 						
 					</div>
 				</div>
@@ -978,7 +978,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/bitrise-cli/run-your-first-build" title="Run your first build">Run your first build</a>
+				<a href="/bitrise-cli/run-your-first-build" title="Run your first build" class="current">Run your first build</a>
 			
 		
 		
@@ -1764,26 +1764,51 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Run your first build</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/bitrise-cli/run-your-first-build.md" target="_blank"></a>
+					</div>
+				
+				<p>To run your Bitrise build you only need two things:</p>
 
-<div class="container">
-  <h1>404</h1>
+<ol>
+  <li>The Bitrise CLI - <a href="/bitrise-cli/installation/">installation guide</a></li>
+  <li>A build configuration (<code class="highlighter-rouge">bitrise.yml</code>)</li>
+</ol>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>Once you have the Bitrise CLI installed (just run <code class="highlighter-rouge">bitrise setup</code> to validate
+the installation) you just have to create the <code class="highlighter-rouge">bitrise.yml</code> build configuration,
+and you’re ready to go!</p>
+
+<p>If you use <a href="https://www.bitrise.io">bitrise.io</a>, you can download your app’s <code class="highlighter-rouge">bitrise.yml</code> right from
+<a href="https://www.bitrise.io">bitrise.io</a>, and run the build locally. The <code class="highlighter-rouge">bitrise.yml</code> can be found
+in the Workflow Editor of the app on <a href="https://www.bitrise.io">bitrise.io</a>, under the <code class="highlighter-rouge">bitrise.yml</code> section.</p>
+
+<p>If you want to create a <code class="highlighter-rouge">bitrise.yml</code> yourself, simply create a <code class="highlighter-rouge">bitrise.yml</code> file
+in the root of your project. You can use this as the base content of <code class="highlighter-rouge">bitrise.yml</code>:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">format_version</span><span class="pi">:</span> <span class="s">1.3.1</span>
+<span class="na">default_step_lib_source</span><span class="pi">:</span> <span class="s">https://github.com/bitrise-io/bitrise-steplib.git</span>
+
+<span class="na">app</span><span class="pi">:</span>
+  <span class="na">envs</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">MY_NAME</span><span class="pi">:</span> <span class="s">My Name</span>
+
+<span class="na">workflows</span><span class="pi">:</span>
+  <span class="na">test</span><span class="pi">:</span>
+    <span class="na">steps</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">script@1.1.3</span><span class="pi">:</span>
+        <span class="na">inputs</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">content</span><span class="pi">:</span> <span class="s">echo "Hello ${MY_NAME}!"</span>
+</code></pre></div></div>
+
+<p>To run this build open your Terminal / Command Line, <code class="highlighter-rouge">cd</code> into the directory where
+you saved the <code class="highlighter-rouge">bitrise.yml</code>, and run: <code class="highlighter-rouge">bitrise run test</code>.</p>
+
+<p>That’s all, you just ran your first build with the Bitrise CLI!</p>
+
+<p>Read on to learn more about how the Bitrise CLI and the <code class="highlighter-rouge">bitrise.yml</code> configuration works,
+you’ll be able to compose and run complex builds in no time!</p>
 
 			</main>
 		</div>

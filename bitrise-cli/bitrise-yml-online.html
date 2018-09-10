@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				bitrise.yml online - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							bitrise.yml online
 						
 					</div>
 				</div>
@@ -996,7 +996,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/bitrise-cli/bitrise-yml-online" title="bitrise.yml online">bitrise.yml online</a>
+				<a href="/bitrise-cli/bitrise-yml-online" title="bitrise.yml online" class="current">bitrise.yml online</a>
 			
 		
 		
@@ -1764,26 +1764,89 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>bitrise.yml online</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/bitrise-cli/bitrise-yml-online.md" target="_blank"></a>
+					</div>
+				
+				<p>Every bitrise.yml file is stored for your builds on <a href="https://www.bitrise.io">bitrise.io</a>. They come in handy when you’d like to check the configuration with which a specific build has run. To do that, you can either use the online <code class="highlighter-rouge">Workflow Editor</code> or your build’s online bitrise.yml file. If you choose the latter, you can compare changes, restore the current build to the original version, edit the config, and download the file to your Mac/PC.</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>!!! tip “Using filters on your Builds Board”
+    If an app has multiple builds on <a href="https://www.bitrise.io">bitrise.io</a> and you want to pick a specific build out of those, then these filters will help you a lot. Click on your app in your <code class="highlighter-rouge">Dashboard</code> and use the following fields:</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>* You can search for a build number or commit message in the `Try build number or commit message` grey field.
+
+* You can pick which of these triggers was used for your build: `Pushes`, `Pull Requests`, `Tags` or all of these.
+
+* You can pick which `branch` the build was started on.
+
+* You can select either the `primary` or the `deploy workflow` of the build.
+</code></pre></div></div>
+
+<p><img src="/img/bitrise-cli-bitrise-yml/build-filters.png" alt="Screenshot" /></p>
+
+<h2 id="accessing-a-builds-bitriseyml">Accessing a build’s bitrise.yml <a href="#accessing-a-builds-bitriseyml" class="anchor-symbol">⚓</a></h2>
+
+<ol>
+  <li>
+    <p>Select an application on your <code class="highlighter-rouge">Dashboard</code> and select one of its builds.</p>
+  </li>
+  <li>
+    <p>Click the <code class="highlighter-rouge">Show bitrise.yml</code> button at the top OR at the bottom of your inline log.
+You should see your build’s bitrise.yml content displayed in ace editor but it’s not editable here. See where you can <a href="#editing-and-downloading-bitriseyml-online">edit the bitrise.yml online</a>.</p>
+  </li>
+</ol>
+
+<h2 id="checking-changes-in-bitriseyml-online">Checking changes in bitrise.yml online <a href="#checking-changes-in-bitriseyml-online" class="anchor-symbol">⚓</a></h2>
+
+<p>Once you’ve clicked <code class="highlighter-rouge">Show bitrise.yml</code>, you will see the <code class="highlighter-rouge">BUILD'S BITRISE YML</code> pop-up window displaying your builds’ configuration details. If the <code class="highlighter-rouge">build's bitrise.yml</code> content differs from the <code class="highlighter-rouge">current build's bitrise.yml</code>, you will see two editors displayed side-by-side in the <code class="highlighter-rouge">BITRISE.YML CHANGES</code> pop-up window. The differences between the builds are highlighted in the following colors:</p>
+
+<ul>
+  <li>
+    <p>green means added content</p>
+  </li>
+  <li>
+    <p>blue means modified content</p>
+  </li>
+  <li>
+    <p>orange means deleted content</p>
+  </li>
+</ul>
+
+<p><img src="/img/bitrise-cli-bitrise-yml/bitrise-yml-changes.png" alt="Screenshot" /></p>
+
+<h2 id="restoring-and-undoing-changes-in-bitriseyml-online">Restoring and undoing changes in bitrise.yml online <a href="#restoring-and-undoing-changes-in-bitriseyml-online" class="anchor-symbol">⚓</a></h2>
+
+<p>If you don’t like the changes made to your <em>current</em> bitrise.yml, you can easily restore it to the build’s original bitrise.yml.</p>
+
+<ol>
+  <li>
+    <p>Click the <code class="highlighter-rouge">Show bitrise.yml</code> button at the top OR at the bottom of your inline log on <a href="https://www.bitrise.io/">bitrise.io</a>.</p>
+  </li>
+  <li>
+    <p>In the <code class="highlighter-rouge">BITRISE.YML CHANGES</code> pop-up window, click the orange <code class="highlighter-rouge">Restore</code> button.</p>
+  </li>
+  <li>
+    <p>Hit <code class="highlighter-rouge">OK</code> in the <code class="highlighter-rouge">Are you sure?</code> pop-up window to confirm and override the current bitrise.yml.</p>
+  </li>
+</ol>
+
+<p><img src="/img/bitrise-cli-bitrise-yml/confirm-bitrise-yml-changes.png" alt="Screenshot" /></p>
+
+<h2 id="editing-and-downloading-bitriseyml-online">Editing and downloading bitrise.yml online <a href="#editing-and-downloading-bitriseyml-online" class="anchor-symbol">⚓</a></h2>
+
+<p>You can <strong>edit</strong> your build config in yml format in the <code class="highlighter-rouge">bitrise.yml editor</code> if you go to your app’s <code class="highlighter-rouge">Workflow Editor</code> and click the <code class="highlighter-rouge">bitrise.yml</code> tab.</p>
+
+<ul>
+  <li>press <code class="highlighter-rouge">F1</code> for the full command list</li>
+  <li>fold and unfold with the <code class="highlighter-rouge">-</code> and <code class="highlighter-rouge">+</code> signs</li>
+  <li>press <code class="highlighter-rouge">Ctrl</code>/<code class="highlighter-rouge">Cmd</code> + <code class="highlighter-rouge">F</code> for search and replace where you can search with <code class="highlighter-rouge">RegExp</code>, <code class="highlighter-rouge">Match Whole Word</code>, case-sensitive, case-insensitive, or to search only in the selected section</li>
+  <li>use the <code class="highlighter-rouge">preview sidebar</code> on the right for easier navigation</li>
+</ul>
+
+<p>You can <strong>save</strong> or <strong>discard</strong> any changes you have made with the config. If you click <code class="highlighter-rouge">Download currently saved config</code>, you can <strong>download</strong> this YML version to your own computer and run it with bitrise CLI on your Mac/PC.</p>
+
+<p>You might want to <strong>clone</strong> this whole YML configuration or just part of it to another app, so that you can use the copied version as a base and extend it with a few extra steps. All you have to do is copy this bitrise.yml content and paste it into the new app’s bitrise.yml editor and develop it further.</p>
 
 			</main>
 		</div>

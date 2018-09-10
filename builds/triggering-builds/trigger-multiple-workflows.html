@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Starting parallel builds with a single trigger - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Starting parallel builds with a single trigger
 						
 					</div>
 				</div>
@@ -609,7 +609,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/builds/triggering-builds/trigger-multiple-workflows" title="Starting parallel builds with a single trigger">Starting parallel builds with a single trigger</a>
+				<a href="/builds/triggering-builds/trigger-multiple-workflows" title="Starting parallel builds with a single trigger" class="current">Starting parallel builds with a single trigger</a>
 			
 		
 		
@@ -1764,26 +1764,74 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Starting parallel builds with a single trigger</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/builds/triggering-builds/trigger-multiple-workflows.md" target="_blank"></a>
+					</div>
+				
+				<p>If you have more than one concurrency, you can run more than one build simultaneously. And since we want to make life as easy for you as possible, these builds can be started automatically, with a single trigger. Let’s go through how it works!</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>In the example, we have three workflows of a single app set up to run at the same time. Let’s call these workflows <code class="highlighter-rouge">Trigger</code>, <code class="highlighter-rouge">Building</code> and <code class="highlighter-rouge">Testing</code>. The workflow called <code class="highlighter-rouge">Trigger</code> will be triggered by a pull request, and then the workflow will trigger <code class="highlighter-rouge">Building</code> and <code class="highlighter-rouge">Testing</code> which will run simultaneously.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>All workflows run on separate, “clean” Virtual Machines. They can also run on different types of stacks: to choose the stack for any workflow, enter the <code class="highlighter-rouge">Workflow Editor</code> of the app and select the <code class="highlighter-rouge">Stack</code> tab.</p>
+
+<p>If any of the builds fail, the build will be considered a failed build. If the build is triggered by a webhook, Bitrise will send a summarized build result to the Git hosting provider. If <strong>any</strong> of the parallel builds fail, a failed status will be reported.</p>
+
+<p>!!! info “What you need”
+    - a Personal Access Token
+    - a Secret Environment Variable storing the token
+    - the <code class="highlighter-rouge">Bitrise Start Build</code> step
+    - the <code class="highlighter-rouge">Bitrise Wait for Build</code> step</p>
+
+<ol>
+  <li>
+    <p>Create a <strong>Personal Access Token</strong> for your user.</p>
+
+    <p>Go to <code class="highlighter-rouge">Account settings</code> and select the <code class="highlighter-rouge">Security</code> option on the left side. Click the <code class="highlighter-rouge">Generate new</code> button.</p>
+
+    <p><img src="/img/getting-started/triggering-builds/generate-token.png" alt="Access token" /></p>
+
+    <p>!!! attention
+     Make sure to copy the code once it is generated. You will not be able to see it again!</p>
+  </li>
+  <li>
+    <p>Create a Secret Environment Variable on the <code class="highlighter-rouge">Secrets</code> tab of the app’s <code class="highlighter-rouge">Workflow Editor</code> and add the token as its value.</p>
+
+    <p><img src="/img/getting-started/triggering-builds/secret_token.png" alt="Secret env" /></p>
+
+    <p>!!! note “Secret env key”
+     Feel free to use any key you wish for the secret. We recommend something simple like <code class="highlighter-rouge">$ACCESS_TOKEN</code>.</p>
+  </li>
+  <li>
+    <p>Add the <code class="highlighter-rouge">Bitrise Start Build</code> step to the <code class="highlighter-rouge">Trigger</code> workflow.</p>
+
+    <p>!!! info “Build numbering”
+     The <code class="highlighter-rouge">Bitrise Start Build</code> step will set an environment variable to all builds it starts: <code class="highlighter-rouge">$SOURCE_BITRISE_BUILD_NUMBER</code>. This means that all builds of the app started by this step will have the same build number despite running with different workflows.</p>
+  </li>
+  <li>
+    <p>Add the secret env storing your personal access token to the <code class="highlighter-rouge">Bitrise Access Token</code> input of the step: click the <code class="highlighter-rouge">Insert variable</code> button and choose the key you created.</p>
+
+    <p><img src="/img/getting-started/triggering-builds/access-token-input.png" alt="Secret env" /></p>
+  </li>
+  <li>
+    <p>Find the <code class="highlighter-rouge">Workflows</code> input of the step, and add <code class="highlighter-rouge">Building</code> and <code class="highlighter-rouge">Testing</code> to it.</p>
+
+    <p><img src="/img/getting-started/triggering-builds/workflows-input.png" alt="Workflows input" /></p>
+  </li>
+  <li>
+    <p>Add the <code class="highlighter-rouge">Bitrise Wait for Build</code> step as the <strong>last step</strong> of the <code class="highlighter-rouge">Trigger</code> workflow.</p>
+
+    <p>!!! info “The <code class="highlighter-rouge">Bitrise Wait for Build</code> step”
+     The step checks statuses of the builds defined in the step. The builds are defined in the <code class="highlighter-rouge">Build slugs</code> input: the slugs are the output of the <code class="highlighter-rouge">Bitrise Start Build</code> step. As long as the builds defined by the slugs are running, the step will hold the build it is running in. The build will fail if any of the builds included in the step fail.</p>
+  </li>
+  <li>
+    <p>Add the secret env storing your personal access token to the <code class="highlighter-rouge">Bitrise Access Token</code> input of the step: click the <code class="highlighter-rouge">Insert variable</code> button and choose the key you created.</p>
+
+    <p><img src="/img/getting-started/triggering-builds/access-token-input.png" alt="Secret env" /></p>
+  </li>
+</ol>
+
+<p>And you are done! Once you trigger the <code class="highlighter-rouge">Trigger</code> workflow, the <code class="highlighter-rouge">Bitrise Start Build</code> step of the workflow will trigger two more builds running simultaneously. If those two builds are successful, the <code class="highlighter-rouge">Bitrise Wait for Build</code> step lets the first build finish. A single status report is sent to the git hosting provider, regardless whether the build is successful or not.</p>
 
 			</main>
 		</div>

@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Android x86 Emulator - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Android x86 Emulator
 						
 					</div>
 				</div>
@@ -1530,7 +1530,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/faq/android-x86-emulator" title="Android x86 Emulator">Android x86 Emulator</a>
+				<a href="/faq/android-x86-emulator" title="Android x86 Emulator" class="current">Android x86 Emulator</a>
 			
 		
 		
@@ -1764,26 +1764,27 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Android x86 Emulator</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/faq/android-x86-emulator.md" target="_blank"></a>
+					</div>
+				
+				<p>A frequent question is whether it’s possible to run the Android x86 emulator, instead of the ARM emulators.</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>As an experiment we now allow all the required nested virtualization bits for the x86 Android emulators <strong>on the Linux/Android stacks</strong>, which means that we can use the virtualization that the host machine has for running an emulator with x86 architecture, and we can thus skip the slow emulation. This is still 10-15% slower than when run on a physical machine, but it is still much faster than the armv7-a emulator.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p><strong>This feature is only available on the Linux/Android stacks</strong> right now.</p>
+
+<h2 id="alternatives-for-other-stacks">Alternatives (for other stacks) <a href="#alternatives-for-other-stacks" class="anchor-symbol">⚓</a></h2>
+
+<p>For now, the best workaround seems to be <a href="https://www.ravellosystems.com/">Oracle’s Ravello</a> ( <a href="https://www.ravellosystems.com/blog/android-emulator-on-amazon-ec2-and-google-cloud/">a related blog post</a> )
+if you need a full emulator (with UI),
+or <a href="http://robolectric.org/">robolectric</a> for unit tests.</p>
+
+<p>Another alternative might be to use a service like <a href="https://aws.amazon.com/device-farm/">AWS Device Farm</a> or <a href="https://openstf.io/">Open STF</a>,
+where you can run the tests on real devices instead of in an emulator. Bitrise integrations are available for both those services.</p>
+
+<p>If you know about any other, <a href="https://www.bitrise.io/contact">feel free to contact us</a>!</p>
 
 			</main>
 		</div>

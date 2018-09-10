@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				HipChat message with build status and details - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							HipChat message with build status and details
 						
 					</div>
 				</div>
@@ -1269,7 +1269,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/tutorials/hipchat-message" title="HipChat message with build status and details">HipChat message with build status and details</a>
+				<a href="/tutorials/hipchat-message" title="HipChat message with build status and details" class="current">HipChat message with build status and details</a>
 			
 		
 		
@@ -1764,26 +1764,50 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>HipChat message with build status and details</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/tutorials/hipchat-message.md" target="_blank"></a>
+					</div>
+				
+				<p>You can send <a href="https://www.hipchat.com/">HipChat</a> messages during your build.</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>You can, for example, send a <code class="highlighter-rouge">HipChat</code> message with the Build’s <a href="https://www.bitrise.io">bitrise.io</a> URL,
+the build’s status (at the point where you include the HipChat step - usually it’s best to
+make it the very last step of the Workflow) and with the Public Install Page for the app.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>To do this all you have to do is:</p>
+
+<ol>
+  <li>add a <code class="highlighter-rouge">Send HipChat message</code> step to your app’s Workflow, after the <code class="highlighter-rouge">Deploy to Bitrise.io step</code>,</li>
+  <li>fill out the required inputs (authentication token, the room’s ID you want to send the message to,
+color of the message, …),</li>
+  <li>and in the <em>Message</em> input field you can include environment variables
+defined by Bitrise and by the steps which run before the HipChat Message step.</li>
+</ol>
+
+<p>!!! note
+    If you click into any Step input field, an <strong>Insert Variable</strong> button will appear.
+    With this you can insert environment variables defined by Bitrise
+    (for example the App’s title, the Build’s unique ID or the Build’s URL on Bitrise)
+    and environment variables exported by Steps which ran before this step
+    (for example an Xcode Build’s status or the generated IPA path).</p>
+
+<p>Fill out the HipChat steps’ required input fields, and for the HipChat Message
+step’s <code class="highlighter-rouge">Message</code> input include the build’s url with the <code class="highlighter-rouge">$BITRISE_BUILD_URL</code> environment variable,
+the build’s status at that point with the <code class="highlighter-rouge">$BITRISE_BUILD_STATUS</code> variable,
+and the related Public Install Page URL with <code class="highlighter-rouge">$BITRISE_PUBLIC_INSTALL_PAGE_URL</code>.</p>
+
+<p>An example <code class="highlighter-rouge">Message</code> input:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Your build's details can be found at: $BITRISE_BUILD_URL,
+and the Public Install page at: $BITRISE_PUBLIC_INSTALL_PAGE_URL
+
+Build status: $BITRISE_BUILD_STATUS
+</code></pre></div></div>
+
+<p>That’s all. Once you configure your Workflow this way and start a new build,
+you’ll be notified about the build and deploy on HipChat,
+including both the build’s details url and the app’s Public Install Page url.</p>
 
 			</main>
 		</div>

@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Public apps - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Public apps
 						
 					</div>
 				</div>
@@ -297,7 +297,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/adding-a-new-app/public-apps" title="Public apps">Public apps</a>
+				<a href="/adding-a-new-app/public-apps" title="Public apps" class="current">Public apps</a>
 			
 		
 		
@@ -1764,26 +1764,51 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Public apps</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/adding-a-new-app/public-apps.md" target="_blank"></a>
+					</div>
+				
+				<p>Open source projects are great - we all love them! They can be a pain to maintain, however, especially with CI/CD in the picture. That’s why we have introduced the Public Apps feature for Bitrise: to make everyone’s life a lot easier!</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>If your Bitrise app is public, anyone who has the build URL can see the build logs. For example, if the CI status check on GitHub fails on a pull request, anyone can click on the build URL and view the build logs. As such, outside contributors can troubleshoot issues easier, find out why, for example, a pull request of theirs resulted in a failed build. They do not have to be invited to a Bitrise team to be able to view Bitrise logs and they do not need the help of a Bitrise team member, either.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>Of course, this does not mean anyone can do anything with your public app on Bitrise. If the user viewing the logs is not invited to work on the app in some role, they will only be able to:</p>
+
+<ul>
+  <li>view the build logs</li>
+  <li>download the build logs</li>
+  <li>view the build’s <code class="highlighter-rouge">bitrise.yml</code> file.</li>
+</ul>
+
+<p>!!! warning
+    <strong>You can only set an app to public when adding the app to Bitrise!</strong> Once an app has been added, its privacy settings <strong>CANNOT</strong> be changed again.</p>
+
+<h3 id="add-a-new-app-as-public">Add a new app as public <a href="#add-a-new-app-as-public" class="anchor-symbol">⚓</a></h3>
+
+<p>Adding a new app as a public app is incredibly simple: at the start of the process of adding a new app, you will be asked to choose between a private and a public option for the app. Choosing the public option does not change anything about the process itself, it only determines the accessibility of the app.</p>
+
+<ol>
+  <li>
+    <p>Click the <code class="highlighter-rouge">+</code> symbol on the top menu bar.</p>
+  </li>
+  <li>
+    <p>Click <code class="highlighter-rouge">Add app</code>.</p>
+  </li>
+  <li>
+    <p>Choose the account you wish to use for the app.</p>
+  </li>
+  <li>
+    <p>Set the privacy of the app to <code class="highlighter-rouge">Public</code>.</p>
+  </li>
+</ol>
+
+<p><img src="/img/adding-a-new-app/public-app.png" alt="Set the app to Public" /></p>
+
+<p>After this, proceed as usual to set up the app.</p>
+
+<p>!!! warning
+    Remember: a public app’s build logs and <code class="highlighter-rouge">bitrise.yml</code> file can be seen by anyone - make sure these files do not expose anything you do not want to be seen! Check out our <a href="/builds/sensitive-input-field">Sensitive input in public apps</a> section to learn how to protect sensitive input in your public apps.</p>
 
 			</main>
 		</div>

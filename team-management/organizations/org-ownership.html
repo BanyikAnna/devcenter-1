@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Changing the owners of an organization - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Changing the owners of an organization
 						
 					</div>
 				</div>
@@ -402,7 +402,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/team-management/organizations/org-ownership" title="Changing the owners of an organization">Changing the owners of an organization</a>
+				<a href="/team-management/organizations/org-ownership" title="Changing the owners of an organization" class="current">Changing the owners of an organization</a>
 			
 		
 		
@@ -1764,26 +1764,65 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Changing the owners of an organization</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/team-management/organizations/org-ownership.md" target="_blank"></a>
+					</div>
+				
+				<p>Organization owners can access and delete all apps linked to the organization, can manage the billing details of an organization and can add or remove other owners. Organization owners are in their own group in the organization and they are managed via membership in this group.</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>Every organization must have at least one owner.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<h2 id="adding-owners-to-an-organization">Adding owners to an organization <a href="#adding-owners-to-an-organization" class="anchor-symbol">⚓</a></h2>
+
+<ol>
+  <li>
+    <p>Sign in with an account that is an owner of an organization and open its profile page.</p>
+  </li>
+  <li>
+    <p>Go to your organization’s profile page: click <code class="highlighter-rouge">Switch Profile</code> on the top left corner and select the organization you need.</p>
+
+    <p><img src="/img/team-management/organization/switch-profile-2.png" alt="Screenshot" /></p>
+  </li>
+  <li>
+    <p>On the left, select <code class="highlighter-rouge">Groups</code> from the menu options.</p>
+  </li>
+  <li>
+    <p>Find the <code class="highlighter-rouge">Organization owners</code> group.</p>
+
+    <p><img src="/img/team-management/organization/org-owners.png" alt="Screenshot" /></p>
+  </li>
+  <li>
+    <p>Enter an email address or username. The account in question will become an owner of the organization.</p>
+  </li>
+</ol>
+
+<h2 id="removing-owners-from-an-organization">Removing owners from an organization <a href="#removing-owners-from-an-organization" class="anchor-symbol">⚓</a></h2>
+
+<ol>
+  <li>
+    <p>Sign in with an account that is an owner of an organization and open its profile page.</p>
+  </li>
+  <li>
+    <p>Go to your organization’s profile page: click <code class="highlighter-rouge">Switch Profile</code> on the top left corner and select the organization you need.</p>
+
+    <p><img src="/img/team-management/organization/switch-profile-2.png" alt="Screenshot" /></p>
+  </li>
+  <li>
+    <p>On the left, select <code class="highlighter-rouge">Groups</code> from the menu options.</p>
+  </li>
+  <li>
+    <p>Find the <code class="highlighter-rouge">Organization owners</code> group.</p>
+
+    <p><img src="/img/team-management/organization/org-owners.png" alt="Screenshot" /></p>
+  </li>
+  <li>
+    <p>Find the account you wish to remove and click the little checkmark on the right.</p>
+
+    <p>!!! note “Organizations must have at least one owner”
+     If you are trying to remove the only owner of the organization, the system will throw an error message. An organization must have at least one owner.</p>
+  </li>
+</ol>
 
 			</main>
 		</div>

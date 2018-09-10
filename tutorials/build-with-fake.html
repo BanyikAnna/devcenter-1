@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Build with FAKE (F# Make) - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Build with FAKE (F# Make)
 						
 					</div>
 				</div>
@@ -1323,7 +1323,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/tutorials/build-with-fake" title="Build with FAKE (F# Make)">Build with FAKE (F# Make)</a>
+				<a href="/tutorials/build-with-fake" title="Build with FAKE (F# Make)" class="current">Build with FAKE (F# Make)</a>
 			
 		
 		
@@ -1764,26 +1764,59 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Build with FAKE (F# Make)</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/tutorials/build-with-fake.md" target="_blank"></a>
+					</div>
+				
+				<p>To add support for your <a href="http://fsharp.github.io/FAKE/">FAKE</a> build scripts,
+open your app’s <a href="/getting-started/manage-your-bitrise-workflow/">Workflow Editor on bitrise.io</a>
+and add a <code class="highlighter-rouge">Script</code> step to your workflow.</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>Below you can find an example script content to perform a build with FAKE,
+<em>make sure you fill out the parameters at the top of the script</em>!</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="nb">set</span> <span class="nt">-ex</span>
+
+<span class="c"># Fill out these parameters:</span>
+<span class="c"># You should use the same directory that you set in your build script for the FAKE dll</span>
+<span class="nv">output_directory</span><span class="o">=</span>tools
+<span class="nv">fake_build_script</span><span class="o">=</span>build.fsx
+<span class="nv">fake_target_name</span><span class="o">=</span>
+<span class="nv">fake_option_flags</span><span class="o">=</span>
+
+<span class="c"># ---</span>
+
+<span class="nv">fake_exe</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">output_directory</span><span class="k">}</span><span class="s2">/FAKE/tools/fake.exe"</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="o">!</span> <span class="nt">-f</span> <span class="s2">"</span><span class="k">${</span><span class="nv">fake_exe</span><span class="k">}</span><span class="s2">"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+  </span><span class="nb">printf</span> <span class="s2">"</span><span class="se">\e</span><span class="s2">[34mInstalling FAKE</span><span class="se">\e</span><span class="s2">[0m</span><span class="se">\n</span><span class="s2">"</span>
+  nuget <span class="nb">install </span>FAKE <span class="nt">-OutputDirectory</span> <span class="s2">"</span><span class="k">${</span><span class="nv">output_directory</span><span class="k">}</span><span class="s2">"</span> <span class="nt">-ExcludeVersion</span> <span class="nt">-NoCache</span> <span class="nt">-NonInteractive</span>
+<span class="k">fi
+
+</span><span class="nb">command</span><span class="o">=(</span><span class="s2">"mono"</span> <span class="s2">"</span><span class="k">${</span><span class="nv">fake_exe</span><span class="k">}</span><span class="s2">"</span><span class="o">)</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="nt">-n</span> <span class="s2">"</span><span class="nv">$fake_build_script</span><span class="s2">"</span> <span class="o">]</span> <span class="p">;</span> <span class="k">then
+  </span><span class="nb">command</span>+<span class="o">=(</span><span class="s2">"</span><span class="k">${</span><span class="nv">fake_build_script</span><span class="k">}</span><span class="s2">"</span><span class="o">)</span>
+<span class="k">fi
+
+if</span> <span class="o">[</span> <span class="nt">-n</span> <span class="s2">"</span><span class="nv">$fake_target_name</span><span class="s2">"</span> <span class="o">]</span> <span class="p">;</span> <span class="k">then
+  </span><span class="nb">command</span>+<span class="o">=(</span><span class="s2">"</span><span class="k">${</span><span class="nv">fake_target_name</span><span class="k">}</span><span class="s2">"</span><span class="o">)</span>
+<span class="k">fi
+
+if</span> <span class="o">[</span> <span class="nt">-n</span> <span class="s2">"</span><span class="nv">$fake_option_flags</span><span class="s2">"</span> <span class="o">]</span> <span class="p">;</span> <span class="k">then
+  </span><span class="nb">command</span>+<span class="o">=(</span><span class="s2">"</span><span class="k">${</span><span class="nv">fake_option_flags</span><span class="k">}</span><span class="s2">"</span><span class="o">)</span>
+<span class="k">fi
+
+</span><span class="nb">printf</span> <span class="s2">"</span><span class="se">\e</span><span class="s2">[34mExecuting </span><span class="k">${</span><span class="nv">fake_build_script</span><span class="k">}</span><span class="se">\e</span><span class="s2">[0m</span><span class="se">\n</span><span class="s2">"</span>
+<span class="k">$(</span><span class="nv">IFS</span><span class="o">=</span><span class="s1">' '</span><span class="p">;</span> <span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="nv">command</span><span class="p">[*]</span><span class="k">}</span><span class="s2">"</span><span class="k">)</span>
+</code></pre></div></div>
+
+<p>You should update the <code class="highlighter-rouge">output_directory</code> and <code class="highlighter-rouge">fake_build_script</code> variables for your needs and you are ready to go!</p>
+
+<p>!!! note
+    You should set the <code class="highlighter-rouge">output_directory</code> to the same directory where your build script will search for the FAKE dlls.</p>
 
 			</main>
 		</div>

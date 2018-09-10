@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Create your first App on Bitrise.io - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Create your first App on Bitrise.io
 						
 					</div>
 				</div>
@@ -108,7 +108,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/getting-started/create-your-first-app-on-bitrise" title="Create your first App on Bitrise.io">Create your first App on Bitrise.io</a>
+				<a href="/getting-started/create-your-first-app-on-bitrise" title="Create your first App on Bitrise.io" class="current">Create your first App on Bitrise.io</a>
 			
 		
 		
@@ -1764,26 +1764,137 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Create your first App on Bitrise.io</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/getting-started/create-your-first-app-on-bitrise.md" target="_blank"></a>
+					</div>
+				
+				<p>We are always refining our UI and UX, to achieve the best and smoothest experience possible,
+but at the same time give you enough room for experimentation and customization.</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>Because of the very reason of us believing that you should be able to do everything you want with Bitrise,
+some parts may seem a bit complex at first glance.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>This guide will help you get your first app up and running on Bitrise. Let’s dive in!</p>
+
+<p>First of all you have to open the <a href="https://www.bitrise.io/apps/add">Add New App page</a>,
+either by clicking <code class="highlighter-rouge">Add</code> on the <a href="https://www.bitrise.io/dashboard">Dashboard</a>,
+or clicking <code class="highlighter-rouge">+</code> on the top menu bar and selecting <code class="highlighter-rouge">Add app</code>.</p>
+
+<h2 id="1-privacy-and-code-repository-setup">1. Privacy and code repository setup <a href="#1-privacy-and-code-repository-setup" class="anchor-symbol">⚓</a></h2>
+
+<p>Set the privacy setting of the app: public or private. A public app’s build logs are exposed to the public: anyone can view them if they have the build URL. Public apps cannot have SSH keys.</p>
+
+<p>The next step is to specify where the app’s code is stored.</p>
+
+<p>You can either choose any one of <a href="https://github.com/">GitHub.com</a>, <a href="https://bitbucket.org/">Bitbucket.org</a> or <a href="https://gitlab.com/">GitLab.com</a> or add an other location manually.</p>
+
+<h3 id="github--bitbucket--gitlab">GitHub / Bitbucket / GitLab <a href="#github--bitbucket--gitlab" class="anchor-symbol">⚓</a></h3>
+
+<p>Under Connect your repository just choose the git hosting service for the repo you want to add to Bitrise.
+(If you haven’t connected your GitHub, Bitbucket or GitLab account yet on your profile, click on the green button to do so here.) Now you can see all your repos listed and a Search field in case you have many of them. If you hover on the repository names, you can get a glimpse of their descriptions, too.
+Your personal repos are separated from the ones that belong to an organization or other user.</p>
+
+<p>Select the repository from the list to proceed to the next step.</p>
+
+<p>!!! note “Why does Bitrise need write permissions on Github/Bitbucket/GitLab?”
+    There are two things that Bitrise couldn’t do without write permissions:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- Adding an SSH key to the selected repository
+- Registering a Webhook for the repository
+
+Please note, that __if you want to avoid giving Bitrise write permissions,
+you can select `Other / Manual`__ instead, and do the setup yourself.
+</code></pre></div></div>
+
+<h3 id="other--manual-setup-option">Other / Manual setup option <a href="#other--manual-setup-option" class="anchor-symbol">⚓</a></h3>
+
+<p>Paste your HTTPS git clone URL where Bitrise can access your code and click on <code class="highlighter-rouge">Next</code> to proceed.</p>
+
+<h2 id="2-setup-repository-access">2. Setup repository access <a href="#2-setup-repository-access" class="anchor-symbol">⚓</a></h2>
+
+<p>You need to specify how Bitrise will be able to access the source code. Depending on whether or not you have admin rights to the repo</p>
+
+<h3 id="auto-add-the-ssh-key-bitrise-generated-for-you">Auto-add the SSH key Bitrise generated for you <a href="#auto-add-the-ssh-key-bitrise-generated-for-you" class="anchor-symbol">⚓</a></h3>
+
+<p><em>This option is available for GitHub, Bitbucket and GitLab.com repositories,
+if you have your account connected to your Bitrise account.</em></p>
+
+<p>This is the easieast, fastest way. You can just click on <code class="highlighter-rouge">Auto add</code>
+<strong>if you have admin rights to the repo</strong> you selected.</p>
+
+<h3 id="copy-the-public-key-bitrise-generated">Copy the public key Bitrise generated <a href="#copy-the-public-key-bitrise-generated" class="anchor-symbol">⚓</a></h3>
+
+<p>If you use other repos for your build, you have to copy the <strong>public key</strong> and <strong>register it as an account SSH key</strong> on your git hosting service (<em>not</em> as a deployment key).
+You can also use this option if you don’t have admin rights to the repo, or if the repository is not hosted on GitHub, Bitbucket or GitLab.com or if you use submodules and want to use the same SSH key for multiple repositories.
+If you use submodules or private Cocoapods,
+use this guide: <a href="/faq/adding-projects-with-submodules/">Adding projects with submodules</a></p>
+
+<h3 id="use-your-own-keypair">Use your own keypair <a href="#use-your-own-keypair" class="anchor-symbol">⚓</a></h3>
+
+<p>You can paste your existing SSH <strong>private key</strong> on Add own SSH tab.
+<strong>Make sure it is an RSA private key without a passphrase,</strong>
+otherwise you won’t be able to use it on Bitrise.</p>
+
+<p>You can find a guide <a href="/faq/how-to-generate-ssh-keypair/">here</a> about
+how you can generate an SSH key like this.</p>
+
+<p>If you use submodules, private Cocoapods,
+or have to access more than one private repository
+during the build, you should check this guide: <a href="/faq/adding-projects-with-submodules/">Adding projects with submodules</a></p>
+
+<h2 id="3-validation-setup">3. Validation setup <a href="#3-validation-setup" class="anchor-symbol">⚓</a></h2>
+
+<p>In this section you have to specify a branch, which will be used in the next step:
+your repository will be cloned, the specified branch will be checked out,
+and our <a href="https://github.com/bitrise-core/bitrise-init">open source project scanner</a>
+will scan through the repository, and will construct base configuration(s)
+appropriate for your project.</p>
+
+<p><em>You can choose to configure your project manually.
+This is only recommended if you can’t use the automatic
+project scanner to generate a good base configuration for you.
+Choose this option only if you really know what you’re doing,
+or if you can’t use the automatic scanner!</em></p>
+
+<h2 id="4-validating-repository">4. Validating repository <a href="#4-validating-repository" class="anchor-symbol">⚓</a></h2>
+
+<p>You don’t have to do anything in this section: a validation
+is started automatically based on the setup you have just finished.
+You can check the progress and the logs of the validation while it runs,
+and the errors and warnings in case the scanner would generate any.</p>
+
+<h2 id="5-project-build-configuration">5. Project build configuration <a href="#5-project-build-configuration" class="anchor-symbol">⚓</a></h2>
+
+<p>Platform selection: We try to detect on validation whether you added an Android, iOS, or Xamarin project,
+or any other project type the <a href="https://github.com/bitrise-core/bitrise-init">scanner</a> supports.
+If we succeed, you can either Confirm the settings or Edit them.
+If we fail to detect it, you have to select one and configure it manually.</p>
+
+<p>We will also try to detect your build configuration automatically, based on your project settings / project
+files in the repository.</p>
+
+<h2 id="6-webhook-setup">6. Webhook setup <a href="#6-webhook-setup" class="anchor-symbol">⚓</a></h2>
+
+<p>To have Bitrise <strong>automatically start a build every time you push code into your repository</strong> you can set up a webhook at your code hosting service which will automatically trigger a build on Bitrise with the code you push to your repository.</p>
+
+<p>If we have permission for adding webhooks automatically to the source code hosting service you use, you can add the webhook in this section with a single click or you can skip this step (unrecommended).</p>
+
+<p>!!! warning “Error: Webhook registration failed”
+    If you see a message like this, that means that you don’t have admin rights to the repo,
+    so no webhook could be created. Contact the administrator, register the webhook manually (see link to the guide below)
+    or skip this step if you’re OK with starting builds manually (not advised).</p>
+
+<p>You can find the webhook setup guide <a href="/webhooks/">here</a>,
+if you’d have to do this manually.</p>
+
+<h2 id="7-congratulations-you-have-set-up-your-first-app-on-bitriseio">7. Congratulations, you have set up your first app on Bitrise.io! <a href="#7-congratulations-you-have-set-up-your-first-app-on-bitriseio" class="anchor-symbol">⚓</a></h2>
+
+<p>After you are done in the “webhook” section, a build is triggered automatically
+for your app, with the base configuration detected and generated by
+the “Repository validator / scanner”. At this point you should have
+a base working configuration, which you’ll be able to improve and change
+to fit your project’s development process.</p>
 
 			</main>
 		</div>

@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				iOS code signing on Bitrise - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							iOS code signing on Bitrise
 						
 					</div>
 				</div>
@@ -771,7 +771,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/code-signing/ios-code-signing/code-signing" title="iOS code signing on Bitrise">iOS code signing on Bitrise</a>
+				<a href="/code-signing/ios-code-signing/code-signing" title="iOS code signing on Bitrise" class="current">iOS code signing on Bitrise</a>
 			
 		
 		
@@ -1764,26 +1764,69 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>iOS code signing on Bitrise</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/code-signing/ios-code-signing/code-signing.md" target="_blank"></a>
+					</div>
+				
+				<p>To run a build of your iOS app on Bitrise, you will need to provide code signing files in some way. The code signing of iOS projects requires:</p>
 
-<div class="container">
-  <h1>404</h1>
+<ul>
+  <li><strong>Signing certificates</strong> in a .p12 format</li>
+  <li><strong>Provisioning Profile</strong> file(s) matching your project (team ID, bundle ID, …)</li>
+  <li>a script, tool or step which installs these files in the build environment.</li>
+</ul>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>You can store your code signing files and create a signed .ipa file for your iOS project (Xcode or Xamarin), or a signed .app or .pkg file for your MacOS project on <a href="https://www.bitrise.io">bitrise.io</a>. You can manually upload all the required files (Provisoning Profiles and .p12 certificate files) or you can use automatic provisioning to automatically generate and manage Provisioning Profiles from a connected Apple Developer account. We’ll show you how to use both options!</p>
+
+<p>We also support using Xcode’s <strong>Automatically manage signing</strong> option, with both manual and automatic provisioning.</p>
+
+<h3 id="ios-code-signing-procedure">iOS code signing procedure <a href="#ios-code-signing-procedure" class="anchor-symbol">⚓</a></h3>
+
+<p>The basic workflow of code signing is pretty straightforward:</p>
+
+<ol>
+  <li>
+    <p><a href="/code-signing/ios-code-signing/collecting-files-with-codesigndoc">Collect the required files with our codesigndoc tool</a>.</p>
+  </li>
+  <li>
+    <p>Upload your code signing files to <a href="https://www.bitrise.io">bitrise.io</a>. You can upload the files using <code class="highlighter-rouge">codesigndoc</code> or manually on the website. For Provisioning Profiles, you can use:</p>
+
+    <ul>
+      <li><a href="/code-signing/ios-code-signing/ios-manual-provisioning">manual provisioning</a></li>
+      <li><a href="/code-signing/ios-code-signing/ios-auto-provisioning">automatic provisioning</a>.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Use the <code class="highlighter-rouge">Xcode Archive &amp; Export for iOS</code> or the <code class="highlighter-rouge">Xamarin Archive</code> step to create a signed <code class="highlighter-rouge">.ipa</code>:</p>
+
+    <ul>
+      <li>Xcode projects: <a href="/code-signing/ios-code-signing/create-signed-ipa-for-xcode">Create a signed .ipa for Xcode projects</a></li>
+      <li>Xamarin projects: <a href="/code-signing/ios-code-signing/create-signed-ipa-for-xamarin">Create a signed .ipa for Xamarin projects</a></li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="ios-code-signing-with-third-party-tools">iOS code signing with third party tools <a href="#ios-code-signing-with-third-party-tools" class="anchor-symbol">⚓</a></h3>
+
+<p>You can use third party tools to manage code signing on Bitrise, such as <a href="https://github.com/fastlane/fastlane/tree/master/match">fastlane match</a>
+or <a href="https://github.com/fastlane/fastlane/tree/master/sigh">fastlane sigh</a>. However, we recommend using our own steps and tools.</p>
+
+<p>!!! warning
+    If you decide to use a third party tool for code signing management,
+    please consult the tool’s documentation and issue tracker,
+    we only provide customer support for our own Step (<code class="highlighter-rouge">Certificate and profile installer</code>)
+    and tools (<code class="highlighter-rouge">codesigndoc</code>)!</p>
+
+<p>!!! note “<code class="highlighter-rouge">Certificate and profile installer</code> step”
+    Even if you use a third party tool to manage your code signing files,
+    and you don’t plan to upload any code signing file to bitrise.io,
+    you should keep the <code class="highlighter-rouge">Certificate and profile installer</code> step in your
+    Workflow. This is because certain tools were not designed to work
+    in an ephemeral environment, or in a full clean macOS install,
+    and the <code class="highlighter-rouge">Certificate and profile installer</code> includes common
+    workarounds for this situation. It’s not guaranteed that it will help with
+    the tool of your choice, but it won’t cause any issue either.</p>
 
 			</main>
 		</div>

@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Deploy to TestFairy with Bitrise - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Deploy to TestFairy with Bitrise
 						
 					</div>
 				</div>
@@ -1374,7 +1374,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/tutorials/deploy/deploy-to-testfairy-with-bitrise" title="Deploy to TestFairy with Bitrise">Deploy to TestFairy with Bitrise</a>
+				<a href="/tutorials/deploy/deploy-to-testfairy-with-bitrise" title="Deploy to TestFairy with Bitrise" class="current">Deploy to TestFairy with Bitrise</a>
 			
 		
 		
@@ -1764,26 +1764,41 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Deploy to TestFairy with Bitrise</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/tutorials/deploy/deploy-to-testfairy-with-bitrise.md" target="_blank"></a>
+					</div>
+				
+				<p>If you are looking for a deployment service that also gives you lots of insights
+about your application, then <a href="https://www.testfairy.com/">TestFairy</a> is a great service to check out.</p>
 
-<div class="container">
-  <h1>404</h1>
+<h1 id="what-is-testfairy">What is TestFairy? <a href="#what-is-testfairy" class="anchor-symbol">⚓</a></h1>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>When testing apps in the crowd, you never know what exactly was tested and what exactly went wrong on the client side.
+TestFairy solves this problem by providing a video of everything that happened on the mobile device,
+including detailed internal metrics such as CPU, memory, GPS, network, logs, crash reports, and a lot more.
+To get these insights on iOS you need to <a href="http://docs.testfairy.com/iOS_SDK/Integrating_iOS_SDK.html">integrate their iOS SDK into your app</a>.</p>
+
+<h1 id="upload-your-app-to-testfairy-through-bitrise">Upload your app to TestFairy through Bitrise <a href="#upload-your-app-to-testfairy-through-bitrise" class="anchor-symbol">⚓</a></h1>
+
+<p>To deploy your app on the TestFairy platform you just simply need to add the <code class="highlighter-rouge">TestFairy</code> step
+to your app’s workflow (on <a href="https://www.bitrise.io">bitrise.io</a>).</p>
+
+<p><img src="/img/tutorials/deploy/testfairy_workflow-editor.png" alt="Deploy to TestFairy step in a Workflow" /></p>
+
+<p>The only required parameter you have to add is your API Key on TestFairy.
+To get it you should navigate to your <a href="https://app.testfairy.com/settings/">account preferences</a> on TestFairy
+and find the key under your API Key menu.</p>
+
+<p>!!! note
+    You can also enable or disable the email notifications and set the tester groups you would like to notify.
+    There’s an option to make your users always upgrade to the latest build by enabling Auto update in the step,
+    and you can also start recording video and set the length of it.</p>
+
+<h1 id="ready-to-go">Ready to go! <a href="#ready-to-go" class="anchor-symbol">⚓</a></h1>
+
+<p>There’s nothing else you need to do,
+simply work on your awesome app and we ensure your app is automatically deployed to TestFairy every time you update your code.</p>
 
 			</main>
 		</div>

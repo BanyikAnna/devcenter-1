@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Connecting self-hosted GitLab instances - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Connecting self-hosted GitLab instances
 						
 					</div>
 				</div>
@@ -306,7 +306,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/adding-a-new-app/self-hosted-gitlab" title="Connecting self-hosted GitLab instances">Connecting self-hosted GitLab instances</a>
+				<a href="/adding-a-new-app/self-hosted-gitlab" title="Connecting self-hosted GitLab instances" class="current">Connecting self-hosted GitLab instances</a>
 			
 		
 		
@@ -1764,26 +1764,93 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Connecting self-hosted GitLab instances</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/adding-a-new-app/self-hosted-gitlab.md" target="_blank"></a>
+					</div>
+				
+				<p>For organizations, Bitrise supports connecting to self-hosted GitLab instances. Connecting is simple, and once it’s done, you can add apps to Bitrise from privately hosted repositories <a href="/adding-a-new-app">in the usual way</a>. All functions that you got used to with publicly hosted repositories will be available!</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>Setting up an app that is in a self-hosted GitLab repository is very simple: Bitrise needs to be authorized as an application for the entire GitLab instance and then the <strong>Application Id</strong> and the <strong>Secret</strong> value belonging to the Bitrise OAuth application must be added to the organization on <a href="https://www.bitrise.io">bitrise.io</a>.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<h2 id="connect-a-self-hosted-gitlab-instance-with-bitrise">Connect a self-hosted GitLab instance with Bitrise <a href="#connect-a-self-hosted-gitlab-instance-with-bitrise" class="anchor-symbol">⚓</a></h2>
+
+<p>!!! warning
+    Only Organizations can use privately hosted GitLab instances on Bitrise. If you are not on an Organization plan, you should not follow this guide.</p>
+
+<ol>
+  <li>
+    <p>Log in to your GitLab instance with <strong>root</strong> privileges.</p>
+
+    <p>!!! warning
+     If you connect to Bitrise without root privileges, your Organization’s other team members will not have access to the repository on the GitLab instance.</p>
+  </li>
+  <li>
+    <p>Go to the admin area by clicking the little wrench icon on the top menu bar.</p>
+  </li>
+  <li>
+    <p>On the left menu bar, select <code class="highlighter-rouge">Applications</code>, then click <code class="highlighter-rouge">New Application</code>.</p>
+
+    <p><img src="/img/adding-a-new-app/gitlab-newapp.png" alt="New Application" /></p>
+  </li>
+  <li>
+    <p>In the <code class="highlighter-rouge">Name</code> field, enter a name that clearly identifies the application. For the sake of simplicity, we recommend <strong>Bitrise</strong>.</p>
+  </li>
+  <li>
+    <p>In the <code class="highlighter-rouge">Redirect URI</code> field, enter https://app.bitrise.io/users/auth/gitlab/callback.</p>
+  </li>
+  <li>
+    <p>In the <code class="highlighter-rouge">Scopes</code> menu, check <strong><code class="highlighter-rouge">api</code></strong>.</p>
+
+    <p><img src="/img/adding-a-new-app/gitlab-newapp-settings.png" alt="New Application settings" /></p>
+  </li>
+  <li>
+    <p>Click <code class="highlighter-rouge">Submit</code>. On the next page, you should see an <code class="highlighter-rouge">Application Id</code> and a <code class="highlighter-rouge">Secret</code>. You’ll need both to connect to your GitLab instance on <a href="https://www.bitrise.io">bitrise.io</a>.</p>
+
+    <p><img src="/img/adding-a-new-app/appid-secret.png" alt="App id and secret" /></p>
+  </li>
+  <li>
+    <p>Go to your organization’s profile page on <a href="https://www.bitrise.io">bitrise.io</a>.</p>
+  </li>
+  <li>
+    <p>Select the <code class="highlighter-rouge">Connected Accounts</code> option on the left menu bar.</p>
+  </li>
+  <li>
+    <p>Add your self-hosted GitLab credentials:</p>
+
+    <ul>
+      <li>App ID</li>
+      <li>Secret</li>
+      <li>Self-hosted URL</li>
+    </ul>
+  </li>
+</ol>
+
+<p>You are done! Now you are able to access your privately hosted repositories with Bitrise.</p>
+
+<h2 id="add-a-new-app-from-a-self-hosted-gitlab-repository">Add a new app from a self-hosted GitLab repository <a href="#add-a-new-app-from-a-self-hosted-gitlab-repository" class="anchor-symbol">⚓</a></h2>
+
+<p>Before you start, make sure you <a href="/adding-a-new-app/self-hosted-gitlab#connect-a-self-hosted-gitlab-instance-with-bitrise">created an OAuth application</a> in your self-hosted GitLab instance.</p>
+
+<ol>
+  <li>
+    <p>Log in to <a href="https://www.bitrise.io">bitrise.io</a> and click the <code class="highlighter-rouge">+</code> symbol on the top menu bar and select <code class="highlighter-rouge">Add app</code> from the options.</p>
+  </li>
+  <li>
+    <p>Choose an Organization account.</p>
+  </li>
+  <li>
+    <p>When prompted to select your Git provider, select GitLab. Select the <code class="highlighter-rouge">Self-hosted</code> option.</p>
+  </li>
+  <li>
+    <p>If you haven’t provided your self-hosted GitLab credentials to the organization before, you can do it at this stage.</p>
+  </li>
+  <li>
+    <p>Click <code class="highlighter-rouge">Connect</code>.</p>
+  </li>
+</ol>
+
+<p>Once connected, proceed as usual to <a href="/adding-a-new-app/setting-up-configuration">setting up your project configuration</a>.</p>
 
 			</main>
 		</div>

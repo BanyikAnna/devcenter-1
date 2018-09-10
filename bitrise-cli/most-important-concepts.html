@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Most important concepts - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Most important concepts
 						
 					</div>
 				</div>
@@ -1068,7 +1068,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/bitrise-cli/most-important-concepts" title="Most important concepts">Most important concepts</a>
+				<a href="/bitrise-cli/most-important-concepts" title="Most important concepts" class="current">Most important concepts</a>
 			
 		
 		
@@ -1764,26 +1764,127 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Most important concepts</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/bitrise-cli/most-important-concepts.md" target="_blank"></a>
+					</div>
+				
+				<h2 id="every-input-output-and-parameter-is-an-environment-variable">Every input, output and parameter is an Environment Variable <a href="#every-input-output-and-parameter-is-an-environment-variable" class="anchor-symbol">⚓</a></h2>
 
-<div class="container">
-  <h1>404</h1>
+<p>Every step input, step output, secret environment variable, app environment variable and workflow environment variable
+(basically every input and variable in your build config) is an environment variable.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>There’s nothing special about how Bitrise handles environment variables,
+<strong>these are regular environment variable, with the same rules and restrictions as any other environment variable.</strong></p>
+
+<p>To highlight a couple of technical details:</p>
+
+<h3 id="the-value-of-an-environment-variable-can-only-be-a-string">The value of an Environment Variable can only be a String <a href="#the-value-of-an-environment-variable-can-only-be-a-string" class="anchor-symbol">⚓</a></h3>
+
+<p>Environment Variables can only hold <code class="highlighter-rouge">String</code> values. Even if you set a number or bool, like <code class="highlighter-rouge">1</code> or <code class="highlighter-rouge">true</code> as
+the value of the Environment Variable, that will be a string.</p>
+
+<h3 id="parent-process-cant-access--environment-variables-exposed-by-child-processes">Parent process can’t access  Environment Variables exposed by child processes <a href="#parent-process-cant-access--environment-variables-exposed-by-child-processes" class="anchor-symbol">⚓</a></h3>
+
+<p>Parent process(es) can’t access Environment Variables exposed by child processes.</p>
+
+<p>For example, if you run a <code class="highlighter-rouge">my_bash_script.sh</code> in your Terminal with <code class="highlighter-rouge">bash my_bash_script.sh</code>,
+and <code class="highlighter-rouge">my_bash_script.sh</code> sets an environment variable with <code class="highlighter-rouge">export MY_VAR=the-value</code>,
+you won’t be able to access <code class="highlighter-rouge">MY_VAR</code> in your Terminal after the script is finished,
+<code class="highlighter-rouge">MY_VAR</code> will only be available in <code class="highlighter-rouge">my_bash_script.sh</code> <strong>and</strong> in the processes / scripts
+started by <code class="highlighter-rouge">my_bash_script.sh</code>.</p>
+
+<p>In terms of Bitrise CLI this means that if you <code class="highlighter-rouge">export MY_VAR=...</code> in a Script step,
+<code class="highlighter-rouge">MY_VAR</code> won’t be available in subsequent steps. This is true for the steps too,
+regardless of which language the step is written in.</p>
+
+<p>Bitrise CLI includes a mechanism for exposing environment variables from Steps
+so that subsequent Steps can also access it, through the Bitrise CLI tool
+called <a href="https://github.com/bitrise-io/envman">envman</a>.</p>
+
+<p>To set an environment variable in your script or in your step to make that
+available in other steps too, you have to do that through <code class="highlighter-rouge">envman</code>.</p>
+
+<p>A simple example:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>envman add --key MY_TEST_ENV_KEY --value 'test value for test key'
+</code></pre></div></div>
+
+<p>You can find more examples in <a href="https://github.com/bitrise-io/envman">envman’s README</a>,
+and in the <a href="/tips-and-tricks/expose-environment-variable">Expose an Environment Variable and use it in another Step</a> guide.</p>
+
+<h2 id="availability-order-of-environment-variables">Availability order of environment variables <a href="#availability-order-of-environment-variables" class="anchor-symbol">⚓</a></h2>
+
+<p>Environment variables are available <strong>after</strong> the environment variable
+is “processed”.</p>
+
+<p>There are a few environment variables <a href="/faq/available-environment-variables/#exposed-by-the-bitrise-cli">exposed by the Bitrise CLI itself</a>,
+those are available from the start (e.g. <code class="highlighter-rouge">BITRISE_SOURCE_DIR</code> and <code class="highlighter-rouge">BITRISE_TRIGGERED_WORKFLOW_ID</code>).</p>
+
+<p>All other environment variables are “processed” / made available <em>as the build progresses.</em></p>
+
+<p>There are two types of environment variables which are processed and
+made available before the workflow would be executed:
+<a href="/bitrise-cli/secrets/">Secrets</a> and <code class="highlighter-rouge">App Env Vars</code> (<code class="highlighter-rouge">app: envs:</code> in the <a href="/bitrise-cli/basics-of-bitrise-yml/">bitrise.yml</a>).</p>
+
+<p>After these, the processing of the specified Workflow starts, and the
+<a href="/bitrise-cli/workflows/#define-workflow-specific-parameters-environment-variables">environment variables specified for that Workflow</a>
+are made available. If the workflow has before or after workflows, when
+a specific workflow is processed (right before the first step of the workflow would run)
+the workflow’s environment variables are processed and made available.</p>
+
+<p>Step inputs are also environment variables;
+those are exposed only for the specific step, and right before the Step would start.</p>
+
+<p>Last but not least Step outputs are exposed by the specific step,
+so those are available for subsequent steps <strong>after the Step finishes</strong>.</p>
+
+<p><strong>The environment variable processing order:</strong></p>
+
+<ol>
+  <li><a href="/faq/available-environment-variables/#exposed-by-the-bitrise-cli">Bitrise CLI exposed environment variables</a></li>
+  <li><a href="/bitrise-cli/secrets/">Secrets</a></li>
+  <li>One-off environment variables specified for the build through the <a href="/api/build-trigger">Build Trigger API</a></li>
+  <li><code class="highlighter-rouge">App Env Vars</code> (<code class="highlighter-rouge">app: envs:</code> in the <a href="/bitrise-cli/basics-of-bitrise-yml/">bitrise.yml</a>)</li>
+  <li><a href="/bitrise-cli/workflows/#define-workflow-specific-parameters-environment-variables">Workflow environment variables</a></li>
+  <li>Step inputs</li>
+  <li>Step outputs</li>
+</ol>
+
+<p><strong>So, why does the processing order matter?</strong></p>
+
+<p>An environment variable is only available <strong>after</strong> it is processed and made available.
+<strong>When you reference or use an environment variable, you can only reference/use those which are already processed!</strong></p>
+
+<p>A couple of examples:</p>
+
+<ul>
+  <li>In the value of a <code class="highlighter-rouge">Secret</code> environment variable,
+you can use environment variables exposed by Bitrise CLI,
+but you can’t use any other environment variable (App Env Vars, Workflow Env Vars, …),
+as those are not processed when secrets are processed.</li>
+  <li>In the value of an <code class="highlighter-rouge">App Env Var</code>, you can use environment variables
+from <code class="highlighter-rouge">Secrets</code> as well as the Bitrise CLI exposed ones, but you can’t use Workflow Env Vars,
+nor Step inputs.</li>
+  <li>In a <code class="highlighter-rouge">Workflow environment variable</code> you can use all the above (<code class="highlighter-rouge">Secrets</code>, <code class="highlighter-rouge">App Env Vars</code>,
+Bitrise CLI exposed env vars).</li>
+  <li>And finally, in step input values, you can use all other environment variables,
+including the workflow’s environment variables, as well as the outputs
+of steps which run before the specific step.</li>
+</ul>
+
+<h3 id="environment-variables-of-chained-workflows">Environment variables of chained workflows <a href="#environment-variables-of-chained-workflows" class="anchor-symbol">⚓</a></h3>
+
+<p>Once an environment variable of a workflow is processed and made available,
+it is available everywhere else during the build. This means that other workflows
+of the chain <strong>can</strong> use the environment variables of a workflow which is performed <strong>before</strong>
+the specific workflow, similar to Step outputs, which are available for every
+other step <strong>after</strong> the step (which generates the outputs) completes.</p>
+
+<p>You can find more information about environment variable availability
+of Workflow env vars in chained workflows in the
+<a href="/bitrise-cli/workflows/#note-about-workflow-environment-variables">Workflows: Note about workflow environment variables</a>
+documentation.</p>
 
 			</main>
 		</div>

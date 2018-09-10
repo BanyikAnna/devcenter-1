@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Configure and connect to your VPN - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Configure and connect to your VPN
 						
 					</div>
 				</div>
@@ -1305,7 +1305,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/tutorials/vpn-configuration" title="Configure and connect to your VPN">Configure and connect to your VPN</a>
+				<a href="/tutorials/vpn-configuration" title="Configure and connect to your VPN" class="current">Configure and connect to your VPN</a>
 			
 		
 		
@@ -1764,26 +1764,166 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Configure and connect to your VPN</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/tutorials/vpn-configuration.md" target="_blank"></a>
+					</div>
+				
+				<p>Do you require a VPN connection for your build, to be able to connect to your server,
+either to <code class="highlighter-rouge">git clone</code> your repository or to access a private API?
+If yes, then this tutorial is for you!</p>
 
-<div class="container">
-  <h1>404</h1>
+<h2 id="technical-infos">Technical infos <a href="#technical-infos" class="anchor-symbol">⚓</a></h2>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>Connecting to a VPN, in short, works like this:</p>
+
+<ol>
+  <li>the build starts</li>
+  <li>you install &amp; configure the VPN components you need</li>
+  <li>you start the VPN</li>
+  <li>you proceed with the build</li>
+</ol>
+
+<p>Obviously, if you require a VPN connection in order to access your code repository,
+you have to connect to the VPN <strong>before</strong> the <code class="highlighter-rouge">Git Clone</code> step, but in general
+you can configure &amp; connect to the VPN anywhere in your Workflow, <strong>before</strong> you’d use the
+connection.</p>
+
+<p><em>You can choose other VPN tools, not just the one shown here (<a href="https://www.strongswan.org">strongswan</a>),
+this is just one example setup which works on <a href="https://www.bitrise.io">bitrise.io</a>.</em></p>
+
+<p><strong>One important note</strong>: when you choose your VPN tool and do the setup/configuration,
+you have to be careful to <strong>not to restart / abort</strong> existing SSH sessions!
+The <a href="https://www.bitrise.io">bitrise.io</a> workers will abort the build
+if the SSH connection between the build’s Control/Master machine and
+the Build virtual machine terminates!</p>
+
+<h2 id="example">Example <a href="#example" class="anchor-symbol">⚓</a></h2>
+
+<p>This is an example script which you can either save into your repository and run
+it from there, or just copy paste its content into a <code class="highlighter-rouge">Script Step</code> in your <code class="highlighter-rouge">bitrise</code>
+configuration (<code class="highlighter-rouge">bitrise.yml</code> / Workflow).</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
+<span class="nb">set</span> <span class="nt">-e</span>
+
+<span class="nb">echo</span> <span class="s2">"WAN IP"</span>
+<span class="c"># This prints the servers Internet IP adress to the log, useful for debugging</span>
+curl http://httpbin.org/ip
+
+<span class="k">case</span> <span class="s2">"</span><span class="nv">$OSTYPE</span><span class="s2">"</span> <span class="k">in
+  </span>linux<span class="k">*</span><span class="p">)</span>
+    <span class="nb">echo</span> <span class="s2">"Configuring for Linux"</span>
+
+    <span class="c"># Variables</span>
+    <span class="nv">etc_dir</span><span class="o">=</span>/etc
+    <span class="nv">etc_sudo</span><span class="o">=</span><span class="s1">'sudo'</span> <span class="c"># Sudo is needed for Linux Strongswan configuration</span>
+
+    <span class="c"># Install strongswan</span>
+    <span class="nb">echo</span> <span class="s2">"Installing Strongswan..."</span>
+    <span class="nb">sudo </span>apt-get <span class="nb">install</span> <span class="nt">-y</span> strongswan
+
+    <span class="p">;;</span>
+  darwin<span class="k">*</span><span class="p">)</span>
+    <span class="nb">echo</span> <span class="s2">"Configuring for Mac OS"</span>
+
+    <span class="c"># Variables</span>
+    <span class="nv">etc_dir</span><span class="o">=</span>/usr/local/etc
+    <span class="nv">etc_sudo</span><span class="o">=</span><span class="s1">''</span> <span class="c"># Sudo is NOT needed for Mac OS Strongswan configuration</span>
+
+    <span class="c"># Install Strongswan using homebrew</span>
+    <span class="nb">echo</span> <span class="s2">"Installing OpenSSL..."</span>
+    <span class="c"># Manually install OpenSSL first to save time, since installing Strongswan directly compiles OpenSSL from source instead</span>
+    brew <span class="nb">install </span>openssl
+    <span class="nb">echo</span> <span class="s2">"Installing Strongswan..."</span>
+    brew <span class="nb">install </span>strongswan
+
+    <span class="p">;;</span>
+  <span class="k">*</span><span class="p">)</span>
+    <span class="nb">echo</span> <span class="s2">"Unknown operative system: </span><span class="nv">$OSTYPE</span><span class="s2">, exiting"</span>
+    <span class="nb">exit </span>1
+    <span class="p">;;</span>
+<span class="k">esac</span>
+
+
+<span class="c"># Method for rendering a template string file (when run, returns the input string with $VARIABLES replaced from env)</span>
+render_template<span class="o">()</span> <span class="o">{</span>
+  <span class="nb">eval</span> <span class="s2">"echo </span><span class="se">\"</span><span class="k">$(</span><span class="nb">cat</span> <span class="nv">$1</span><span class="k">)</span><span class="se">\"</span><span class="s2">"</span>
+<span class="o">}</span>
+
+<span class="c"># Create a temporary directory to hold files</span>
+<span class="nv">temp_dir</span><span class="o">=</span>/tmp/vpn-config
+<span class="nb">mkdir</span> <span class="nv">$temp_dir</span>
+
+<span class="c"># IPsec config file, see examples at https://wiki.strongswan.org/projects/strongswan/wiki/IKEv1Examples and https://wiki.strongswan.org/projects/strongswan/wiki/IKEv2Examples</span>
+<span class="nb">echo</span> <span class="s2">"Downloading ipsec.conf..."</span>
+wget https://www.example.com/ipsec.conf.template <span class="nt">-O</span> <span class="nv">$temp_dir</span>/ipsec.conf.template
+<span class="c"># IPsec credentials file, see documentation at https://wiki.strongswan.org/projects/strongswan/wiki/IpsecSecrets</span>
+<span class="nb">echo</span> <span class="s2">"Downloading ipsec.secrets..."</span>
+wget https://www.example.com/ipsec.secrets.template <span class="nt">-O</span> <span class="nv">$temp_dir</span>/ipsec.secrets.template
+<span class="c"># In some cases you might need to download the certificate, or certificate chain, of your other VPN endpoint</span>
+<span class="nb">echo</span> <span class="s2">"Downloading server.crt..."</span>
+wget https://www.example.com/server.crt <span class="nt">-O</span> <span class="nv">$temp_dir</span>/server.crt
+
+<span class="nb">echo</span> <span class="s2">"Rendering config templates"</span>
+render_template <span class="nv">$temp_dir</span>/ipsec.conf.template <span class="o">&gt;</span> <span class="nv">$temp_dir</span>/ipsec.conf
+render_template <span class="nv">$temp_dir</span>/ipsec.secrets.template <span class="o">&gt;</span> <span class="nv">$temp_dir</span>/ipsec.secrets
+
+<span class="nb">echo</span> <span class="s2">"Installing configuration"</span>
+<span class="nv">$etc_sudo</span> <span class="nb">cp</span> <span class="nv">$temp_dir</span>/ipsec.conf <span class="nv">$etc_dir</span>/ipsec.conf
+<span class="nv">$etc_sudo</span> <span class="nb">cp</span> <span class="nv">$temp_dir</span>/ipsec.secrets <span class="nv">$etc_dir</span>/ipsec.secrets
+<span class="nv">$etc_sudo</span> <span class="nb">cp</span> <span class="nv">$temp_dir</span>/server.crt <span class="nv">$etc_dir</span>/ipsec.d/ocspcerts/server.crt
+
+<span class="c"># Start the ipsec service</span>
+<span class="nb">echo</span> <span class="s2">"Starting ipsec"</span>
+<span class="nb">sudo </span>ipsec start
+
+<span class="c"># We're sleeping between commands, mostly since Mac OS seems to have some problems otherwise</span>
+<span class="nb">sleep </span>1
+
+<span class="c"># Output some helpful status to the log</span>
+<span class="nb">echo</span> <span class="s2">"Status ipsec"</span>
+<span class="nb">sudo </span>ipsec statusall
+
+<span class="nb">sleep </span>1
+
+<span class="c"># Switch out myconnection with the name of your connection in ipsec.conf</span>
+<span class="nb">echo</span> <span class="s2">"Initiating VPN connection"</span>
+<span class="nb">sudo </span>ipsec up myconnection
+
+<span class="nb">sleep </span>1
+
+<span class="k">case</span> <span class="s2">"</span><span class="nv">$OSTYPE</span><span class="s2">"</span> <span class="k">in
+  </span>linux<span class="k">*</span><span class="p">)</span>
+    <span class="p">;;</span>
+  darwin<span class="k">*</span><span class="p">)</span>
+    <span class="c"># In Mac OS El Capitan, the `sudo ipsec up` command consistently fails the first time, but succeeds after a restart of the ipsec service</span>
+    <span class="nb">echo</span> <span class="s2">"Restarting ipsec"</span>
+    <span class="nb">sudo </span>ipsec restart
+
+    <span class="nb">sleep </span>1
+
+    <span class="nb">echo</span> <span class="s2">"Initiating VPN connection"</span>
+    <span class="nb">sudo </span>ipsec up myconnection
+
+    <span class="nb">sleep </span>1
+
+    <span class="c"># This step might apply if you are routing all traffic trough the IPsec connection (that is, if your remote IP range is 0.0.0.0/0)</span>
+    <span class="c"># Mac OS El Capitan seems to have problems getting the DNS configuration from the Strongswan interface. Also IPv6 sometimes causes issues. So we're manually turning off IPv6 and forcing a new DNS configuration.</span>
+    <span class="nb">echo</span> <span class="s2">"Disabling IPv6 and forcing DNS settings"</span>
+    <span class="c"># Fetch main interface</span>
+    <span class="nv">main_interface</span><span class="o">=</span><span class="k">$(</span>networksetup <span class="nt">-listnetworkserviceorder</span> | <span class="nb">awk</span> <span class="nt">-F</span><span class="s1">'\\) '</span> <span class="s1">'/\(1\)/ {print $2}'</span><span class="k">)</span>
+    <span class="c"># Completely disable IPv6</span>
+    <span class="nb">sudo </span>networksetup <span class="nt">-setv6off</span> <span class="s2">"</span><span class="nv">$main_interface</span><span class="s2">"</span>
+    <span class="c"># Switch 10.0.0.1 with your DNS server</span>
+    <span class="nb">sudo </span>networksetup <span class="nt">-setdnsservers</span> <span class="s2">"</span><span class="nv">$main_interface</span><span class="s2">"</span> 10.0.0.1
+    <span class="p">;;</span>
+  <span class="k">*</span><span class="p">)</span> <span class="p">;;</span>
+<span class="k">esac</span>
+
+<span class="c"># Your VPN connection should be up and running. Any following steps of your Bitrise workflow can access devices over your VPN connection 🎉</span>
+
+</code></pre></div></div>
 
 			</main>
 		</div>

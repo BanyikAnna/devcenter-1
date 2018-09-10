@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Creating a signed .ipa for Xcode projects - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Creating a signed .ipa for Xcode projects
 						
 					</div>
 				</div>
@@ -807,7 +807,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/code-signing/ios-code-signing/create-signed-ipa-for-xcode" title="Creating a signed .ipa for Xcode projects">Creating a signed .ipa for Xcode projects</a>
+				<a href="/code-signing/ios-code-signing/create-signed-ipa-for-xcode" title="Creating a signed .ipa for Xcode projects" class="current">Creating a signed .ipa for Xcode projects</a>
 			
 		
 		
@@ -1764,26 +1764,66 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Creating a signed .ipa for Xcode projects</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/code-signing/ios-code-signing/create-signed-ipa-for-xcode.md" target="_blank"></a>
+					</div>
+				
+				<p>You can easily create a signed IPA for your Xamarin project with Bitrise. All you need to do is set the relevant inputs of our <code class="highlighter-rouge">Xamarin Archive</code> step!</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>!!! todo “Before you start”
+    Before setting up IPA export, make sure that:</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   * your code signing files have been collected: we recommend using our [codesigndoc](https://github.com/bitrise-tools/codesigndoc) tool.
+   * you have the required steps in your workflow to manage code your signing files:
+      * `Certificate and profile installer` if you uploaded your Provisioning Profiles manually.
+      * `iOS Auto Provisioning` if you connected your Bitrise account to your Apple Developer account for automatic provisioning.
+</code></pre></div></div>
+
+<p>If you’re all set, proceed to setting up IPA export in your workflow:</p>
+
+<ol>
+  <li>
+    <p>Make sure you have the <code class="highlighter-rouge">Xcode Archive for iOS</code> step in the app’s Workflow Editor, depending on your project type. Select your step.</p>
+  </li>
+  <li>
+    <p>Set the <code class="highlighter-rouge">Select method for export</code> input of the step to the type of code signing you want to use.</p>
+
+    <p><img src="/img/code-signing/ios-code-signing/xcode-archive-export-method.png" alt="Select export method for Xcode Archive for iOS" /></p>
+
+    <p>If you use automatic provisioning, make sure it matches the value of the <code class="highlighter-rouge">Distribution type</code> input of the <code class="highlighter-rouge">iOS Auto Provisioning</code> step. The options are:</p>
+
+    <ul>
+      <li>
+        <p><code class="highlighter-rouge">auto-detect</code> - please note that this option is deprecated and will be removed. We do not recommend using it.</p>
+      </li>
+      <li>
+        <p><code class="highlighter-rouge">app-store</code></p>
+      </li>
+      <li>
+        <p><code class="highlighter-rouge">ad-hoc</code></p>
+      </li>
+      <li>
+        <p><code class="highlighter-rouge">enterprise</code></p>
+      </li>
+      <li>
+        <p><code class="highlighter-rouge">development</code>.</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>Save the Workflow, and start a new build.</p>
+  </li>
+</ol>
+
+<p>That’s all. Xcode will auto select the right signing files based on your project’s Bundle ID and
+Team ID settings, and the Export Method you set.</p>
+
+<p>If you want to sign the IPA with a different team’s code signing files (e.g.
+if you use your company’s code signing for internal builds, but your client’s
+code signing files for App Store distribution), all you have to do is to set
+the <code class="highlighter-rouge">The Developer Portal team to use for this export</code> option as well (in addition
+to the <code class="highlighter-rouge">Select method for export</code>).</p>
 
 			</main>
 		</div>

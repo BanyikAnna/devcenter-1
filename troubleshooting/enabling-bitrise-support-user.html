@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Enabling Bitrise Support user for your app - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Enabling Bitrise Support user for your app
 						
 					</div>
 				</div>
@@ -1617,7 +1617,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/troubleshooting/enabling-bitrise-support-user" title="Enabling Bitrise Support user for your app">Enabling Bitrise Support user for your app</a>
+				<a href="/troubleshooting/enabling-bitrise-support-user" title="Enabling Bitrise Support user for your app" class="current">Enabling Bitrise Support user for your app</a>
 			
 		
 		
@@ -1764,26 +1764,41 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Enabling Bitrise Support user for your app</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/troubleshooting/enabling-bitrise-support-user.md" target="_blank"></a>
+					</div>
+				
+				<p>If you need quick tech support from us, our onsite chat support can look into your project and fix your technical issues in the most efficient way! All you have to do is enable <code class="highlighter-rouge">Bitrise Support user</code> so that we have access to your project, specifically to your workflow, your build log, your app settings or to your yml.</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>With the toggle function, you can easily turn the <code class="highlighter-rouge">Bitrise Support user</code> on and off, no need to add us as a user to your app’s Team any more.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>Let’s see how to set it up!</p>
+
+<ol>
+  <li>
+    <p>Go to the <code class="highlighter-rouge">Settings</code> tab of your project.</p>
+  </li>
+  <li>
+    <p>Scroll down to the <code class="highlighter-rouge">Enable Bitrise Support user for this app</code> and toggle the switch to the right to enable it.</p>
+
+    <p>!!! tip
+     It might take a couple of seconds to work and you might need to <strong>refresh your page</strong> to see the enabled status.</p>
+
+    <p><img src="/img/troubleshooting/enable-bitrise-support-user.png" alt="Screenshot" /></p>
+  </li>
+  <li>
+    <p>Ping us through our onsite chat and notify us that you have enabled the Bitrise support user for your app so that we can help you with your issue.</p>
+  </li>
+</ol>
+
+<h3 id="what-the-bitrise-support-user-can-see-if-its-enabled">What the Bitrise Support user can see if it’s enabled <a href="#what-the-bitrise-support-user-can-see-if-its-enabled" class="anchor-symbol">⚓</a></h3>
+
+<p>The Bitrise Support user has access to your builds and can edit your workflows. We can also modify the inputs of the <code class="highlighter-rouge">Team</code>, <code class="highlighter-rouge">Code</code> and the <code class="highlighter-rouge">Settings</code> tab. In the case of a failing workflow, our best practice is to create a new and correct version of the failing workflow called <code class="highlighter-rouge">support-testing</code>. You can compare our <code class="highlighter-rouge">support-testing</code> with your own and update yours or keep the <code class="highlighter-rouge">support-testing</code> workflow, rename it as you wish, and develop it further.</p>
+
+<h3 id="what-the-bitrise-support-user-cant-see-if-its-enabled">What the Bitrise Support user can’t see if it’s enabled <a href="#what-the-bitrise-support-user-cant-see-if-its-enabled" class="anchor-symbol">⚓</a></h3>
+
+<p>The Bitrise Support user can’t see your <code class="highlighter-rouge">Account information</code> or any <code class="highlighter-rouge">Billing</code> information. Only the owner of the account has access to this information and has the right to modify any account-related records.</p>
 
 			</main>
 		</div>

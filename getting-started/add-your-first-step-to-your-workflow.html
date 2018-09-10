@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Add your first Step to your Workflow - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Add your first Step to your Workflow
 						
 					</div>
 				</div>
@@ -117,7 +117,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/getting-started/add-your-first-step-to-your-workflow" title="Add your first Step to your Workflow">Add your first Step to your Workflow</a>
+				<a href="/getting-started/add-your-first-step-to-your-workflow" title="Add your first Step to your Workflow" class="current">Add your first Step to your Workflow</a>
 			
 		
 		
@@ -1764,26 +1764,46 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Add your first Step to your Workflow</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/getting-started/add-your-first-step-to-your-workflow.md" target="_blank"></a>
+					</div>
+				
+				<p>When you’ve registered an app you can start modifying its Workflow,
+that is to customize how a build should work.</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>To edit your App’s Workflow you should open the <code class="highlighter-rouge">Workflow Editor</code>:</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<ol>
+  <li>After <a href="https://www.bitrise.io">logging in</a>, select your App on your <a href="https://www.bitrise.io/dashboard">Dashboard</a></li>
+  <li>Select the <code class="highlighter-rouge">Workflow</code> tab</li>
+</ol>
+
+<p>In the Workflow Editor you can see a preset list of Steps based on your app we added to your Workflow.</p>
+
+<h2 id="add-a-new-step-to-the-workflow">Add a new Step to the Workflow <a href="#add-a-new-step-to-the-workflow" class="anchor-symbol">⚓</a></h2>
+
+<p>If you want to <strong>add a new Step</strong> to the Workflow,
+just click the <code class="highlighter-rouge">+</code> sign button between the Steps you want the new one to be.</p>
+
+<p><img src="/img/getting-started/add-your-first-step.png" alt="Add step button in Workflow Editor" /></p>
+
+<p>This will show you a list of available Steps in our <strong>Step Library</strong>.
+You can search and filter these steps if you want to, or just browse through the collection.
+Clicking the Step will add it to your Workflow.</p>
+
+<p>You can <strong>Drag and Drop</strong> to reorder your list of Steps. During a build,
+steps will be executed one by one, in top-to-bottom order.</p>
+
+<p>Once you’re happy with your Workflow Save it on the top right!
+That’s all, your next build will automatically use the current, <strong>saved</strong> Workflow!</p>
+
+<p>!!! note “Multiple Workflows”
+    You can create as many workflows as you like, and then
+    specify which one to use for which build trigger event in the <code class="highlighter-rouge">Triggers</code> section
+    of the Workflow Editor.
+    You can read more about Triggers and workflow selection in the
+    <a href="/webhooks/trigger-map/">Control what to build when, with the Trigger Map</a> guide.</p>
 
 			</main>
 		</div>

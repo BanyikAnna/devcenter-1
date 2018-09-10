@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Caching Maven - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Caching Maven
 						
 					</div>
 				</div>
@@ -927,7 +927,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/caching/caching-maven" title="Caching Maven">Caching Maven</a>
+				<a href="/caching/caching-maven" title="Caching Maven" class="current">Caching Maven</a>
 			
 		
 		
@@ -1764,26 +1764,30 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Caching Maven</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/caching/caching-maven.md" target="_blank"></a>
+					</div>
+				
+				<ol>
+  <li>
+    <p>Open your app’s <code class="highlighter-rouge">Workflow Editor</code>.</p>
+  </li>
+  <li>
+    <p>Insert the <code class="highlighter-rouge">Cache:Pull</code> step after the <code class="highlighter-rouge">Git Clone</code> but before the <code class="highlighter-rouge">Android Build</code> steps.</p>
 
-<div class="container">
-  <h1>404</h1>
+    <p>!!! note “Step version”
+     Make sure that your step is version 1.0.0 or newer.</p>
+  </li>
+  <li>
+    <p>Insert the <code class="highlighter-rouge">Cache:Push</code> step to the very end of your workflow.</p>
+  </li>
+  <li>
+    <p>In the <code class="highlighter-rouge">Ignore Paths from change check</code> input of the step, enter <code class="highlighter-rouge">$HOME/.m2</code>.</p>
+  </li>
+</ol>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>And you’re done!</p>
 
 			</main>
 		</div>

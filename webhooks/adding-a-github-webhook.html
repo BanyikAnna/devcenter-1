@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Adding a GitHub webhook - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Adding a GitHub webhook
 						
 					</div>
 				</div>
@@ -450,7 +450,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/webhooks/adding-a-github-webhook" title="Adding a GitHub webhook">Adding a GitHub webhook</a>
+				<a href="/webhooks/adding-a-github-webhook" title="Adding a GitHub webhook" class="current">Adding a GitHub webhook</a>
 			
 		
 		
@@ -1764,26 +1764,55 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Adding a GitHub webhook</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/webhooks/adding-a-github-webhook.md" target="_blank"></a>
+					</div>
+				
+				<p>You can specify webhooks so that Bitrise automatically triggers a build of your app whenever you perform a specified action, such as a code push or a pull request. For GitHub, all you have to do is register your <code class="highlighter-rouge">bitrise-webhooks</code> URL as a Webhook in your <a href="https://www.github.com">GitHub</a> repository.</p>
 
-<div class="container">
-  <h1>404</h1>
+<h2 id="get-the-webhook-url-for-github">Get the webhook URL for GitHub <a href="#get-the-webhook-url-for-github" class="anchor-symbol">⚓</a></h2>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<ol>
+  <li>
+    <p>Navigate to the <code class="highlighter-rouge">Code</code> tab of your app’s page and select <code class="highlighter-rouge">GitHub</code> from the dropdown menu of the <code class="highlighter-rouge">Incoming Webhooks</code> section.</p>
+
+    <p><img src="/img/webhooks/github-webhook-1.png" alt="Screenshot" /></p>
+  </li>
+  <li>
+    <p>Copy the webhook URL for the selected service.</p>
+  </li>
+</ol>
+
+<h2 id="set-up-webhook-on-github">Set up webhook on GitHub <a href="#set-up-webhook-on-github" class="anchor-symbol">⚓</a></h2>
+
+<ol>
+  <li>
+    <p>Navigate to your GitHub repository and select <code class="highlighter-rouge">Settings</code>.</p>
+
+    <p><img src="/img/webhooks/github-webhook-2.png" alt="Screenshot" /></p>
+  </li>
+  <li>
+    <p>Select <code class="highlighter-rouge">Add webhook</code> under Webhooks.</p>
+
+    <p><img src="/img/webhooks/github-webhook-3.png" alt="Screenshot" /></p>
+  </li>
+  <li>
+    <p>Paste the GitHub Webhook URL from Bitrise to the Payload URL.</p>
+
+    <p><img src="/img/webhooks/github-webhook-4.png" alt="Screenshot" /></p>
+  </li>
+  <li>
+    <p>And on the same page, select <code class="highlighter-rouge">Let me select individual events</code>.</p>
+
+    <p><img src="/img/webhooks/github-webhook-5.png" alt="Screenshot" /></p>
+  </li>
+  <li>
+    <p>Select <code class="highlighter-rouge">Pull request</code> and <code class="highlighter-rouge">Push</code>. After you are ready press the <code class="highlighter-rouge">Add webhook</code> button and you are ready to roll!</p>
+
+    <p><img src="/img/webhooks/github-webhook-6.png" alt="Screenshot" /></p>
+  </li>
+</ol>
 
 			</main>
 		</div>

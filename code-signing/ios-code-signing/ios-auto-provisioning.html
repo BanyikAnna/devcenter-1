@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Managing iOS code signing files - automatic provisioning - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Managing iOS code signing files - automatic provisioning
 						
 					</div>
 				</div>
@@ -789,7 +789,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/code-signing/ios-code-signing/ios-auto-provisioning" title="Managing iOS code signing files - automatic provisioning">Managing iOS code signing files - automatic provisioning</a>
+				<a href="/code-signing/ios-code-signing/ios-auto-provisioning" title="Managing iOS code signing files - automatic provisioning" class="current">Managing iOS code signing files - automatic provisioning</a>
 			
 		
 		
@@ -1764,26 +1764,84 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Managing iOS code signing files - automatic provisioning</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/code-signing/ios-code-signing/ios-auto-provisioning.md" target="_blank"></a>
+					</div>
+				
+				<p>Manage your code signing files on <a href="https://www.bitrise.io">bitrise.io</a>. You can use iOS automatic provisioning to automatically generate the required Provisioning Profiles for your project.</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>With automatic provisioning, the <code class="highlighter-rouge">iOS Auto Provision</code> step will manage the Provisioning Profiles. You only have to upload the .p12 certificate files manually to <a href="https://www.bitrise.io">bitrise.io</a>.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>!!! warning “Upload all signing certificates for your project”
+    We strongly recommend uploading <strong>BOTH</strong> the development and distribution signing certificates for your project. Without the different types of certificates, you will not be able to generate different types of signed IPAs.</p>
+
+<p>Before setting up automatic provisioning in your workflow, make sure that:</p>
+
+<ul>
+  <li>you collected the required files with <a href="https://github.com/bitrise-tools/codesigndoc">codesigndoc</a>. You can also upload the distribution and development certificates with the tool!</li>
+  <li>you have at least <strong>Admin</strong> role in the developer portal team.</li>
+  <li><a href="/signing-up/connecting-apple-dev-account">your Apple Developer account is connected to bitrise.io</a>.</li>
+  <li>Apple Developer Portal integration to your Bitrise project is enabled.</li>
+</ul>
+
+<p>!!! info “Xcode Automatically manage signing option”
+    The <code class="highlighter-rouge">iOS Auto Provision</code> step can automatically manage profiles even if the iOS project uses Xcode’s
+    <em>Automatically manage signing</em> option, introduced in Xcode 8. The step can detect if the provided iOS
+    project uses <em>Automatically manage signing</em> option or not. Then it will download the Xcode managed profiles which are needed to sign your project and
+    will install them together with the provided certificates.</p>
+
+<p>Once you are ready, proceed to uploading your files and setting up your workflow:</p>
+
+<ol>
+  <li>
+    <p>Open your app on your <code class="highlighter-rouge">Dashboard</code>.</p>
+  </li>
+  <li>
+    <p>Select the <code class="highlighter-rouge">Workflow Editor</code> tab.</p>
+  </li>
+  <li>
+    <p>Select the <code class="highlighter-rouge">Code Signing</code> tab.</p>
+  </li>
+  <li>
+    <p>Make sure you have the .p12 certificate files uploaded. If not, add the .p12 files in the <code class="highlighter-rouge">Add the private key (.p12) for signing</code> field.</p>
+
+    <p><img src="/img/code-signing/ios-code-signing/provisioning-and-certificate-upload.png" alt="Uploading certificates and Provisioning Profiles" /></p>
+
+    <p>!!! info “Provisioning Profile file extensions”
+     For a MacOS project, the Provisioning Profile file extension is <code class="highlighter-rouge">.provisionprofile</code>; for an iOS project, the file extension is <code class="highlighter-rouge">.mobileprovision</code>.</p>
+  </li>
+  <li>
+    <p>Make sure that you do <strong>NOT</strong> have the <code class="highlighter-rouge">Certificate and profile installer</code> step in your Workflow. If you have both <code class="highlighter-rouge">iOS Auto Provision</code> and <code class="highlighter-rouge">Certificate and profile installer</code> steps in your Workflow, your build will fail.</p>
+  </li>
+  <li>
+    <p>Add the <code class="highlighter-rouge">iOS Auto Provision</code> step to your app’s Workflow. You can check it on the <code class="highlighter-rouge">Workflow</code> tab of the <code class="highlighter-rouge">Workflow Editor</code>.</p>
+
+    <p>Please note that this step must come <strong>AFTER</strong> any dependency installer step in your workflow, such as <code class="highlighter-rouge">Run CocoaPods install</code> or <code class="highlighter-rouge">Carthage</code>. Make sure that you do <strong>NOT</strong> modify your Xcode project between the <code class="highlighter-rouge">iOS Auto Provision</code> and the <code class="highlighter-rouge">Xcode Archive &amp; Export for iOS</code> steps. For example, do not change the bundle ID after the <code class="highlighter-rouge">iOS Auto Provision</code> step.</p>
+
+    <p><img src="/img/code-signing/ios-code-signing/workflow-with-auto-prov.png" alt="iOS Auto Provisioning in your workflow" /></p>
+  </li>
+  <li>
+    <p>Fill the required inputs of the step.</p>
+    <ul>
+      <li><code class="highlighter-rouge">The Developer Portal team id</code> - find this on the <a href="https://developer.apple.com/account/#/membership">Membership Details page of your Apple Developer Portal account</a></li>
+      <li><code class="highlighter-rouge">Distribution type</code> - make sure its value matches the value of the <code class="highlighter-rouge">Select method for export</code> input in the <code class="highlighter-rouge">Xcode Archive &amp; Export for iOS step</code>.</li>
+      <li><code class="highlighter-rouge">Scheme</code> - you can restrict which targets to process.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>!!! hint “Troubleshooting: missing Distribution signing files”
+    If <code class="highlighter-rouge">codesigndoc</code> does not pick up one or more distribution .p12 files,
+    you can export those manually from the <code class="highlighter-rouge">Keychain Access</code> app, just like you would when you
+    transfer these files between Macs.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>But __even if `codesigndoc` does not find
+all the files, you should upload all the files collected by `codesigndoc` - except the Provisioning Profile files!__
+The base files collected by `codesigndoc` are essential for your project's
+code signing: without those it's not possible to create a signed IPA
+for the project!
+</code></pre></div></div>
 
 			</main>
 		</div>

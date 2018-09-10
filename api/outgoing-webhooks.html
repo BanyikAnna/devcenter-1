@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Outgoing Webhooks - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Outgoing Webhooks
 						
 					</div>
 				</div>
@@ -1737,7 +1737,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/api/outgoing-webhooks" title="Outgoing Webhooks">Outgoing Webhooks</a>
+				<a href="/api/outgoing-webhooks" title="Outgoing Webhooks" class="current">Outgoing Webhooks</a>
 			
 		
 		
@@ -1764,26 +1764,73 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Outgoing Webhooks</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/api/outgoing-webhooks.md" target="_blank"></a>
+					</div>
+				
+				<p>By setting up outgoing webhooks you can make Bitrise send notifications about specific events to your web service, so you can create custom integrations.</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>You can set the URL of your web service and select which events should trigger a notification in the Code tab of your app. Currently only build events are supported: a notification is sent when a build starts or finishes.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>The event type that triggered the webhook is sent in a custom header:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"Bitrise-Event-Type": "build/triggered" # or "build/finished"
+</code></pre></div></div>
+
+<p>The recent delivery attempts of a webhook can be found on the Code tab, so you can inspect the sent payload and the given response, and even request a redelivery of a given item. (Please note that Bitrise tries to deliver an item only once, no automatic retry attempts are made: it can be requested manually.)</p>
+
+<h2 id="build-events">Build events <a href="#build-events" class="anchor-symbol">⚓</a></h2>
+
+<p><em>Note: the available values of the build status parameter can be found at the <a href="/api/v0.1/#get-appsapp-slugbuilds">build list part of the Bitrise API documentation</a></em></p>
+
+<h3 id="build-triggered">Build triggered <a href="#build-triggered" class="anchor-symbol">⚓</a></h3>
+
+<p>Custom header:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"Bitrise-Event-Type": "build/triggered"
+</code></pre></div></div>
+
+<p>Payload example:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  "build_slug":"1234abcd",
+  "build_number":3,
+  "app_slug":"abcd1234",
+  "build_status":0,
+  "git": {
+    "provider":"github",
+    "src_branch":"feature/branch",
+    "dst_branch":"master", # If the build was triggered by a pull request
+    "pull_request_id":32, # If the build was triggered by a pull request
+    "tag":"v1.0" # If the build was triggered by tag
+  }
+}
+</code></pre></div></div>
+
+<h3 id="build-finished">Build finished <a href="#build-finished" class="anchor-symbol">⚓</a></h3>
+
+<p>Custom header:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"Bitrise-Event-Type": "build/finished"
+</code></pre></div></div>
+
+<p>Payload example:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+  "build_slug":"1234abcd",
+  "build_number":3,
+  "app_slug":"abcd1234",
+  "build_status":1,
+  "git": {
+    "provider":"github",
+    "src_branch":"feature/branch",
+    "dst_branch":master, # If the build was triggered by a pull request
+    "pull_request_id":32 # If the build was triggered by a pull request
+    "tag":"v1.0" # If the build was triggered by tag
+  }
+}
+</code></pre></div></div>
 
 			</main>
 		</div>

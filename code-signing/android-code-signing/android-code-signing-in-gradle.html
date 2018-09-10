@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Android code signing in Gradle - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Android code signing in Gradle
 						
 					</div>
 				</div>
@@ -738,7 +738,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/code-signing/android-code-signing/android-code-signing-in-gradle" title="Android code signing in Gradle">Android code signing in Gradle</a>
+				<a href="/code-signing/android-code-signing/android-code-signing-in-gradle" title="Android code signing in Gradle" class="current">Android code signing in Gradle</a>
 			
 		
 		
@@ -1764,26 +1764,92 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Android code signing in Gradle</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/code-signing/android-code-signing/android-code-signing-in-gradle.md" target="_blank"></a>
+					</div>
+				
+				<h2 id="configure-manually-in-gradle">Configure manually in Gradle <a href="#configure-manually-in-gradle" class="anchor-symbol">⚓</a></h2>
 
-<div class="container">
-  <h1>404</h1>
+<p>You can manually specify the code signing configuration in your Gradle configuration so that your app gets signed during the build process.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<ol>
+  <li>
+    <p>Open your module-level <code class="highlighter-rouge">build.gradle</code> file.</p>
+  </li>
+  <li>
+    <p>Add the <code class="highlighter-rouge">signingConfigs</code> codeblock to your code and define the following entries specific to your project:
+<code class="highlighter-rouge">storeFile</code>, <code class="highlighter-rouge">storePassword</code>, <code class="highlighter-rouge">keyAlias</code>, and <code class="highlighter-rouge">keyPassword</code>.</p>
+  </li>
+</ol>
+
+<p>!!! example “Signing configuration in <code class="highlighter-rouge">build.gradle</code>”
+    <code class="highlighter-rouge">
+    android {
+        signingConfigs {
+            release {
+                keyAlias 'MyAndroidKey'
+                keyPassword '***'
+                storeFile file("/path/to/my/keystore.jks")
+                storePassword '***'
+            }
+        }
+    ...
+   </code></p>
+
+<h2 id="about-environment-variables">About environment variables <a href="#about-environment-variables" class="anchor-symbol">⚓</a></h2>
+
+<p>You can avoid having the same keystore path locally and on <a href="https://www.bitrise.io">bitrise.io</a> by using configuration values and environment variables in the keystore path (<code class="highlighter-rouge">storeFile</code>) and in the keystore password.</p>
+
+<p>!!! example “Using environment variables in keystore path and in keystore password”
+    If your keystore path is <code class="highlighter-rouge">$HOME/keystores/my_keystore.jks</code>, then your <code class="highlighter-rouge">build.gradle</code> file looks like this:
+    <code class="highlighter-rouge">
+    android {
+       signingConfigs {
+           release {
+               keyAlias 'MyAndroidKey'
+               keyPassword '***'
+               storeFile file(System.getenv("HOME") + "/keystores/my_keystore.jks")
+               storePassword '***'
+           }
+       }
+    ...
+   </code></p>
+
+<p>!!! tip “Accessing environment variables in your Gradle config”</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> You can use the `System.getenv("ENV_KEY")` file to access environment variables in the Gradle config file.
+</code></pre></div></div>
+
+<p>!!! example “Using env vars as <code class="highlighter-rouge">keyPassword</code> and <code class="highlighter-rouge">storePassword</code> in the <code class="highlighter-rouge">Code signing</code> tab”
+    Your <code class="highlighter-rouge">build.gradle</code> will look like this:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>```
+android {
+   signingConfigs {
+       release {
+          keyAlias System.getenv("BITRISEIO_ANDROID_KEYSTORE_ALIAS")
+          keyPassword System.getenv("BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD")
+          storeFile file(System.getenv("HOME") + "/keystores/my_keystore.jks")
+          storePassword System.getenv("BITRISEIO_ANDROID_KEYSTORE_PASSWORD")
+       }
+   }
+...
+```
+You get these environment variables when you upload your keystore to the `GENERIC FILE STORAGE` field of the `Code Signing` tab in your Workflow Editor.
+</code></pre></div></div>
+
+<p>!!! attention
+    Do not forget to define the used environment variables on <a href="https://www.bitrise.io">bitrise.io</a> as well.</p>
+
+<p>When you upload a keystore file in the <code class="highlighter-rouge">Android keystore file</code> section and you have all the fields filled out, Bitrise will export these environment variables automatically:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">BITRISEIO_ANDROID_KEYSTORE_ALIAS</code></li>
+  <li><code class="highlighter-rouge">BITRISEIO_ANDROID_KEYSTORE_PASSWORD</code></li>
+  <li><code class="highlighter-rouge">BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD</code></li>
+  <li><code class="highlighter-rouge">BITRISEIO_ANDROID_KEYSTORE_URL</code></li>
+</ul>
 
 			</main>
 		</div>

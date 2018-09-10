@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Adding a new app - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Adding a new app
 						
 					</div>
 				</div>
@@ -252,7 +252,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/adding-a-new-app/index" title="Adding a new app">Adding a new app</a>
+				<a href="/adding-a-new-app/index" title="Adding a new app" class="current">Adding a new app</a>
 			
 		
 		
@@ -1764,26 +1764,28 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Adding a new app</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/adding-a-new-app/index.md" target="_blank"></a>
+					</div>
+				
+				<p>When adding your app to <strong>Bitrise</strong>, we will clone your repository to make sure we can access it. Besides cloning your repository we will run our <a href="https://github.com/bitrise-steplib/steps-project-scanner">project scanner</a> that detects all the supported apps and instantly configure your workflow with all the necessary steps to build and deploy your app.</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>!!! note “Currently we are supporting the following projects out of the box”
+    * iOS
+    * Android
+    * Xamarin
+    * Fastlane</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>To add a new app to Bitrise go to your <a href="https://bitrise.io/dashboard">dashboard</a> and press the <code class="highlighter-rouge">Add new app</code> button.</p>
+
+<p><img src="/img/adding-a-new-app/add_new_app.png" alt="Screenshot" /></p>
+
+<p>In case this is the first application the dashboard will show you the quickstart guide instead of a list of you apps. There you can choose to add your first app right away.</p>
+
+<p>Let’s check out how you can <a href="/adding-a-new-app/connecting-a-repository">connect a repository</a>!</p>
+
+<p><img src="/img/adding-a-new-app/quickstart_guide.png" alt="Screenshot" /></p>
 
 			</main>
 		</div>

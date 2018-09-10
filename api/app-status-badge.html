@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				App Status Image/Badge API - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							App Status Image/Badge API
 						
 					</div>
 				</div>
@@ -1728,7 +1728,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/api/app-status-badge" title="App Status Image/Badge API">App Status Image/Badge API</a>
+				<a href="/api/app-status-badge" title="App Status Image/Badge API" class="current">App Status Image/Badge API</a>
 			
 		
 		
@@ -1764,26 +1764,63 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>App Status Image/Badge API</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/api/app-status-badge.md" target="_blank"></a>
+					</div>
+				
+				<p>With the <code class="highlighter-rouge">Status Image API token</code>, you can get an embeddable SVG badge image, a JSON message reflecting the status of the app, or a specific branch of the app.</p>
 
-<div class="container">
-  <h1>404</h1>
+<ol>
+  <li>
+    <p>Open your App on <a href="https://www.bitrise.io">bitrise.io</a> and click the badge image right next to the app’s name.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+    <p><img src="/img/api/status-image-api-token.jpg" alt="Printscreen" /></p>
+  </li>
+  <li>
+    <p>In the <code class="highlighter-rouge">Status image</code> popup, you can optionally set a branch, and get copy-paste-ready <code class="highlighter-rouge">Embed</code> codes for the SVG image.</p>
+
+    <p>!!! example “Example SVG URL”
+     <code class="highlighter-rouge">
+     https://app.bitrise.io/app/APP-ID/status.svg?token=STATUS-IMAGE-API-TOKEN&amp;branch=master
+    </code></p>
+
+    <p>To get the JSON equivalent of the status image, simply replace the <code class="highlighter-rouge">.svg</code> in the <code class="highlighter-rouge">Embed</code> URL with <code class="highlighter-rouge">.json</code>.</p>
+
+    <p>!!! example “JSON URL”
+     <code class="highlighter-rouge">
+     https://app.bitrise.io/app/APP-ID/status.json?token=STATUS-IMAGE-API-TOKEN&amp;branch=master
+    </code></p>
+  </li>
+</ol>
+
+<p>!!! attention “STATUS-IMAGE-API-TOKEN”
+    The <code class="highlighter-rouge">STATUS-IMAGE-API-TOKEN</code> is a special token which can only be used for calling this endpoint (you can find this token in the <code class="highlighter-rouge">Status image</code> popup). No other information can be retrieved with this token, and it’s not the same as the <code class="highlighter-rouge">API Token</code> which you can find on the <code class="highlighter-rouge">Code</code> tab!</p>
+
+<h2 id="json-response">JSON response <a href="#json-response" class="anchor-symbol">⚓</a></h2>
+
+<p>The JSON response returns a very simple JSON object:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "status": "SIMPLIFIED-STATUS-AS-TEXT"
+}
+</code></pre></div></div>
+
+<p>where <code class="highlighter-rouge">SIMPLIFIED-STATUS-AS-TEXT</code> can be:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">success</code> : if the last finished build on the specified branch was successful</li>
+  <li><code class="highlighter-rouge">error</code> : if the last finished build failed or was aborted on the specified branch</li>
+  <li><code class="highlighter-rouge">unknown</code> : in any other case, including if there was no (finished) build on the specified branch</li>
+</ul>
+
+<h3 id="http-codes-and-errors">HTTP Codes and Errors <a href="#http-codes-and-errors" class="anchor-symbol">⚓</a></h3>
+
+<p>If the <code class="highlighter-rouge">APP-ID</code> and the <code class="highlighter-rouge">STATUS-IMAGE-API-TOKEN</code> parameters are correct,
+and they identify an existing app, a <strong>200</strong> HTTP code is returned along with the JSON response, even if the branch parameter points to a non-existing branch (the JSON response in this case will be <code class="highlighter-rouge">{"status": "unknown"}</code> with a 200 HTTP code).</p>
+
+<p>If the <code class="highlighter-rouge">APP-ID</code> or the <code class="highlighter-rouge">STATUS-IMAGE-API-TOKEN</code> (or both) is not correct,
+you’ll get a HTTP <strong>403</strong> code <em>with an empty response</em> body.</p>
 
 			</main>
 		</div>

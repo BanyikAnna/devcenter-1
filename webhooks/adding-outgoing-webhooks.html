@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Adding outgoing webhooks - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Adding outgoing webhooks
 						
 					</div>
 				</div>
@@ -522,7 +522,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/webhooks/adding-outgoing-webhooks" title="Adding outgoing webhooks">Adding outgoing webhooks</a>
+				<a href="/webhooks/adding-outgoing-webhooks" title="Adding outgoing webhooks" class="current">Adding outgoing webhooks</a>
 			
 		
 		
@@ -1764,26 +1764,123 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Adding outgoing webhooks</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/webhooks/adding-outgoing-webhooks.md" target="_blank"></a>
+					</div>
+				
+				<p>You can configure Bitrise to send build event notifications to any service you would like. A build event is:</p>
 
-<div class="container">
-  <h1>404</h1>
+<ul>
+  <li>when a build is started</li>
+  <li>when a build ends.</li>
+</ul>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>You can use this notification to share build statuses with your git provider if we don’t support it yet, notify only the right team about build success or failure, or use it to automate your in-house release pipeline.</p>
+
+<p>You can add, remove and edit your webhooks easily on the website interface.</p>
+
+<h2 id="adding-an-outgoing-webhook">Adding an outgoing webhook <a href="#adding-an-outgoing-webhook" class="anchor-symbol">⚓</a></h2>
+
+<p>You can set up and configure the webhooks sent by Bitrise on the web UI. Let’s see how!</p>
+
+<ol>
+  <li>
+    <p>Go to your app’s page on <a href="https://www.bitrise.io">bitrise.io</a> and open the <code class="highlighter-rouge">Code</code> tab.</p>
+  </li>
+  <li>
+    <p>Click <code class="highlighter-rouge">+ Add webhook</code>.</p>
+
+    <p><img src="/img/webhooks/adding-outgoing.png" alt="Adding outgoing webhook" /></p>
+  </li>
+  <li>
+    <p>Enter the URL of the service where you wish to send the notification in the <code class="highlighter-rouge">URL</code> field.</p>
+  </li>
+  <li>
+    <p>Select either the <code class="highlighter-rouge">Send me everything</code> or the <code class="highlighter-rouge">Select individual events</code> option.</p>
+
+    <ul>
+      <li><code class="highlighter-rouge">Send me everything</code>: every supported event type will trigger the webhook. Currently, only build events are supported but there will be other options in the future!</li>
+      <li><code class="highlighter-rouge">Select individual events</code>: you can specify the individual events that should trigger the webhook.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Click <code class="highlighter-rouge">Create Webhook</code>.</p>
+  </li>
+</ol>
+
+<p>And you’re done! You can modify your webhook at any time by clicking <code class="highlighter-rouge">Edit</code> next to the webhook URL displayed.</p>
+
+<h3 id="adding-custom-headers-to-outgoing-webhooks">Adding custom headers to outgoing webhooks <a href="#adding-custom-headers-to-outgoing-webhooks" class="anchor-symbol">⚓</a></h3>
+
+<p>You can add extra headers to your outgoing webhooks via the <code class="highlighter-rouge">Code</code> tab of the web interface. For example, if you have an API listening to the webhook, you can track the requests with API keys set as a custom header.</p>
+
+<p>You can add custom headers either when:</p>
+
+<ul>
+  <li><a href="/webhooks/adding-outgoing-webhooks#adding-an-outgoing-webhook">creating a new outgoing webhook</a>.</li>
+  <li>modifying an existing outgoing webhook by clicking the <code class="highlighter-rouge">Edit</code> button next to the URL.</li>
+</ul>
+
+<p>Add the header:</p>
+
+<ol>
+  <li>
+    <p>Find the <code class="highlighter-rouge">WEBHOOK HEADERS</code> section.</p>
+
+    <p><img src="/img/webhooks/webhook-headers.png" alt="Webhook headers" /></p>
+  </li>
+  <li>
+    <p>Add a key and a value to the header. You need both to be able to save the header.</p>
+  </li>
+  <li>
+    <p>Click <code class="highlighter-rouge">Add header</code>.</p>
+  </li>
+  <li>
+    <p>Click <code class="highlighter-rouge">Create webhook</code>/<code class="highlighter-rouge">Update webhook</code>.</p>
+  </li>
+</ol>
+
+<h2 id="checking-and-resending-webhook-deliveries">Checking and resending webhook deliveries <a href="#checking-and-resending-webhook-deliveries" class="anchor-symbol">⚓</a></h2>
+
+<p>You can check if the notifications were successfully sent or not, and you can check both the payload and the response. The deliveries are marked with appropriate status code, depending on whether the delivery was successful. If it was, you will see a green check mark; if it failed, you will see an orange triangle.</p>
+
+<ol>
+  <li>
+    <p>Go to the <code class="highlighter-rouge">Recent deliveries</code> section of the <code class="highlighter-rouge">Outgoing Webhooks</code> menu.</p>
+  </li>
+  <li>
+    <p>Click an outgoing webhook.</p>
+
+    <p><img src="/img/webhooks/outgoing-webhook.jpeg" alt="Outgoing webhook" /></p>
+  </li>
+  <li>
+    <p>Select the <code class="highlighter-rouge">REQUEST</code> tab to see and, if you wish, modify the payload that was sent to the specified URL.</p>
+
+    <p>An example payload:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> {
+   "build_slug":"1234abcd",
+   "build_number":3,
+   "app_slug":"abcd1234",
+   "git": {
+     "provider":"github",
+     "src_branch":"feature/branch",
+     "dst_branch":master, # If the build was triggered by a pull request
+     "pull_request_id":32 # If the build was triggered by a pull request
+   }
+ }
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Select the <code class="highlighter-rouge">RESPONSE</code> tab to see the response from the service you sent the notification to.</p>
+  </li>
+  <li>
+    <p>You can redeliver any delivery. Open the delivery you need and click <code class="highlighter-rouge">Redeliver</code>.</p>
+
+    <p><img src="/img/webhooks/redeliver-payload.jpeg" alt="Redeliver" /></p>
+  </li>
+</ol>
 
 			</main>
 		</div>

@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Build artifacts online - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Build artifacts online
 						
 					</div>
 				</div>
@@ -660,7 +660,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/builds/build-artifacts-online" title="Build artifacts online">Build artifacts online</a>
+				<a href="/builds/build-artifacts-online" title="Build artifacts online" class="current">Build artifacts online</a>
 			
 		
 		
@@ -1764,26 +1764,45 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Build artifacts online</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/builds/build-artifacts-online.md" target="_blank"></a>
+					</div>
+				
+				<p>If you select a build of your app, in the <code class="highlighter-rouge">APPS &amp; Artifacts</code> tab of your build’s page you can check out the artifacts (for example, files &amp; reports) which have been generated during the build. All files are destroyed at the end of the build so if you want to view or download any files, insert <code class="highlighter-rouge">Deploy to bitrise.io</code> step to your workflow so that it can help you access the artifacts.</p>
 
-<div class="container">
-  <h1>404</h1>
+<h2 id="deploy-files-into-artifacts">Deploy files into artifacts <a href="#deploy-files-into-artifacts" class="anchor-symbol">⚓</a></h2>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>Artifacts are deployed into the <code class="highlighter-rouge">APPS &amp; Artifacts</code> section in your build’s page with the help of the <code class="highlighter-rouge">Deploy to Bitrise.io</code> step. It deploys all the files which have been generated during the build and stores them in the <code class="highlighter-rouge">$BITRISE_DEPLOY_DIR</code> directory. You can change the target directory path in the <code class="highlighter-rouge">Deploy directory or file path</code> field under the <code class="highlighter-rouge">Config</code> section of the step.</p>
+
+<ol>
+  <li>Insert the <code class="highlighter-rouge">Deploy to Bitrise.io</code> step AFTER the step/s that generate the artifacts or even better if the <code class="highlighter-rouge">Deploy to Bitrise.io</code> step is <strong>at the very end of your workflow</strong>. For more information, check out <a href="https://devcenter.bitrise.io/tips-and-tricks/attach-any-file-to-build/">Attach any file as an Artifact to the Build</a>.</li>
+</ol>
+
+<p>!!! important
+    Add the <code class="highlighter-rouge">Deploy to Bitrise.io</code> step in the right place. If you insert the step before other steps that generate files during the build, then <code class="highlighter-rouge">Deploy to Bitrise.io</code> will have nothing to deploy.</p>
+
+<p>!!! note
+    Note that the content of any sub-directories found in the deploy directory will not be displayed in the <code class="highlighter-rouge">APPS and Artifacts</code> section of your build. You can, however, <strong>compress your artifacts</strong> into a zip file if you modify the default <code class="highlighter-rouge">false</code> value to <code class="highlighter-rouge">true</code> in the <code class="highlighter-rouge">Compress the artifacts into one file</code> field in the <code class="highlighter-rouge">Deploy to Bitrise.io</code> step. This will compress the whole directory along with its sub-directories and deploy to <code class="highlighter-rouge">APPS &amp; Artifacts</code>.</p>
+
+<h3 id="modify-target-directory-path">Modify target directory path <a href="#modify-target-directory-path" class="anchor-symbol">⚓</a></h3>
+
+<p>You can <strong>modify the target directory path</strong> to another one but make sure you reference the same directory paths in other steps of your workflow to ensure that the generated files get collected to the same directory.</p>
+
+<h3 id="view-artifacts-if-your-build-has-failed">View artifacts if your build has failed <a href="#view-artifacts-if-your-build-has-failed" class="anchor-symbol">⚓</a></h3>
+
+<p>With the <code class="highlighter-rouge">Run if previous Step failed</code> toggle enabled, you can access your build artifacts - only those that have been successfully generated - even if your build has failed. For example, you can detect bugs in your failed build by looking into the generated test report files.</p>
+
+<h3 id="who-can-access-build-artifacts">Who can access build artifacts? <a href="#who-can-access-build-artifacts" class="anchor-symbol">⚓</a></h3>
+
+<p>The artifacts at <code class="highlighter-rouge">APPS &amp; Artifacts</code> are accessible for everyone who are owner, admin, developer, tester/QA of the app. Besides these roles, if you keep the default config of the <code class="highlighter-rouge">Enable public page for the App</code> feature, then anyone who receives the URL, will be able to access your app and its artifacts. For more information, check out <a href="https://devcenter.bitrise.io/tutorials/deploy/bitrise-app-deployment/#public-app-install-page">Public App install page</a>.</p>
+
+<h2 id="file-types--limitations">File types &amp; limitations <a href="#file-types--limitations" class="anchor-symbol">⚓</a></h2>
+
+<p>All file types are supported and will be available in <code class="highlighter-rouge">APPS &amp; Artifacts</code>.
+Depending on the type of the file, you can either view your artifacts inline if you click on the <code class="highlighter-rouge">eye</code> icon or download them to your local computer.</p>
+
+<p>There is no limitation on the NUMBER of files deployed to <code class="highlighter-rouge">APPS &amp; Artifacts</code> per build. There is a limitation, however, on the file size which is <strong>2GB per file</strong>.</p>
 
 			</main>
 		</div>

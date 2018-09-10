@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Skip a Build (skip ci) - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Skip a Build (skip ci)
 						
 					</div>
 				</div>
@@ -1407,7 +1407,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/tips-and-tricks/skip-a-build" title="Skip a Build (skip ci)">Skip a Build (skip ci)</a>
+				<a href="/tips-and-tricks/skip-a-build" title="Skip a Build (skip ci)" class="current">Skip a Build (skip ci)</a>
 			
 		
 		
@@ -1764,26 +1764,64 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Skip a Build (skip ci)</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/tips-and-tricks/skip-a-build.md" target="_blank"></a>
+					</div>
+				
+				<p>If you want to skip a specific commit, to not to start a build,
+all you have to do is to include either <code class="highlighter-rouge">[skip ci]</code> or <code class="highlighter-rouge">[ci skip]</code>
+in the commit message.</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>For example, the commit message:</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>This is not important, please [skip ci]
+</code></pre></div></div>
+
+<p>won’t start a build, nor will:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>I just changed the README
+
+[ci skip]
+</code></pre></div></div>
+
+<p>!!! warning “Only the head/last commit message is checked!”
+    <strong>If you push more than one commit</strong>, only the last (“head”) commit’s
+    message will be checked for the skip ci pattern!</p>
+
+<p>If you’d decide that you still want to start a build you’ll have to
+either rebase that commit (e.g. just change its commit message), or push another commit.</p>
+
+<p>!!! note “You can push an empty commit”
+    Git allows to create and push empty commits, so if you’d decide that you
+    still want to build a skipped build you can do <code class="highlighter-rouge">git commit --allow-empty -m "I decided to run this"</code>
+    on the related branch and push the commit.</p>
+
+<h2 id="pull-requests">Pull Requests <a href="#pull-requests" class="anchor-symbol">⚓</a></h2>
+
+<p>Skip CI works for Pull Requests too, but a little bit differently, due to how Pull Requests are
+handled on the git source code hosting services.</p>
+
+<p>In short, what you have to know is that Pull Requests are virtual/temporary “commits” / “branches”.
+In case of GitHub there’s actually a pull request related “virtual branch” (ref), which, if you know
+its name, you can <code class="highlighter-rouge">fetch</code> through <code class="highlighter-rouge">git</code> (if you add the related <code class="highlighter-rouge">refs/</code> to your git <code class="highlighter-rouge">fetch</code> config).
+This “branch” (ref) is also removed / made unaccessible after you close the pull request.
+Other services like Bitbucket doesn’t even create this virtual branch / ref, the pull request is just
+a virtual data but can’t be accessed through <code class="highlighter-rouge">git</code> directly.</p>
+
+<p>!!! note “What’s the commit message of a Pull Request?”
+    In any case this means that <strong>the Pull Request itself</strong> is treated as a (virtual) commit,
+    where <strong>the commit message is the title + description of the Pull Request</strong> and
+    not the commit(s) of the pull request!</p>
+
+<p>This means that, <strong>if you want to skip a pull request</strong>, you have to include the Skip CI
+pattern <strong>in the Pull Request’s title or description</strong>, and not in the commit’s message!</p>
+
+<p><strong>Once you decide to not to skip the Pull Request / more commits in the pull request</strong>
+you can simply remove the
+Skip CI pattern from the Pull Request’s title or description, which should automatically
+trigger a new build with the latest commit, and all future commits of the pull request
+will be built too (unless you add a Skip CI pattern again).</p>
 
 			</main>
 		</div>

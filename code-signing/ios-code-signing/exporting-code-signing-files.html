@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Exporting code signing files without codesigndoc - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Exporting code signing files without codesigndoc
 						
 					</div>
 				</div>
@@ -861,7 +861,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/code-signing/ios-code-signing/exporting-code-signing-files" title="Exporting code signing files without codesigndoc">Exporting code signing files without codesigndoc</a>
+				<a href="/code-signing/ios-code-signing/exporting-code-signing-files" title="Exporting code signing files without codesigndoc" class="current">Exporting code signing files without codesigndoc</a>
 			
 		
 		
@@ -1764,26 +1764,62 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Exporting code signing files without codesigndoc</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/code-signing/ios-code-signing/exporting-code-signing-files.md" target="_blank"></a>
+					</div>
+				
+				<h3 id="exporting-certificates-using-xcode">Exporting certificates using Xcode <a href="#exporting-certificates-using-xcode" class="anchor-symbol">⚓</a></h3>
+<ol>
+  <li>Start Xcode</li>
+  <li>Select Xcode &gt; Preferences from the navigation bar.</li>
+  <li>At the top of the window select <code class="highlighter-rouge">Accounts</code>.</li>
+  <li>Select your Apple ID and your team from the right side bar, then click on <code class="highlighter-rouge">View Details...</code>.</li>
+  <li>A dialog will appear where you will see your code signing identities and the provisioning profiles.</li>
+  <li>Select the certificates and choose <code class="highlighter-rouge">Export</code> from the pop-up menu.
+<img src="/img/code-signing/ios-code-signing/xcode_export_certificate.png" alt="Export certificate" /></li>
+  <li>Enter a filename in the Save As dialog. You can set a password and a verification to store it securely, but it’s not necessary.</li>
+  <li>Xcode will export the requested certificate in .p12 format.</li>
+</ol>
 
-<div class="container">
-  <h1>404</h1>
+<h3 id="exporting-manually">Exporting manually <a href="#exporting-manually" class="anchor-symbol">⚓</a></h3>
+<ol>
+  <li>Start Keychain Access.</li>
+  <li>On the top left sidebar select <code class="highlighter-rouge">login</code> and on the bottom left select <code class="highlighter-rouge">My Certificates</code>.</li>
+  <li>This will list all your installed certificates and the associated private key.</li>
+  <li>Select the one that you would like to export and choose <code class="highlighter-rouge">Export</code> from the pop-up menu.
+<img src="/img/code-signing/ios-code-signing/keychain_access_export.png" alt="Export certificate" /></li>
+  <li>Enter a filename in the Save As dialog. You can set a password and a verification to store it securely, but it’s not necessary.</li>
+  <li>Keychain Access will export the requested certificate in .p12 format.</li>
+</ol>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<h2 id="exporting-provisioning-profiles">Exporting Provisioning Profiles <a href="#exporting-provisioning-profiles" class="anchor-symbol">⚓</a></h2>
+
+<h3 id="exporting-using-xcode">Exporting using Xcode <a href="#exporting-using-xcode" class="anchor-symbol">⚓</a></h3>
+<ol>
+  <li>Start Xcode</li>
+  <li>Select Xcode &gt; Preferences from the navigation bar.</li>
+  <li>At the top of the window select <code class="highlighter-rouge">Accounts</code>.</li>
+  <li>Select your Apple ID and your team from the right side bar, then click on <code class="highlighter-rouge">View Details...</code>.</li>
+  <li>A dialog will appear where you will see your code signing identities and the provisioning profiles.</li>
+  <li>Locate the profile that you are looking for under Provisioning Profiles.</li>
+  <li>If you don’t have it installed on the system, click on the <code class="highlighter-rouge">Download</code> button next to it.</li>
+  <li>Choose <code class="highlighter-rouge">Show in finder</code> from the pop-up menu, that will show you the installed provisioning profile for you.</li>
+</ol>
+
+<h3 id="exporting-manually-1">Exporting manually <a href="#exporting-manually-1" class="anchor-symbol">⚓</a></h3>
+<ol>
+  <li>Go to <a href="https://developer.apple.com">https://developer.apple.com</a> and log in.</li>
+  <li>Select Certificates, Identifiers &amp; Profiles from the left sidebar</li>
+  <li>Navigate to Provisioning Profiles &gt; All</li>
+  <li>Find the Provisioning Profile you are looking for from the list or use the search to filter.</li>
+  <li>Click on the selected Provisioning Profile, this will expand the details.</li>
+  <li>If its status is invalid, you can click on the <code class="highlighter-rouge">Edit</code> button and save again.</li>
+  <li>Click on the <code class="highlighter-rouge">Download</code> button to download it and double click to install on your macOS.</li>
+</ol>
+
+<p>!!! note
+    You can also locate all installed Provisioning Profiles at the following path: <code class="highlighter-rouge">~/Library/MobileDevice/Provisioning Profiles/</code>.</p>
 
 			</main>
 		</div>

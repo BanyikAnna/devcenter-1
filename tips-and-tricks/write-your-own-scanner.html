@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Write Your Own Scanner - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Write Your Own Scanner
 						
 					</div>
 				</div>
@@ -1764,26 +1764,200 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Write Your Own Scanner</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/tips-and-tricks/write-your-own-scanner.md" target="_blank"></a>
+					</div>
+				
+				<h1 id="write-your-own-project-scanner">Write your own project scanner <a href="#write-your-own-project-scanner" class="anchor-symbol">⚓</a></h1>
 
-<div class="container">
-  <h1>404</h1>
+<p>When you add a <strong>new app</strong> on bitrise, it will run a <a href="https://github.com/bitrise-steplib/steps-project-scanner">project-scanner step</a> to figure out the <strong>project’s type</strong> and generate a <strong>configuration</strong> based on the type. Same functionality exist as a bitrise cli <a href="https://github.com/bitrise-core/bitrise-plugins-init">plugin</a>.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>Both the step and the plugin uses our shared <a href="https://github.com/bitrise-core/bitrise-init">bitrise-init tool</a>, which is responsible for detecting project type and generating the raleted bitrise configuration (bitrise.yml).</p>
+
+<p><strong>bitrise-init tool</strong> is <strong>open source</strong> and designed to <strong>easily add new project type</strong> support. The following article will explain, how to write your own project scanner.</p>
+
+<h2 id="bitrise-init-tool">bitrise-init tool <a href="#bitrise-init-tool" class="anchor-symbol">⚓</a></h2>
+
+<p>The tool is written in <a href="https://golang.org">golang</a> and built with <strong>command line interface</strong>.</p>
+
+<p>In the <code class="highlighter-rouge">cli</code> package you can find <code class="highlighter-rouge">init_config.go</code> which is responsible to initialize a bitrise configuration file.</p>
+
+<p>It does the followings:</p>
+
+<ol>
+  <li><strong>Collects the cli inputs</strong> (dir, output-dir, format, …) which configures the init process and prints this params
+    <ul>
+      <li><strong>Instantiates</strong> the currently available <strong>project scanners</strong> (ios, android, xamarin, fastlane) and puts them into an array</li>
+      <li>Iterates through the scanner array, <strong>calls the scanner</strong> interface methods on every scanner and collects them outputs</li>
+      <li>Based on the scanner outputs <strong>generates the configurations</strong></li>
+    </ul>
+  </li>
+</ol>
+
+<p><strong>To contribure and write your own scanner you have to do the followings:</strong></p>
+
+<ol>
+  <li>Fork the <a href="https://github.com/bitrise-steplib/steps-project-scanner">project</a>
+    <ul>
+      <li>Write your project type detection functionality guided by the <code class="highlighter-rouge">ScannerInterface</code><br />
+<em>Every new scanner has to put into new package inside the scanners package and has to contain go tests.</em></li>
+      <li>Instantiate and add the new scanner to the scanner list in <code class="highlighter-rouge">cli/init_config.go</code></li>
+      <li>Test with the specified project type</li>
+      <li>Create a PR</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="scannerinterface">ScannerInterface <a href="#scannerinterface" class="anchor-symbol">⚓</a></h2>
+
+<p><strong>Declaration (<code class="highlighter-rouge">scanners/scanners.go</code>):</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// ScannerInterface ...
+type ScannerInterface interface {
+	Name() string
+	Configure(searchDir string)
+
+	DetectPlatform() (bool, error)
+
+	Options() (models.OptionModel, error)
+	DefaultOptions() models.OptionModel
+
+	Configs() (models.BitriseConfigMap, error)
+	DefaultConfigs() (models.BitriseConfigMap, error)
+}
+</code></pre></div></div>
+
+<ul>
+  <li>You have to provide a simple name of the project type you will detect and return with that in <code class="highlighter-rouge">Name()</code> function.</li>
+  <li>Scanner will be configured (<code class="highlighter-rouge">Configure(searchDir string)</code>) with the search directoy (where the scanner should scan).</li>
+  <li><code class="highlighter-rouge">DetectPlatform()</code> should return true, if desired platform is detected.<br />
+It has to be a small logic, which quickly decide. If it return with falss, the scanner loop will continue with the next detector.</li>
+  <li><code class="highlighter-rouge">Options()</code> has to return with an <code class="highlighter-rouge">OptionModel</code> instance. This model represents an option for a step input, which will be asked from the user.<br />
+<em>Lets say ios project scanner found three schemes and later the user has to decide which one to use in the bitrise.yml.<br />
+See more in OptionModel section.</em></li>
+  <li><code class="highlighter-rouge">Configs()</code> return value should hold the possible workflow variations.<br />
+If we stay at ios example, lats say project contains two sub project one of them has a test project also. In this case scanner should pass back at <em>least</em> two workflows, one with test and another one without test, because which workflow will be used, depends on which project will be selected.</li>
+  <li>Later about <code class="highlighter-rouge">Defult</code> prefixed methods.</li>
+</ul>
+
+<h2 id="optionmodel">OptionModel <a href="#optionmodel" class="anchor-symbol">⚓</a></h2>
+
+<p>OptionModel represents an input, with possible values.<br />
+Every value can contain a new OptionModel, which is available if the value will be selected.</p>
+
+<p><strong>Declaration (<code class="highlighter-rouge">models/models.go</code>):</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// OptionModel ...
+type OptionModel struct {
+	Title  string 
+	EnvKey string 
+
+	ValueMap OptionValueMap 
+	Config   string         
+}
+</code></pre></div></div>
+
+<p><strong>Example:</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>title: Path to the gradle file to use
+env_key: GRADLE_BUILD_FILE_PATH
+value_map:
+  build.gradle:
+    title: Gradle task to run
+    env_key: GRADLE_TASK
+    value_map:
+      assembleAndroidTest:
+        title: Gradlew file path
+        env_key: GRADLEW_PATH
+        value_map:
+          ./gradlew:
+            config: android-gradlew-config
+      assembleDebug:
+        title: Gradlew file path
+        env_key: GRADLEW_PATH
+        value_map:
+          ./gradlew:
+            config: android-gradlew-config
+  app/build.gradle:
+    title: Gradle task to run
+    env_key: GRADLE_TASK
+    value_map:
+      assembleAndroidTest:
+        title: Gradlew file path
+        env_key: GRADLEW_PATH
+        value_map:
+          ./gradlew:
+            config: android-gradlew-config
+      assembleDebug:
+        title: Gradlew file path
+        env_key: GRADLEW_PATH
+        value_map:
+          ./gradlew:
+            config: android-gradlew-config
+</code></pre></div></div>
+
+<p>Every OptionModel instance represents a step input with the possible values.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">Title</code> is title of the related input.</li>
+  <li><code class="highlighter-rouge">EnvKey</code> is a key for the environment variable, which will be set as value of the related input.</li>
+  <li><code class="highlighter-rouge">Valuemap</code> contains the possible values of the input.</li>
+  <li><code class="highlighter-rouge">Config</code> holds which config should be used if this option value is selected.</li>
+</ul>
+
+<h2 id="bitriseconfigmap">BitriseConfigMap <a href="#bitriseconfigmap" class="anchor-symbol">⚓</a></h2>
+
+<p>BitriseConfigMap maps the name of the bitrise.yml and the value is a bitrise.yml as a raw string.<br />
+The name of the bitrse.yml is last OptionModel’s Config’s value.</p>
+
+<p><strong>Declaration (<code class="highlighter-rouge">models/models.go</code>):</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// BitriseConfigMap ...
+type BitriseConfigMap map[string]string
+</code></pre></div></div>
+
+<p><strong>Example:</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fastlane:
+  default-fastlane-config: |
+    format_version: 1.2.0
+    default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+    trigger_map:
+    - pattern: '*'
+      is_pull_request_allowed: true
+      workflow: primary
+    workflows:
+      primary:
+        steps:
+        - git-clone@3.2.0: {}
+        - fastlane@2.2.0:
+            inputs:
+            - lane: $FASTLANE_LANE
+            - work_dir: $FASTLANE_WORK_DIR
+ios:
+  default-ios-config: |
+    format_version: 1.2.0
+    default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+    trigger_map:
+    - pattern: '*'
+      is_pull_request_allowed: true
+      workflow: primary
+    workflows:
+      primary:
+        steps:
+        - git-clone@3.2.0: {}
+        - xcode-archive@1.7.3:
+            inputs:
+            - project_path: $BITRISE_PROJECT_PATH
+            - scheme: $BITRISE_SCHEME
+</code></pre></div></div>
+
+r />
+
+<blockquote>
+  <p>For more infos and examples check out the existing scanners.</p>
+</blockquote>
 
 			</main>
 		</div>

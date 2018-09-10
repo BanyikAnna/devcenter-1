@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Don't mark the Build as failed if a given step would fail (ignore the error of the Step) - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Don't mark the Build as failed if a given step would fail (ignore the error of the Step)
 						
 					</div>
 				</div>
@@ -1434,7 +1434,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/tips-and-tricks/dont-mark-build-failed-if-step-fails" title="Don't mark the Build as failed if a given step would fail (ignore the error of the Step)">Don't mark the Build as failed if a given step would fail (ignore the error of the Step)</a>
+				<a href="/tips-and-tricks/dont-mark-build-failed-if-step-fails" title="Don't mark the Build as failed if a given step would fail (ignore the error of the Step)" class="current">Don't mark the Build as failed if a given step would fail (ignore the error of the Step)</a>
 			
 		
 		
@@ -1764,26 +1764,29 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Don't mark the Build as failed if a given step would fail (ignore the error of the Step)</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/tips-and-tricks/dont-mark-build-failed-if-step-fails.md" target="_blank"></a>
+					</div>
+				
+				<p><em>To do this you have to switch to <code class="highlighter-rouge">bitrise.yml</code> mode (open the Workflow Editor on bitrise.io -&gt; left side: click on <code class="highlighter-rouge">bitrise.yml</code> to switch to the interactive <code class="highlighter-rouge">bitrise.yml</code> editor).</em></p>
 
-<div class="container">
-  <h1>404</h1>
+<p>All you have to do is: add an <code class="highlighter-rouge">is_skippable: true</code> flag to the Step.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>An example <code class="highlighter-rouge">script</code> step which, although fails, it won’t “break” the build:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- script:
+    is_skippable: true
+    inputs:
+    - content: |-
+        #!/bin/bash
+        echo "Failing Step."
+        exit 1
+        # exit 1 would mark this step as Failed, but it won't break the Build
+        #  because of the is_skippable: true flag / property
+</code></pre></div></div>
+
+<p>You can find more examples on <a href="https://github.com/bitrise-io/bitrise/blob/fec3772ee2287d6e405d908fb9b42367a5751b43/_examples/tutorials/errors-force-run-and-skippable/bitrise.yml">GitHub</a>.</p>
 
 			</main>
 		</div>

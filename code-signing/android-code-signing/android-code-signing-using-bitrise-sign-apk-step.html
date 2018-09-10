@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Android code signing using Bitrise Sign APK step - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Android code signing using Bitrise Sign APK step
 						
 					</div>
 				</div>
@@ -720,7 +720,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/code-signing/android-code-signing/android-code-signing-using-bitrise-sign-apk-step" title="Android code signing using Bitrise Sign APK step">Android code signing using Bitrise Sign APK step</a>
+				<a href="/code-signing/android-code-signing/android-code-signing-using-bitrise-sign-apk-step" title="Android code signing using Bitrise Sign APK step" class="current">Android code signing using Bitrise Sign APK step</a>
 			
 		
 		
@@ -1764,26 +1764,103 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Android code signing using Bitrise Sign APK step</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/code-signing/android-code-signing/android-code-signing-using-bitrise-sign-apk-step.md" target="_blank"></a>
+					</div>
+				
+				<h2 id="create-a-signed-apk-with-the-sign-apk-step">Create a signed APK with the <code class="highlighter-rouge">Sign APK</code> step <a href="#create-a-signed-apk-with-the-sign-apk-step" class="anchor-symbol">⚓</a></h2>
 
-<div class="container">
-  <h1>404</h1>
+<p>You can create a signed APK using the <code class="highlighter-rouge">Sign APK step</code> in our Bitrise workflow.</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<p>Bitrise Project Scanner provides a <code class="highlighter-rouge">deploy workflow</code> which contains the <code class="highlighter-rouge">Sign APK step</code>. With this step, you can digitally sign your APK as part of your workflow. This step is configured to run if you have already uploaded your keystore file to Bitrise. All you have to do is upload your keystore file in the <code class="highlighter-rouge">Code signing</code> tab of the Workflow Editor.</p>
+
+<p>In this section, we walk you through the code signing steps using our <code class="highlighter-rouge">android-multiple-test-results-sample</code> demo app.</p>
+
+<ol>
+  <li>
+    <p>Log into <a href="https://www.bitrise.io/">bitrise.io</a> and click on your app.</p>
+  </li>
+  <li>
+    <p>On your Bitrise <code class="highlighter-rouge">Dashboard</code>, click on <code class="highlighter-rouge">Workflow</code>.</p>
+  </li>
+  <li>
+    <p>Click on <code class="highlighter-rouge">Code signing</code>.</p>
+  </li>
+  <li>
+    <p>Click or drag-and-drop your keystore file on the <code class="highlighter-rouge">Upload file</code> field of the <code class="highlighter-rouge">ANDROID KEYSTORE FILE</code> section.</p>
+
+    <p><img src="/img/android-code-signing/upload-file.png" alt="Screenshot" /></p>
+  </li>
+  <li>
+    <p>Fill out the displayed three input fields: <code class="highlighter-rouge">keystore password</code>, <code class="highlighter-rouge">keystore alias</code> and <code class="highlighter-rouge">private key password</code>.</p>
+
+    <p><img src="/img/android-code-signing/three-fields.png" alt="Screenshot" /></p>
+  </li>
+  <li>
+    <p>Click on <code class="highlighter-rouge">Save metadata</code>.</p>
+
+    <p>!!! success
+     The <code class="highlighter-rouge">Sign APK</code> step will receive your uploaded files.</p>
+  </li>
+</ol>
+
+<p>Bitrise uploads your keystore file and assigns an environment variable (<code class="highlighter-rouge">BITRISEIO_ANDROID_KEYSTORE_URL</code>) to the download URL (which is a time-limited, read-only download URL) of the file as the value. You can use this URL to download the keystore file during a build in the future. The <code class="highlighter-rouge">Sign APK</code> step in the workflow will track this environment variable and will run if it is set.</p>
+
+<h2 id="download-your-files">Download your files <a href="#download-your-files" class="anchor-symbol">⚓</a></h2>
+
+<p>You can download your files from <code class="highlighter-rouge">GENERIC FILE STORAGE</code>(for example, your keystore file) using the <code class="highlighter-rouge">File-downloader</code> step:</p>
+
+<p>!!! example
+    In this example, we’re downloading a keystore file.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>``` yaml
+...
+- file-downloader:
+   inputs:
+   - source: $BITRISEIO_ANDROID_KEYSTORE_URL
+   - destination: "$HOME/keystores/my_keystore.jks" #native android#
+...
+
+```
+</code></pre></div></div>
+
+<p>After this step, <code class="highlighter-rouge">my_keystore.jks</code> will be available at <code class="highlighter-rouge">$HOME/keystores/my_keystore.jks</code>.</p>
+
+<h2 id="run-your-deploy-workflow">Run your deploy workflow <a href="#run-your-deploy-workflow" class="anchor-symbol">⚓</a></h2>
+
+<p>You can run a workflow <em>manually</em>.</p>
+
+<ol>
+  <li>
+    <p>Open your app’s <code class="highlighter-rouge">Builds</code> page.</p>
+  </li>
+  <li>
+    <p>Click on <code class="highlighter-rouge">Start/Schedule a Build</code>.</p>
+  </li>
+  <li>
+    <p>In the popup window, select <code class="highlighter-rouge">deploy</code> in the Workflow dropdown list.</p>
+  </li>
+  <li>
+    <p>Click <code class="highlighter-rouge">Start Build</code>.</p>
+  </li>
+</ol>
+
+<p>You can also run it through a <em>GIT event</em> if you set the trigger map for the workflow.</p>
+
+<ol>
+  <li>
+    <p>Click on the <code class="highlighter-rouge">Triggers</code> tab.</p>
+  </li>
+  <li>
+    <p>Set up your event (push/tag/pull) and select <code class="highlighter-rouge">deploy</code> workflow.</p>
+  </li>
+  <li>
+    <p>Click on <code class="highlighter-rouge">Done</code> and then <code class="highlighter-rouge">Save</code>.</p>
+  </li>
+</ol>
+
+<p>The next change in your repository that matches any of your trigger map event will start your <code class="highlighter-rouge">deploy</code> workflow.</p>
 
 			</main>
 		</div>

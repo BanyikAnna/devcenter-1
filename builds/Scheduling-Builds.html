@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			
-				 - Bitrise DevCenter
+				Scheduling your builds - Bitrise DevCenter
 			
 		</title>
 		<meta property="og:title" content="Bitrise DevCenter">
@@ -35,7 +35,7 @@
 					<button class="burger material-icon" onclick="toggleSideBar()"></button>
 					<div class="title">
 						
-							Bitrise DevCenter
+							Scheduling your builds
 						
 					</div>
 				</div>
@@ -633,7 +633,7 @@
 	<li class="menu-item">
 		
 			
-				<a href="/builds/Scheduling-Builds" title="Scheduling your builds">Scheduling your builds</a>
+				<a href="/builds/Scheduling-Builds" title="Scheduling your builds" class="current">Scheduling your builds</a>
 			
 		
 		
@@ -1764,26 +1764,62 @@
 			</nav>
 			<main class="content">
 				
-				<style type="text/css" media="screen">
-  .container {
-    margin: 10px auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  h1 {
-    margin: 30px 0;
-    font-size: 4em;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-</style>
+					<div class="title-with-source-edit">
+						<h1>Scheduling your builds</h1>
+						<a class="material-icon" href="https://github.com/bitrise-io/devcenter/blob/master/docs/builds/Scheduling-Builds.md" target="_blank"></a>
+					</div>
+				
+				<p>You can schedule your builds to run automatically at a specific time of the week so that you can check your logs when it’s most convenient for you.</p>
 
-<div class="container">
-  <h1>404</h1>
+<p>Follow the steps to see how you can set it up for your next build!</p>
 
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
-</div>
+<ol>
+  <li>
+    <p>Log into <a href="https://www.bitrise.io">bitrise.io</a>.</p>
+  </li>
+  <li>
+    <p>Go to your <code class="highlighter-rouge">Dashboard</code> and click on the project whose build you want to schedule.</p>
+  </li>
+  <li>
+    <p>Click on <code class="highlighter-rouge">Start/Schedule a Build</code>.</p>
+  </li>
+  <li>
+    <p>In the <code class="highlighter-rouge">Build configuration</code> pop-up window, toggle the switch to the right to enable <code class="highlighter-rouge">Schedule this build</code> feature.</p>
+  </li>
+</ol>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![Screenshot](/img/scheduling-builds/disabled-build-scheduling.png)
+</code></pre></div></div>
+
+<ol>
+  <li>
+    <p>Set the hour and minute in the <code class="highlighter-rouge">HH/MM</code> field.</p>
+  </li>
+  <li>
+    <p>On the timeline, click on the day(s) when you want your build to run.</p>
+  </li>
+</ol>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>![Screenshot](/img/scheduling-builds/selected-builds.png)
+</code></pre></div></div>
+
+<ol>
+  <li>
+    <p>Check and fill out the rest of the input fields if necessary. You can schedule your build in the advanced version of the <code class="highlighter-rouge">Build configuration</code> window too.</p>
+  </li>
+  <li>
+    <p>Click <code class="highlighter-rouge">Schedule Build</code> at the bottom of the pop-up window.</p>
+  </li>
+</ol>
+
+<p>!!! done
+    Now you’re back on your <code class="highlighter-rouge">Builds</code> board and you can see your scheduled build.</p>
+
+<p>If you click on <code class="highlighter-rouge">Show scheduled</code>, you can edit/delete your schedules, disable build scheduling by toggling the switch to the left, or immediately trigger the build by clicking on the <code class="highlighter-rouge">Trigger now</code> button.</p>
+
+<p><img src="/img/scheduling-builds/scheduled-build.png" alt="Screenshot" /></p>
+
+<p>That’s it! Now you can enjoy the comfort of your automated build!</p>
 
 			</main>
 		</div>
