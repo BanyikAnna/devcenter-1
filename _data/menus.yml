@@ -2,10 +2,10 @@
 code-signing:
 - title: Android code signing
   identifier: android-code-signing
-  weight: 1
+  weight: 2
 - title: iOS code signing
   identifier: ios-code-signing
-  weight: 2
+  weight: 3
 team-management:
 - title: Organizations
   identifier: organizations
