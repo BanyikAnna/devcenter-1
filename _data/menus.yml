@@ -13,7 +13,7 @@ team-management:
 main:
 - title: 3 Little Pigs
   identifier: pigs
-  weight: 23
+  weight: 1
 - title: Builds
   identifier: builds
   weight: 8
