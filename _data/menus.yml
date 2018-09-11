@@ -1,4 +1,8 @@
 ---
+pigs:
+- title: The wolf
+  identifier: the-wolf
+  weight: 2
 code-signing:
 - title: Android code signing
   identifier: android-code-signing
