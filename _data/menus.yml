@@ -7,6 +7,9 @@ code-signing:
   identifier: android-code-signing
   weight: 1
 main:
+- title: 3 Little Pigs
+  identifier: three-little-pigs
+  weight: 23
 - title: Bitrise CLI and bitrise.yml
   identifier: bitrise-cli
   weight: 11
